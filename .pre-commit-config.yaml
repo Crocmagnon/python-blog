@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: check-ast
+        types: [python]
+#      - id: check-json
+#        types: [json]
+      - id: check-toml
+        types: [toml]
+#      - id: check-xml
+#        types: [xml]
+      - id: end-of-file-fixer
+      - id: pretty-format-json
+        args:
+          - --autofix
+          - --no-sort-keys
+      - id: trailing-whitespace
+        args:
+          - --markdown-linebreak-ext=md
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.4.1
+    hooks:
+      - id: isort
+        types: [python]
+  - repo: https://github.com/psf/black
+    rev: stable
+    hooks:
+    - id: black
+      types: [python]
