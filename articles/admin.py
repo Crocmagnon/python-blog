@@ -26,12 +26,12 @@ class ArticleAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "title",
-                    "status",
-                    ("created_at", "published_at", "updated_at"),
-                    "author",
+                    ("author", "status"),
+                    ("published_at", "created_at", "updated_at"),
+                    "views_count",
                 )
             },
         ),
         ("Content", {"fields": ("content",)}),
     ]
-    readonly_fields = ["created_at", "updated_at"]
+    readonly_fields = ["created_at", "updated_at", "views_count"]
