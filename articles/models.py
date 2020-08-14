@@ -1,3 +1,5 @@
+import re
+
 import markdown
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -26,10 +28,11 @@ class Article(models.Model):
         ordering = ["-published_at"]
 
     def get_abstract(self):
-        md = markdown.Markdown(extensions=["extra"])
-        html = md.convert(self.content)
+        html = self.get_formatted_content()
         return html.split("<!--more-->")[0]
 
     def get_formatted_content(self):
         md = markdown.Markdown(extensions=["extra"])
-        return md.convert(self.content)
+        content = self.content
+        content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
+        return md.convert(content)
