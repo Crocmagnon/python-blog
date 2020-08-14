@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from django.views import generic
 
-# Create your views here.
+from articles.models import Article
+
+
+class ArticlesListView(generic.ListView):
+    model = Article
+    paginate_by = 15
+    context_object_name = "articles"
+
+
+class ArticleDetailView(generic.DetailView):
+    model = Article
+    context_object_name = "article"

@@ -1,0 +1,12 @@
+{% extends 'articles/base.html' %}
+
+{% block content %}
+    <h1>{{ article.title }}</h1>
+    <p>By: {{ article.author }}</p>
+    <p>Published at: {{ article.published_at }}</p>
+    <p>Updated at: {{ article.updated_at }}</p>
+
+    <div>
+    {{ article.get_formatted_content|safe }}
+    </div>
+{% endblock %}
