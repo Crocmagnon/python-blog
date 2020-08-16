@@ -1,0 +1,7 @@
+#id_content {
+    font-family: "JetBrains Mono", monospace;
+}
+
+label[for=id_content] {
+    display: none;
+}

@@ -1,6 +1,8 @@
+from django import forms
 from django.contrib import admin, messages
 from django.contrib.admin import register
 from django.contrib.auth.admin import UserAdmin
+from django.db import models
 
 from .models import Article, User
 
@@ -35,6 +37,11 @@ class ArticleAdmin(admin.ModelAdmin):
         ("Content", {"fields": ("content",)}),
     ]
     readonly_fields = ["created_at", "updated_at", "views_count"]
+    formfield_overrides = {
+        models.TextField: {
+            "widget": forms.Textarea(attrs={"cols": "100", "rows": "50"})
+        },
+    }
 
     def publish(self, request, queryset):
         if not request.user.has_perm("articles.change_article"):
@@ -58,3 +65,6 @@ class ArticleAdmin(admin.ModelAdmin):
 
     unpublish.short_description = "Unpublish selected articles"
     actions = [publish, unpublish]
+
+    class Media:
+        css = {"all": ("admin_articles.css",)}
