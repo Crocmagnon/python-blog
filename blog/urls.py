@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from articles import views
+from articles.views import feeds, html
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.ArticlesListView.as_view(), name="articles-list"),
-    path("drafts/", views.DraftsListView.as_view(), name="drafts-list"),
-    path("<int:pk>", views.ArticleDetailView.as_view(), name="article-detail"),
+    path("", html.ArticlesListView.as_view(), name="articles-list"),
+    path("drafts/", html.DraftsListView.as_view(), name="drafts-list"),
+    path("<int:pk>", html.ArticleDetailView.as_view(), name="article-detail"),
+    path("feed/", feeds.CompleteFeed(), name="complete-feed"),
 ]

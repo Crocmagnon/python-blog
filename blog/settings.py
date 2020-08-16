@@ -115,3 +115,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 AUTH_USER_MODEL = "articles.User"
+
+BLOG = {
+    "description": "My take on tech-related subjects (but not only)",
+    "base_url": "https://gabnotes.org/",
+}
