@@ -1,10 +1,10 @@
 {% extends 'articles/base.html' %}
 
 {% block content %}
-    <h1>Articles list</h1>
+    <h1>{{ title }} list</h1>
     {% for article in articles %}
         <article>
-        <h2>{{ article.title }}</h2>
+        <h2><a href="{% url 'article-detail' pk=article.pk %}">{{ article.title }}</a></h2>
         <p>{{ article.get_abstract|safe }}</p>
         <p><a href="{% url 'article-detail' pk=article.pk %}">Read more</a></p>
         </article>
