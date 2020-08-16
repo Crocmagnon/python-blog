@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
 from django.views import generic
 
@@ -9,8 +10,27 @@ class ArticlesListView(generic.ListView):
     paginate_by = 15
     context_object_name = "articles"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context["title"] = "Articles"
+        return context
+
     def get_queryset(self):
         return super().get_queryset().filter(status=Article.PUBLISHED)
+
+
+class DraftsListView(generic.ListView, LoginRequiredMixin):
+    model = Article
+    paginate_by = 15
+    context_object_name = "articles"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context["title"] = "Drafts"
+        return context
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status=Article.DRAFT)
 
 
 class ArticleDetailView(generic.DetailView):
@@ -18,6 +38,8 @@ class ArticleDetailView(generic.DetailView):
     context_object_name = "article"
 
     def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return super().get_queryset()
         return super().get_queryset().filter(status=Article.PUBLISHED)
 
     def get_object(self, queryset=None):

@@ -21,5 +21,6 @@ from articles import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.ArticlesListView.as_view(), name="articles-list"),
+    path("drafts/", views.DraftsListView.as_view(), name="drafts-list"),
     path("<int:pk>", views.ArticleDetailView.as_view(), name="article-detail"),
 ]
