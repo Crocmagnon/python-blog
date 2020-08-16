@@ -1,3 +1,8 @@
+{% if user.is_authenticated %}
+    <p>
+        <a href="{{ article.get_admin_url }}">Admin</a>
+    </p>
+{% endif %}
 <p class="date">
     {% if article.published_at %}
         {{ article.published_at|date }}

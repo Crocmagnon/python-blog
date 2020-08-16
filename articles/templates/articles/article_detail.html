@@ -3,7 +3,7 @@
 {% block content %}
     <article>
         <h1>{{ article.title }}{% if article.status != article.PUBLISHED %} ({{ article.status }}){% endif %}</h1>
-        {% include "articles/date_snippet.html" %}
+        {% include "articles/metadata_snippet.html" %}
         <div>
             {{ article.get_formatted_content|safe }}
         </div>

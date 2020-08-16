@@ -2,7 +2,9 @@ import re
 
 import markdown
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 
 
@@ -31,6 +33,16 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_admin_url(self):
+        content_type = ContentType.objects.get_for_model(self.__class__)
+        return reverse(
+            "admin:%s_%s_change" % (content_type.app_label, content_type.model),
+            args=(self.id,),
+        )
+
+    def get_absolute_url(self):
+        return reverse("article-detail", kwargs={"pk": self.pk})
 
     def get_abstract(self):
         html = self.get_formatted_content()
