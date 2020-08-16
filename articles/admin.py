@@ -27,7 +27,7 @@ class ArticleAdmin(admin.ModelAdmin):
             "Metadata",
             {
                 "fields": (
-                    "title",
+                    ("title", "slug"),
                     ("author", "status"),
                     ("published_at", "created_at", "updated_at"),
                     "views_count",
@@ -42,6 +42,7 @@ class ArticleAdmin(admin.ModelAdmin):
             "widget": forms.Textarea(attrs={"cols": "100", "rows": "50"})
         },
     }
+    prepopulated_fields = {"slug": ("title",)}
 
     def publish(self, request, queryset):
         if not request.user.has_perm("articles.change_article"):

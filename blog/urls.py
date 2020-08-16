@@ -22,6 +22,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", html.ArticlesListView.as_view(), name="articles-list"),
     path("drafts/", html.DraftsListView.as_view(), name="drafts-list"),
-    path("<int:pk>", html.ArticleDetailView.as_view(), name="article-detail"),
+    path("<slug:slug>", html.ArticleDetailView.as_view(), name="article-detail"),
     path("feed/", feeds.CompleteFeed(), name="complete-feed"),
 ]

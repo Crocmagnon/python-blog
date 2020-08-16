@@ -4,6 +4,7 @@ import markdown
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
 
@@ -27,6 +28,7 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     views_count = models.IntegerField(default=0)
+    slug = models.SlugField(unique=True)
 
     class Meta:
         ordering = ["-published_at"]
@@ -42,7 +44,7 @@ class Article(models.Model):
         )
 
     def get_absolute_url(self):
-        return reverse("article-detail", kwargs={"pk": self.pk})
+        return reverse("article-detail", kwargs={"slug": self.slug})
 
     def get_abstract(self):
         html = self.get_formatted_content()
@@ -64,3 +66,8 @@ class Article(models.Model):
         self.published_at = None
         self.status = self.DRAFT
         self.save()
+
+    def save(self, *args, **kwargs):  # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
