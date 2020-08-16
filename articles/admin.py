@@ -48,8 +48,7 @@ class ArticleAdmin(admin.ModelAdmin):
             messages.warning(request, "You're not allowed to do this.")
             return
         for article in queryset:
-            article.publish(save=False)
-        Article.objects.bulk_update(queryset, ["published_at", "status"])
+            article.publish()
         messages.success(request, f"{len(queryset)} articles published.")
 
     publish.short_description = "Publish selected articles"
@@ -59,8 +58,7 @@ class ArticleAdmin(admin.ModelAdmin):
             messages.warning(request, "You're not allowed to do this.")
             return
         for article in queryset:
-            article.unpublish(save=False)
-        Article.objects.bulk_update(queryset, ["published_at", "status"])
+            article.unpublish()
         messages.success(request, f"{len(queryset)} articles unpublished.")
 
     unpublish.short_description = "Unpublish selected articles"

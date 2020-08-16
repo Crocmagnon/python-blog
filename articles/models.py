@@ -42,15 +42,13 @@ class Article(models.Model):
         content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
         return md.convert(content)
 
-    def publish(self, save=True):
+    def publish(self):
         if not self.published_at:
             self.published_at = timezone.now()
         self.status = self.PUBLISHED
-        if save:
-            self.save()
+        self.save()
 
-    def unpublish(self, save=True):
+    def unpublish(self):
         self.published_at = None
         self.status = self.DRAFT
-        if save:
-            self.save()
+        self.save()
