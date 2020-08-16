@@ -43,26 +43,32 @@ article.article-list h2 a {
     text-decoration: none;
 }
 
+.pagination {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --accent: #226997;
-    --main: #eeeeee;
-    /*--main2: #cecece;*/
-    /*--main3: #b1b1b1;*/
-    --background: #111111;
-    /*--background2: #575656;*/
-  }
+    :root {
+        --accent: #226997;
+        --main: #eeeeee;
+        /*--main2: #cecece;*/
+        /*--main3: #b1b1b1;*/
+        --background: #111111;
+        /*--background2: #575656;*/
+    }
 
-  img {
-    opacity: .75;
-    transition: opacity .5s ease-in-out;
-  }
-  img:hover {
-    opacity: 1;
-  }
+    img {
+        opacity: .75;
+        transition: opacity .5s ease-in-out;
+    }
 
-  #manage ul ul li img {
-    opacity: 1;
-    filter: invert(1);
-  }
+    img:hover {
+        opacity: 1;
+    }
+
+    #manage ul ul li img {
+        opacity: 1;
+        filter: invert(1);
+    }
 }
