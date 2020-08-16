@@ -4,9 +4,10 @@
     <h1>{{ title }} list</h1>
     {% for article in articles %}
         <article>
-        <h2><a href="{% url 'article-detail' pk=article.pk %}">{{ article.title }}</a></h2>
-        <p>{{ article.get_abstract|safe }}</p>
-        <p><a href="{% url 'article-detail' pk=article.pk %}">Read more</a></p>
+            <h2><a href="{% url 'article-detail' pk=article.pk %}">{{ article.title }}</a></h2>
+            {% include "articles/date_snippet.html" %}
+            <p>{{ article.get_abstract|safe }}</p>
+            <p><a href="{% url 'article-detail' pk=article.pk %}">Read more</a></p>
         </article>
     {% empty %}
         <p>No article here. Come back later 🙂</p>

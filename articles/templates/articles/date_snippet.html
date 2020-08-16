@@ -1,0 +1,7 @@
+<p class="date">
+    {% if article.published_at %}
+        {{ article.published_at|date }}
+    {% else %}
+        {{ article.updated_at|date }}
+    {% endif %}
+</p>

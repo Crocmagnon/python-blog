@@ -2,11 +2,8 @@
 
 {% block content %}
     <article>
-        <h1>{{ article.title }}</h1>
-        <p>By: {{ article.author }}</p>
-        <p>Published at: {{ article.published_at }}</p>
-        <p>Updated at: {{ article.updated_at }}</p>
-
+        <h1>{{ article.title }}{% if article.status != article.PUBLISHED %} ({{ article.status }}){% endif %}</h1>
+        {% include "articles/date_snippet.html" %}
         <div>
             {{ article.get_formatted_content|safe }}
         </div>
