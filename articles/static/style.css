@@ -1,10 +1,55 @@
-.content {
+:root {
+    --accent: #226997;
+    --main: #111111;
+    /*--main2: #575757;*/
+    /*--main3: #7d7d7d;*/
+    --background: #ffffff;
+    /*--background2: #f7f7f7;*/
+}
+
+body {
     max-width: 640px;
     margin-left: auto;
     margin-right: auto;
     font-family: Arial, sans-serif;
+    color: var(--main);
+    background-color: var(--background);
 }
 
-.content img {
+body img {
     max-width: 640px;
+}
+
+a {
+    color: var(--main);
+    text-decoration: underline var(--accent) 2.5px;
+    transition: text-decoration .12s ease;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #226997;
+    --main: #eeeeee;
+    /*--main2: #cecece;*/
+    /*--main3: #b1b1b1;*/
+    --background: #111111;
+    /*--background2: #575656;*/
+  }
+
+  img {
+    opacity: .75;
+    transition: opacity .5s ease-in-out;
+  }
+  img:hover {
+    opacity: 1;
+  }
+
+  #manage ul ul li img {
+    opacity: 1;
+    filter: invert(1);
+  }
 }
