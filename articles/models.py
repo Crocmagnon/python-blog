@@ -3,6 +3,7 @@ import re
 import markdown
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 
 
 class User(AbstractUser):
@@ -28,6 +29,9 @@ class Article(models.Model):
     class Meta:
         ordering = ["-published_at"]
 
+    def __str__(self):
+        return self.title
+
     def get_abstract(self):
         html = self.get_formatted_content()
         return html.split("<!--more-->")[0]
@@ -37,3 +41,16 @@ class Article(models.Model):
         content = self.content
         content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
         return md.convert(content)
+
+    def publish(self, save=True):
+        if not self.published_at:
+            self.published_at = timezone.now()
+        self.status = self.PUBLISHED
+        if save:
+            self.save()
+
+    def unpublish(self, save=True):
+        self.published_at = None
+        self.status = self.DRAFT
+        if save:
+            self.save()

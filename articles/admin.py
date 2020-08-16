@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.admin import register
 from django.contrib.auth.admin import UserAdmin
 
@@ -35,3 +35,26 @@ class ArticleAdmin(admin.ModelAdmin):
         ("Content", {"fields": ("content",)}),
     ]
     readonly_fields = ["created_at", "updated_at", "views_count"]
+
+    def publish(self, request, queryset):
+        if not request.user.has_perm("articles.change_article"):
+            messages.warning(request, "You're not allowed to do this.")
+            return
+        for article in queryset:
+            article.publish(save=False)
+        Article.objects.bulk_update(queryset, ["published_at", "status"])
+        messages.success(request, f"{len(queryset)} articles published.")
+
+    publish.short_description = "Publish selected articles"
+
+    def unpublish(self, request, queryset):
+        if not request.user.has_perm("articles.change_article"):
+            messages.warning(request, "You're not allowed to do this.")
+            return
+        for article in queryset:
+            article.unpublish(save=False)
+        Article.objects.bulk_update(queryset, ["published_at", "status"])
+        messages.success(request, f"{len(queryset)} articles unpublished.")
+
+    unpublish.short_description = "Unpublish selected articles"
+    actions = [publish, unpublish]
