@@ -26,8 +26,8 @@ def main():
         )
         if line[6] is not None:
             db_c.execute(
-                "INSERT INTO articles_page(article_ptr_id) VALUES (?);",
-                (ret.lastrowid,),
+                "INSERT INTO articles_page(article_ptr_id, position) VALUES (?, ?);",
+                (ret.lastrowid, line[6]),
             )
     db.commit()
 
