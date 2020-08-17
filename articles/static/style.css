@@ -9,8 +9,7 @@
 
 body {
     max-width: 640px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 6em;
     font-family: Arial, sans-serif;
     color: var(--main);
     background-color: var(--background);
