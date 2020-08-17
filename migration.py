@@ -2,8 +2,8 @@ import sqlite3
 
 
 def main():
-    writefreely = sqlite3.connect("writefreely.db")
-    db = sqlite3.connect("db.sqlite3")
+    writefreely = sqlite3.connect("db/writefreely.db")
+    db = sqlite3.connect("db/db.sqlite3")
     writefreely_c = writefreely.cursor()
     db_c = db.cursor()
     writefreely_c.execute(
