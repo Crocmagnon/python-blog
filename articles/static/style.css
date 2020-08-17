@@ -31,6 +31,10 @@ a {
     transition: text-decoration .12s ease;
 }
 
+/*.article-list a {*/
+/*    text-decoration: underline var(--accent) 1px;*/
+/*}*/
+
 a:hover, a:focus {
     text-decoration: none;
 }

@@ -1,0 +1,15 @@
+version: '2.4'
+services:
+  django:
+    image: crocmagnon/blog
+    build: .
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    volumes:
+      - ./db:/db
+#      - /srv/blog/db:/db
+      - ./static:/app/static
+#      - /srv/blog/static:/app/static
+    restart: on-failure

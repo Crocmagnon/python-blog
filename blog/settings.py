@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +20,20 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "s#!83!8e$3s89m)r$1ghsgxbndf8=#^qt(_*o%xbq0j2t8#db5"
+SECRET_KEY = os.getenv(
+    "SECRET_KEY", "s#!83!8e$3s89m)r$1ghsgxbndf8=#^qt(_*o%xbq0j2t8#db5"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
+HOST = os.getenv("HOST")
+if HOST:
+    ALLOWED_HOSTS.append(HOST)
 
 
 # Application definition
@@ -74,10 +82,17 @@ WSGI_APPLICATION = "blog.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+DB_BASE_DIR = os.getenv("DB_BASE_DIR", BASE_DIR)
+if not DB_BASE_DIR:
+    # Protect against empty strings
+    DB_BASE_DIR = BASE_DIR
+else:
+    DB_BASE_DIR = Path(DB_BASE_DIR).resolve(strict=True)
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": DB_BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -113,6 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 AUTH_USER_MODEL = "articles.User"
 
