@@ -1,0 +1,21 @@
+image: archlinux
+packages:
+  - docker
+sources:
+  - https://git.sr.ht/~crocmagnon/blog
+secrets:
+  - 2da6ddc6-3d12-4306-a1e4-8268c6194386
+  - 29bc352f-0807-46e9-a4ef-2f869f94afa3
+  - 5c948915-48c2-4542-8fc1-a5676f4d7126
+tasks:
+  - setup_docker: |
+      chmod +x ./blog/docker/setup-docker
+      ./blog/docker/setup-docker
+  - build: |
+      docker info
+      docker login -u crocmagnon --password-stdin < .docker-secret
+      docker pull crocmagnon/blog || true
+      docker build -t crocmagnon/blog blog/
+      docker push crocmagnon/blog
+  - deploy: |
+      ssh blog -o StrictHostKeyChecking=no "/srv/blog/redeploy"
