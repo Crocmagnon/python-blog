@@ -36,7 +36,7 @@ a:hover, a:focus {
     color: var(--background);
 }
 
-article.article-list h2 a {
+.article-list h2 a {
     border-color: transparent;
 }
 
@@ -57,11 +57,11 @@ article.article-list h2 a {
     flex-grow: 0;
 }
 
-article.article-list + article.article-list {
+.article-list + .article-list {
     margin-top: 4em;
 }
 
-article.article-list h2, article h1 {
+.article-list h2, .article-detail h1 {
     margin-bottom: .2em;
 }
 

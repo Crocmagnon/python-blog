@@ -4,11 +4,11 @@
     {{ article.title }}
 {% endblock %}
 {% block content %}
-    <article>
+    <div class="article-detail">
         <h1>{{ article.title }}{% if article.status != article.PUBLISHED %} ({{ article.status }}){% endif %}</h1>
         {% include "articles/metadata_snippet.html" %}
         <div>
             {{ article.get_formatted_content|safe }}
         </div>
-    </article>
+    </div>
 {% endblock %}
