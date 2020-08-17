@@ -1,7 +1,7 @@
 :root {
     --accent: #226997;
     --main: #111111;
-    /*--main2: #575757;*/
+    --main2: #575757;
     /*--main3: #7d7d7d;*/
     --background: #ffffff;
     /*--background2: #f7f7f7;*/
@@ -26,8 +26,18 @@ body img {
 
 a {
     color: var(--main);
-    text-decoration: underline var(--accent) 2.5px;
-    transition: text-decoration .12s ease;
+    text-decoration: none;
+    border-bottom: 2.5px solid var(--accent);
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+    background-color: var(--accent);
+    color: var(--background);
+}
+
+article.article-list h2 a {
+    border-color: transparent;
 }
 
 .pic-container {
@@ -47,16 +57,17 @@ a {
     flex-grow: 0;
 }
 
-a:hover, a:focus {
-    text-decoration: none;
+article.article-list + article.article-list {
+    margin-top: 4em;
 }
 
-article.article-list {
-    margin-top: 2em;
+article.article-list h2, article h1 {
+    margin-bottom: .2em;
 }
 
-article.article-list h2 a {
-    text-decoration: none;
+.date {
+    margin-top: .2em;
+    color: var(--main2);
 }
 
 .pagination {
@@ -68,7 +79,7 @@ article.article-list h2 a {
     :root {
         --accent: #226997;
         --main: #eeeeee;
-        /*--main2: #cecece;*/
+        --main2: #cecece;
         /*--main3: #b1b1b1;*/
         --background: #111111;
         /*--background2: #575656;*/
