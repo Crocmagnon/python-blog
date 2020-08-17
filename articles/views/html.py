@@ -35,6 +35,7 @@ class ArticleDetailView(generic.DetailView):
     model = Article
     context_object_name = "article"
     queryset = Article.with_pages.all()
+    template_name = "articles/article_detail.html"
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -43,6 +44,8 @@ class ArticleDetailView(generic.DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
+        if hasattr(obj, "page"):
+            obj = obj.page
         if not self.request.user.is_authenticated:
             obj.views_count = F("views_count") + 1
             obj.save(update_fields=["views_count"])
