@@ -31,7 +31,7 @@ class Article(models.Model):
     published_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.PROTECT, default=1)
     views_count = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
 
