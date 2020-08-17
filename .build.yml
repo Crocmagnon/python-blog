@@ -15,7 +15,7 @@ tasks:
       docker info
       docker login -u crocmagnon --password-stdin < .docker-secret
       docker pull crocmagnon/blog || true
-      docker build -t crocmagnon/blog blog/
+      docker build --cache-from crocmagnon/blog:latest -t crocmagnon/blog blog/
       docker push crocmagnon/blog
   - deploy: |
       ssh blog -o StrictHostKeyChecking=no "/srv/blog/redeploy"
