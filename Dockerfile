@@ -1,5 +1,6 @@
 FROM python:3.8.5-slim
 
+RUN apt-get update && apt-get install -y curl
 RUN mkdir /app && mkdir /db
 WORKDIR /app
 COPY requirements.txt ./
