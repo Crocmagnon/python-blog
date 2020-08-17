@@ -4,7 +4,7 @@ from django.contrib.admin import register
 from django.contrib.auth.admin import UserAdmin
 from django.db import models
 
-from .models import Article, User
+from .models import Article, Page, User
 
 admin.site.register(User, UserAdmin)
 
@@ -67,3 +67,22 @@ class ArticleAdmin(admin.ModelAdmin):
 
     class Media:
         css = {"all": ("admin_articles.css",)}
+
+
+@register(Page)
+class PageAdmin(ArticleAdmin):
+    list_display = ["position"] + ArticleAdmin.list_display
+    fieldsets = [
+        (
+            "Metadata",
+            {
+                "fields": (
+                    ("title", "slug", "position"),
+                    ("author", "status"),
+                    ("published_at", "created_at", "updated_at"),
+                    "views_count",
+                )
+            },
+        ),
+        ("Content", {"fields": ("content",)}),
+    ]

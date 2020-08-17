@@ -23,19 +23,18 @@ class DraftsListView(generic.ListView, LoginRequiredMixin):
     model = Article
     paginate_by = 15
     context_object_name = "articles"
+    queryset = Article.with_pages.filter(status=Article.DRAFT)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context["title"] = "Drafts"
         return context
 
-    def get_queryset(self):
-        return super().get_queryset().filter(status=Article.DRAFT)
-
 
 class ArticleDetailView(generic.DetailView):
     model = Article
     context_object_name = "article"
+    queryset = Article.with_pages.all()
 
     def get_queryset(self):
         if self.request.user.is_authenticated:

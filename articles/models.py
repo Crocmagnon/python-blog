@@ -13,6 +13,11 @@ class User(AbstractUser):
     pass
 
 
+class ArticleManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(page__isnull=True)
+
+
 class Article(models.Model):
     DRAFT = "draft"
     PUBLISHED = "published"
@@ -29,6 +34,9 @@ class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     views_count = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
+
+    objects = ArticleManager()
+    with_pages = models.Manager()
 
     class Meta:
         ordering = ["-published_at"]
@@ -67,7 +75,15 @@ class Article(models.Model):
         self.status = self.DRAFT
         self.save()
 
-    def save(self, *args, **kwargs):  # new
+    def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+
+class Page(Article):
+    objects = models.Manager()
+    position = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ["position", "-published_at"]
