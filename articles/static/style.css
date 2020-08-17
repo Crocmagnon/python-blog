@@ -7,13 +7,17 @@
     /*--background2: #f7f7f7;*/
 }
 
-body {
-    max-width: 640px;
+html {
+    font-size: 110%;
+    max-width: calc(640px + 2em);
     margin: 8px auto 6em;
+}
+
+body {
+    margin: 0 1em;
     font-family: Arial, sans-serif;
     color: var(--main);
     background-color: var(--background);
-    font-size: 110%;
 }
 
 p {
