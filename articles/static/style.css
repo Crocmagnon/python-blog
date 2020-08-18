@@ -2,7 +2,7 @@
     --accent: #226997;
     --main: #111111;
     --main2: #575757;
-    /*--main3: #7d7d7d;*/
+    --main3: #7d7d7d;
     --background: #ffffff;
     --background2: #f7f7f7;
 }
@@ -97,12 +97,23 @@ code {
     padding: 1em;
 }
 
+footer {
+    border-top: 2px solid var(--background2);
+    margin-top: 2em;
+    font-size: 80%;
+    color: var(--main3)
+}
+footer a {
+    color: var(--main3);
+    /*border-bottom-width: ;*/
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --accent: #226997;
         --main: #eeeeee;
         --main2: #cecece;
-        /*--main3: #b1b1b1;*/
+        --main3: #b1b1b1;
         --background: #111111;
         --background2: #282828;
     }
