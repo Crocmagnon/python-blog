@@ -1,28 +1,14 @@
 import pytest
 from django.test import Client
-from django.utils import timezone
+from model_bakery import baker
 
 from articles.models import Article, Page, User
 
 
 @pytest.mark.django_db
 def test_can_access_list(client: Client, author: User):
-    article = Article.objects.create(
-        author=author,
-        title="Sample published",
-        status=Article.PUBLISHED,
-        published_at=timezone.now(),
-        slug="sample-published",
-        content="Some content lorem ipsum",
-    )
-    page = Page.objects.create(
-        author=author,
-        title="Sample page published",
-        status=Article.PUBLISHED,
-        published_at=timezone.now(),
-        slug="sample-page-published",
-        content="Some page content lorem ipsum",
-    )
+    article = baker.make(Article, author=author, status=Article.PUBLISHED)
+    page = baker.make(Page, author=author, status=Article.PUBLISHED)
     res = client.get("/")
     assert res.status_code == 200
     content = res.content.decode("utf-8")
@@ -36,12 +22,10 @@ def test_can_access_list(client: Client, author: User):
 def test_abstract_shown_on_list(client: Client, author: User):
     abstract = "Some abstract"
     after = "Some content after abstract"
-    article = Article.objects.create(
-        author=author,
-        title="Sample published",
+    baker.make(
+        Article,
         status=Article.PUBLISHED,
-        published_at=timezone.now(),
-        slug="sample-published",
+        author=author,
         content=f"{abstract}\n<!--more-->\n{after}",
     )
     res = client.get("/")

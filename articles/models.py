@@ -87,3 +87,10 @@ class Page(Article):
 
     class Meta:
         ordering = ["position", "-published_at"]
+
+
+# class Comment(models.Model):
+#     username = models.CharField(max_length=255)
+#     email = models.EmailField(blank=True, null=True)
+#     content = models.TextField()
+#     article = models.ForeignKey(Article, on_delete=models.CASCADE)
