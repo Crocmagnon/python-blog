@@ -110,7 +110,7 @@ class Comment(AdminUrlMixin, models.Model):
         null=True,
         help_text=(
             "Not mandatory, fill only if you want me to be able to contact you. "
-            "Will never be displayed here nor shared with any third party."
+            "It will never be displayed here nor shared with any third party."
         ),
     )
     content = models.TextField(
