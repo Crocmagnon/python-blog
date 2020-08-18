@@ -9,7 +9,5 @@ services:
       - .env
     volumes:
       - ./db:/db
-#      - /srv/blog/db:/db
       - ./static:/app/staticfiles
-#      - /srv/blog/static:/app/static
     restart: on-failure
