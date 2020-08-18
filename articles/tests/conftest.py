@@ -18,8 +18,8 @@ def published_article(author):
         status=Article.PUBLISHED,
         author=author,
         published_at=timezone.now(),
-        slug="some-slug",
-        content="# some markdown\n\n[a link](https://example.com)",
+        slug="some-article-slug",
+        content="## some article markdown\n\n[an article link](https://article.com)",
     )
 
 
@@ -31,6 +31,6 @@ def published_page(author):
         status=Article.PUBLISHED,
         author=author,
         published_at=timezone.now(),
-        slug="some-slug",
-        content="# some markdown\n\n[a link](https://example.com)",
+        slug="some-page-slug",
+        content="## some page markdown\n\n[a page link](https://page.com)",
     )
