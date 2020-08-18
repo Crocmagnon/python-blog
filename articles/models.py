@@ -7,6 +7,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
+from markdown.extensions.codehilite import CodeHiliteExtension
 
 
 class User(AbstractUser):
@@ -59,7 +60,7 @@ class Article(models.Model):
         return html.split("<!--more-->")[0]
 
     def get_formatted_content(self):
-        md = markdown.Markdown(extensions=["extra"])
+        md = markdown.Markdown(extensions=["extra", CodeHiliteExtension(linenums=True)])
         content = self.content
         content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
         return md.convert(content)
