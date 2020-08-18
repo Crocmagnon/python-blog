@@ -10,6 +10,6 @@ services:
     volumes:
       - ./db:/db
 #      - /srv/blog/db:/db
-      - ./static:/app/static
+      - ./static:/app/staticfiles
 #      - /srv/blog/static:/app/static
     restart: on-failure
