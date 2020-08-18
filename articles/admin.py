@@ -46,9 +46,7 @@ class ArticleAdmin(admin.ModelAdmin):
         "published_at",
     ]
     formfield_overrides = {
-        models.TextField: {
-            "widget": forms.Textarea(attrs={"cols": "100", "rows": "50"})
-        },
+        models.TextField: {"widget": forms.Textarea(attrs={"style": "width: 98%"})},
     }
     prepopulated_fields = {"slug": ("title",)}
     change_form_template = "articles/article_change_form.html"
