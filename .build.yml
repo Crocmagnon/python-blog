@@ -28,3 +28,7 @@ tasks:
       docker push crocmagnon/blog
   - deploy: |
       ssh blog -o StrictHostKeyChecking=no "/srv/blog/redeploy"
+triggers:
+  - action: email
+    condition: failure
+    to: Gabriel Augendre <gabriel@augendre.info>
