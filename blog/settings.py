@@ -24,6 +24,20 @@ SECRET_KEY = os.getenv(
     "SECRET_KEY", "s#!83!8e$3s89m)r$1ghsgxbndf8=#^qt(_*o%xbq0j2t8#db5"
 )
 
+admins = os.getenv("ADMINS", "")
+if admins:
+    ADMINS = list(map(lambda x: tuple(x.split(",")), admins.split(";")))
+
+DEFAULT_FROM_EMAIL = "blog@gabnotes.org"
+SERVER_EMAIL = "blog@gabnotes.org"
+EMAIL_HOST = os.getenv("EMAIL_HOST", "localhost")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_PORT = 465
+EMAIL_SUBJECT_PREFIX = "[Blog] "
+EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 30
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 TESTING = os.getenv("TESTING", "false").lower() == "true"
