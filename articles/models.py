@@ -102,6 +102,14 @@ class Page(Article):
 
 
 class Comment(AdminUrlMixin, models.Model):
+    PENDING = "pending"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    STATUS_CHOICES = (
+        (PENDING, "Pending"),
+        (APPROVED, "Approved"),
+        (REJECTED, "Rejected"),
+    )
     username = models.CharField(
         max_length=255, help_text="Will be displayed with your comment."
     )
@@ -121,7 +129,7 @@ class Comment(AdminUrlMixin, models.Model):
         Article, on_delete=models.CASCADE, related_name="comments"
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
 
     class Meta:
         ordering = ["created_at"]

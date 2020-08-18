@@ -116,13 +116,13 @@ class PageAdmin(ArticleAdmin):
 
 @register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("username", "email", "content", "article", "created_at", "approved")
-    list_filter = ("approved",)
+    list_display = ("username", "email", "content", "article", "created_at", "status")
+    list_filter = ("status",)
     search_fields = ("username", "email", "content")
-    actions = ["approve_comments", "censor_comments"]
+    actions = ["approve_comments", "reject_comments"]
 
     def approve_comments(self, request, queryset):
-        queryset.update(approved=True)
+        queryset.update(status=Comment.APPROVED)
 
-    def censor_comments(self, request, queryset):
-        queryset.update(approved=False)
+    def reject_comments(self, request, queryset):
+        queryset.update(status=Comment.REJECTED)

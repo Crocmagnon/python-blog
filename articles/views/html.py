@@ -5,7 +5,7 @@ from django.views import generic
 from django.views.generic.edit import FormMixin
 
 from articles.forms import CommentForm
-from articles.models import Article
+from articles.models import Article, Comment
 
 
 class ArticlesListView(generic.ListView):
@@ -52,7 +52,7 @@ class ArticleDetailView(FormMixin, generic.DetailView):
         article = self.object
         if hasattr(article, "article"):
             article = article.article
-        context["comments"] = article.comments.filter(approved=True)
+        context["comments"] = article.comments.filter(status=Comment.APPROVED)
         return context
 
     def get_object(self, queryset=None):
