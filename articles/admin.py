@@ -75,6 +75,11 @@ class ArticleAdmin(admin.ModelAdmin):
     class Media:
         css = {"all": ("admin_articles.css",)}
 
+    def response_post_save_add(self, request, obj: Article):
+        if "_preview" in request.POST:
+            return redirect("article-detail", slug=obj.slug)
+        return super().response_post_save_add(request, obj)
+
     def response_change(self, request, obj: Article):
         if "_preview" in request.POST:
             obj.save()
