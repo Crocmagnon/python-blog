@@ -1,10 +1,8 @@
 function activateDarkMode() {
-    console.log("Activating dark mode");
     document.getElementById("code-dark").removeAttribute("disabled");
 }
 
 function activateLightMode() {
-    console.log("Activating light mode");
     document.getElementById("code-dark").setAttribute("disabled", "true");
 }
 
