@@ -33,3 +33,12 @@ def test_abstract_shown_on_list(client: Client, author: User):
     content = res.content.decode("utf-8")
     assert abstract in content
     assert after not in content
+
+
+@pytest.mark.django_db
+def test_access_article_by_slug(client: Client, published_article: Article):
+    res = client.get(reverse("article-detail", kwargs={"slug": published_article.slug}))
+    assert res.status_code == 200
+    content = res.content.decode("utf-8")
+    assert published_article.title in content
+    assert published_article.get_formatted_content() in content
