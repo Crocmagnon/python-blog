@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
-from django.http import HttpResponseRedirect
 from django.views import generic
+from django.views.generic.edit import FormMixin
 
 from articles.forms import CommentForm
 from articles.models import Article
@@ -34,8 +34,9 @@ class DraftsListView(generic.ListView, LoginRequiredMixin):
         return context
 
 
-class ArticleDetailView(generic.DetailView):
+class ArticleDetailView(FormMixin, generic.DetailView):
     model = Article
+    form_class = CommentForm
     context_object_name = "article"
     queryset = Article.with_pages.all()
     template_name = "articles/article_detail.html"
@@ -47,12 +48,11 @@ class ArticleDetailView(generic.DetailView):
         return queryset.filter(status=Article.PUBLISHED)
 
     def get_context_data(self, **kwargs):
-        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         article = self.object
         if hasattr(article, "article"):
             article = article.article
         context["comments"] = article.comments.filter(approved=True)
-        context["comment_form"] = CommentForm()
         return context
 
     def get_object(self, queryset=None):
@@ -65,15 +65,23 @@ class ArticleDetailView(generic.DetailView):
 
         return obj
 
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
-class CreateCommentView(generic.CreateView):
-    model = Article
-    form_class = CommentForm
+    def form_invalid(self, form):
+        return super().form_invalid(form)
 
     def form_valid(self, form):
-        self.object = self.get_object()
-        self.comment = form.save(commit=False)
-        self.comment.article = self.object
-        self.comment.save()
+        comment = form.save(commit=False)
+        comment.article = self.object
+        comment.save()
         messages.success(self.request, "Comment successfully saved.")
-        return HttpResponseRedirect(self.get_success_url())
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
