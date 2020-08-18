@@ -5,6 +5,7 @@
     --main3: #7d7d7d;
     --background: #ffffff;
     --background2: #f7f7f7;
+    --background3: #d0d0d0;
 }
 
 html {
@@ -103,9 +104,27 @@ footer {
     font-size: 80%;
     color: var(--main3)
 }
+
 footer a {
     color: var(--main3);
-    /*border-bottom-width: ;*/
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 1ex;
+    text-align: left;
+}
+
+tr {
+    border-bottom: 1px solid var(--background3);
+}
+
+tr:hover {
+    background-color: var(--background2);
 }
 
 @media (prefers-color-scheme: dark) {
