@@ -75,7 +75,8 @@ class ArticleDetailView(FormMixin, generic.DetailView):
 
     def form_invalid(self, form):
         messages.error(
-            self.request, "Your comment couldn't be saved, see the form below."
+            self.request,
+            'Your comment couldn\'t be saved, see <a href="#comment-form">the form below</a>.',
         )
         return super().form_invalid(form)
 
@@ -83,7 +84,10 @@ class ArticleDetailView(FormMixin, generic.DetailView):
         comment = form.save(commit=False)
         comment.article = self.object
         comment.save()
-        messages.success(self.request, "Comment successfully saved.")
+        messages.success(
+            self.request,
+            f'Comment successfully saved, you can check it <a href="#{comment.id}">below</a>.',
+        )
         return super().form_valid(form)
 
     def get_success_url(self):

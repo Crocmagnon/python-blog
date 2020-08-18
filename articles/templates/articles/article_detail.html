@@ -19,7 +19,8 @@
                     <span class="username">{{ comment.username }}</span> |
                     <time datetime="{{ comment.created_at|date:'c' }}">
                         {{ comment.created_at|date:"DATETIME_FORMAT" }}
-                    </time> {% include "articles/admin_link_snippet.html" with article=comment %}
+                    </time>
+                    {% include "articles/admin_link_snippet.html" with article=comment %}
                 </p>
                 <p class="content">
                     {{ comment.content|linebreaksbr }}
@@ -34,6 +35,11 @@
                 {{ form.as_table }}
             </table>
             <button type="submit">Submit</button>
+            <p class="helptext">
+                Your comment may be removed if it's not respectful, on topic or spammy.
+                If you feel I've made a mistake with your comment, please
+                <a href="/about-me/">send me a message</a>!
+            </p>
         </form>
     </section>
 {% endblock %}

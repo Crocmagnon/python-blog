@@ -31,7 +31,7 @@
 {% if messages %}
     <div class="messages">
         {% for message in messages %}
-            <p>{{ message }}</p>
+            <p class="{{ message.level_tag }}">{{ message|safe }}</p>
         {% endfor %}
     </div>
 {% endif %}
