@@ -1,13 +1,23 @@
 image: archlinux
 packages:
   - docker
+  - python-pip
+  - python-virtualenv
 sources:
   - https://git.sr.ht/~crocmagnon/blog
 secrets:
   - 2da6ddc6-3d12-4306-a1e4-8268c6194386
   - 29bc352f-0807-46e9-a4ef-2f869f94afa3
   - 5c948915-48c2-4542-8fc1-a5676f4d7126
+environment:
+  TESTING: true
 tasks:
+  - test: |
+      python --version
+      cd blog
+      virtualenv venv
+      venv/bin/python -m pip install -r requirements.txt -r requirements-dev.txt --progress-bar off
+      venv/bin/python -m pytest
   - setup_docker: |
       chmod +x ./blog/docker/setup-docker
       ./blog/docker/setup-docker

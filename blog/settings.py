@@ -26,6 +26,7 @@ SECRET_KEY = os.getenv(
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "true").lower() == "true"
+TESTING = os.getenv("TESTING", "true").lower() == "true"
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -130,7 +131,14 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+if TESTING:
+    # ManifestStaticFilesStorage requires collectstatic to be run
+    # and collectstatic is not run for tests
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+else:
+    STATICFILES_STORAGE = (
+        "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+    )
 
 AUTH_USER_MODEL = "articles.User"
 
