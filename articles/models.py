@@ -60,7 +60,9 @@ class Article(models.Model):
         return html.split("<!--more-->")[0]
 
     def get_formatted_content(self):
-        md = markdown.Markdown(extensions=["extra", CodeHiliteExtension(linenums=True)])
+        md = markdown.Markdown(
+            extensions=["extra", CodeHiliteExtension(linenums=False)]
+        )
         content = self.content
         content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
         return md.convert(content)

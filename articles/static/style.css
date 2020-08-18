@@ -4,7 +4,7 @@
     --main2: #575757;
     /*--main3: #7d7d7d;*/
     --background: #ffffff;
-    /*--background2: #f7f7f7;*/
+    --background2: #f7f7f7;
 }
 
 html {
@@ -79,6 +79,19 @@ a:hover, a:focus {
     justify-content: space-between;
 }
 
+code {
+    white-space: pre-wrap;
+}
+
+.codehilite {
+    border-radius: .5ex;
+    background-color: var(--background2);
+}
+
+.codehilite pre {
+    padding: 1em;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --accent: #226997;
@@ -86,7 +99,7 @@ a:hover, a:focus {
         --main2: #cecece;
         /*--main3: #b1b1b1;*/
         --background: #111111;
-        /*--background2: #575656;*/
+        --background2: #282828;
     }
 
     img {
