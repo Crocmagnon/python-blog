@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv(
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "true").lower() == "true"
-TESTING = os.getenv("TESTING", "true").lower() == "true"
+TESTING = os.getenv("TESTING", "false").lower() == "true"
 
 ALLOWED_HOSTS = [
     "localhost",
