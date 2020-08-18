@@ -73,6 +73,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "articles.context_processors.pages",
+                "articles.context_processors.drafts_count",
             ],
         },
     },

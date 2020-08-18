@@ -127,6 +127,15 @@ tr:hover {
     background-color: var(--background2);
 }
 
+.pill {
+    font-size: 60%;
+    background-color: var(--main2);
+    color: var(--background2);
+    padding: .5ex 1ex;
+    border-radius: 1ex;
+    vertical-align: 15%;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --accent: #226997;
