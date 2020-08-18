@@ -1,21 +1,22 @@
 import pytest
 from django.test import Client
+from django.urls import reverse
 from model_bakery import baker
 
 from articles.models import Article, Page, User
 
 
 @pytest.mark.django_db
-def test_can_access_list(client: Client, author: User):
-    article = baker.make(Article, author=author, status=Article.PUBLISHED)
-    page = baker.make(Page, author=author, status=Article.PUBLISHED)
-    res = client.get("/")
+def test_can_access_list(
+    client: Client, published_article: Article, published_page: Page
+):
+    res = client.get(reverse("articles-list"))
     assert res.status_code == 200
     content = res.content.decode("utf-8")
-    for art in [article, page]:
+    for art in [published_article, published_page]:
         assert art.title in content
-    assert article.content in content
-    assert page.content not in content
+    assert published_article.get_abstract() in content
+    assert published_page.get_formatted_content() not in content
 
 
 @pytest.mark.django_db
@@ -27,8 +28,8 @@ def test_abstract_shown_on_list(client: Client, author: User):
         status=Article.PUBLISHED,
         author=author,
         content=f"{abstract}\n<!--more-->\n{after}",
-    )
-    res = client.get("/")
+    )  # type: Article
+    res = client.get(reverse("articles-list"))
     content = res.content.decode("utf-8")
     assert abstract in content
     assert after not in content
