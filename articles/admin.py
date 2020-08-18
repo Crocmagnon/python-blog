@@ -12,6 +12,7 @@ admin.site.register(User, UserAdmin)
 
 @register(Article)
 class ArticleAdmin(admin.ModelAdmin):
+    ordering = ["status", "-published_at"]
     list_display = [
         "title",
         "status",
