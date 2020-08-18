@@ -1,9 +1,9 @@
+{% load i18n %}
 <p class="date">
     {% if article.published_at %}
-        {{ article.published_at|date }}
-        {% include "articles/admin_link_snippet.html" %}
+        <time datetime="{{ article.published_at|date:'c' }}">{{ article.published_at|date }}</time>
     {% else %}
-        {{ article.updated_at|date }}
-        {% include "articles/admin_link_snippet.html" %}
+        <time datetime="{{ article.updated_at|date:'c' }}">{{ article.updated_at|date }}</time>
     {% endif %}
+    {% include "articles/admin_link_snippet.html" %}
 </p>

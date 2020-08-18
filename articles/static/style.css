@@ -10,7 +10,8 @@
 html {
     font-size: 110%;
     max-width: calc(640px + 2em);
-    margin: 8px auto 6em;
+    padding: 8px 0 3em;
+    margin: 0 auto;
 }
 
 body {
@@ -24,6 +25,10 @@ p {
     line-height: 1.7;
 }
 
+li {
+    line-height: 1.4;
+}
+
 body img {
     max-width: 100%;
 }
@@ -31,7 +36,7 @@ body img {
 a {
     color: var(--main);
     text-decoration: none;
-    border-bottom: 2.5px solid var(--accent);
+    border-bottom: .3ex solid var(--accent);
 }
 
 a:hover, a:focus {
