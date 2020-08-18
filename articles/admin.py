@@ -3,6 +3,7 @@ from django.contrib import admin, messages
 from django.contrib.admin import register
 from django.contrib.auth.admin import UserAdmin
 from django.db import models
+from django.shortcuts import redirect
 
 from .models import Article, Page, User
 
@@ -36,13 +37,20 @@ class ArticleAdmin(admin.ModelAdmin):
         ),
         ("Content", {"fields": ("content",)}),
     ]
-    readonly_fields = ["created_at", "updated_at", "views_count"]
+    readonly_fields = [
+        "created_at",
+        "updated_at",
+        "views_count",
+        "status",
+        "published_at",
+    ]
     formfield_overrides = {
         models.TextField: {
             "widget": forms.Textarea(attrs={"cols": "100", "rows": "50"})
         },
     }
     prepopulated_fields = {"slug": ("title",)}
+    change_form_template = "articles/article_change_form.html"
 
     def publish(self, request, queryset):
         if not request.user.has_perm("articles.change_article"):
@@ -67,6 +75,20 @@ class ArticleAdmin(admin.ModelAdmin):
 
     class Media:
         css = {"all": ("admin_articles.css",)}
+
+    def response_change(self, request, obj: Article):
+        if "_preview" in request.POST:
+            obj.save()
+            return redirect("article-detail", slug=obj.slug)
+        if "_publish" in request.POST:
+            obj.publish()
+            messages.success(request, "Item has been published")
+            return redirect(".")
+        if "_unpublish" in request.POST:
+            obj.unpublish()
+            messages.success(request, "Item has been unpublished")
+            return redirect(".")
+        return super().response_change(request, obj)
 
 
 @register(Page)
