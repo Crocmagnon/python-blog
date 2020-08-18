@@ -74,6 +74,9 @@ class ArticleDetailView(FormMixin, generic.DetailView):
             return self.form_invalid(form)
 
     def form_invalid(self, form):
+        messages.error(
+            self.request, "Your comment couldn't be saved, see the form below."
+        )
         return super().form_invalid(form)
 
     def form_valid(self, form):

@@ -19,7 +19,16 @@ class ArticleManager(models.Manager):
         return super().get_queryset().filter(page__isnull=True)
 
 
-class Article(models.Model):
+class AdminUrlMixin:
+    def get_admin_url(self):
+        content_type = ContentType.objects.get_for_model(self.__class__)
+        return reverse(
+            "admin:%s_%s_change" % (content_type.app_label, content_type.model),
+            args=(self.id,),
+        )
+
+
+class Article(AdminUrlMixin, models.Model):
     DRAFT = "draft"
     PUBLISHED = "published"
     STATUS_CHOICES = [
@@ -92,7 +101,7 @@ class Page(Article):
         ordering = ["position", "-published_at"]
 
 
-class Comment(models.Model):
+class Comment(AdminUrlMixin, models.Model):
     username = models.CharField(
         max_length=255, help_text="Will be displayed with your comment."
     )
@@ -116,3 +125,6 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ["created_at"]
+
+    def get_absolute_url(self):
+        return self.article.get_absolute_url() + "#" + str(self.id)
