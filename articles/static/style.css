@@ -106,7 +106,7 @@ footer {
     border-top: 2px solid var(--background2);
     margin-top: 2em;
     font-size: 80%;
-    color: var(--main3)
+    color: var(--main3);
 }
 
 footer a {
@@ -138,6 +138,57 @@ tr:hover {
     padding: .5ex 1ex;
     border-radius: 1ex;
     vertical-align: 15%;
+}
+
+form .helptext {
+    font-size: 80%;
+    color: var(--main3);
+}
+
+form table th {
+    vertical-align: top;
+}
+
+form table tr:not(.required) th {
+    font-weight: normal;
+}
+
+form table tr {
+    border-bottom: none;
+}
+
+form {
+    background-color: var(--background2);
+    border-radius: .5ex;
+    padding: 1em;
+}
+
+form button[type=submit] {
+    font-size: 1em;
+    padding: .9ex 1.2ex;
+    border-radius: .8ex;
+    background-color: var(--accent);
+    border: none;
+    color: var(--background);
+    cursor: pointer;
+}
+
+.comment {
+    background-color: var(--background2);
+    border-radius: .5ex;
+    padding: .5em 1em;
+}
+
+.comment + .comment, .comments form {
+    margin-top: 1em;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.comment .metadata {
+    color: var(--main3);
 }
 
 @media (prefers-color-scheme: dark) {

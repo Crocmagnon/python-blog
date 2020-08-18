@@ -13,25 +13,27 @@
     </article>
     <section class="comments">
         <h2>Comments</h2>
-        <form action="{% url 'create-comment' slug=article.slug %}" method="post">
-            {% csrf_token %}
-            {{ comment_form.as_p }}
-            <button type="submit">Submit</button>
-        </form>
         {% for comment in comments %}
             <article class="comment">
                 <p class="metadata">
-                    {{ comment.username }} |
+                    <span class="username">{{ comment.username }}</span> |
                     <time datetime="{{ comment.created_at|date:'c' }}">
                         {{ comment.created_at|date:"DATETIME_FORMAT" }}
                     </time>
                 </p>
                 <p class="content">
-                    {{ comment.content }}
+                    {{ comment.content|linebreaksbr }}
                 </p>
             </article>
         {% empty %}
             No reaction yet, write your own!
         {% endfor %}
+        <form action="{% url 'create-comment' slug=article.slug %}" method="post">
+            {% csrf_token %}
+            <table>
+                {{ comment_form.as_table }}
+            </table>
+            <button type="submit">Submit</button>
+        </form>
     </section>
 {% endblock %}

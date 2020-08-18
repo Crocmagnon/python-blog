@@ -105,7 +105,8 @@ class Comment(models.Model):
         ),
     )
     content = models.TextField(
-        max_length=500, help_text="Your comment, limited to 500 characters."
+        max_length=500,
+        help_text="Your comment, limited to 500 characters. No formatting.",
     )
     article = models.ForeignKey(
         Article, on_delete=models.CASCADE, related_name="comments"
