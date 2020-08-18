@@ -75,6 +75,10 @@ a:hover, a:focus {
     margin-bottom: .2em;
 }
 
+.article-detail h1 {
+    font-size: 2em;
+}
+
 .date {
     margin-top: .2em;
     color: var(--main2);

@@ -92,8 +92,26 @@ class Page(Article):
         ordering = ["position", "-published_at"]
 
 
-# class Comment(models.Model):
-#     username = models.CharField(max_length=255)
-#     email = models.EmailField(blank=True, null=True)
-#     content = models.TextField()
-#     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+class Comment(models.Model):
+    username = models.CharField(
+        max_length=255, help_text="Will be displayed with your comment."
+    )
+    email = models.EmailField(
+        blank=True,
+        null=True,
+        help_text=(
+            "Not mandatory, fill only if you want me to be able to contact you. "
+            "Will never be displayed here nor shared with any third party."
+        ),
+    )
+    content = models.TextField(
+        max_length=500, help_text="Your comment, limited to 500 characters."
+    )
+    article = models.ForeignKey(
+        Article, on_delete=models.CASCADE, related_name="comments"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["created_at"]

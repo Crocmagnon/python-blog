@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.db import models
 from django.shortcuts import redirect
 
-from .models import Article, Page, User
+from .models import Article, Comment, Page, User
 
 admin.site.register(User, UserAdmin)
 
@@ -108,3 +108,17 @@ class PageAdmin(ArticleAdmin):
         ),
         ("Content", {"fields": ("content",)}),
     ]
+
+
+@register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("username", "email", "content", "article", "created_at", "approved")
+    list_filter = ("approved",)
+    search_fields = ("username", "email", "content")
+    actions = ["approve_comments", "censor_comments"]
+
+    def approve_comments(self, request, queryset):
+        queryset.update(approved=True)
+
+    def censor_comments(self, request, queryset):
+        queryset.update(approved=False)

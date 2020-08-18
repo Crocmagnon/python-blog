@@ -1,7 +1,10 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
+from django.http import HttpResponseRedirect
 from django.views import generic
 
+from articles.forms import CommentForm
 from articles.models import Article
 
 
@@ -38,9 +41,19 @@ class ArticleDetailView(generic.DetailView):
     template_name = "articles/article_detail.html"
 
     def get_queryset(self):
+        queryset = super().get_queryset()
         if self.request.user.is_authenticated:
-            return super().get_queryset()
-        return super().get_queryset().filter(status=Article.PUBLISHED)
+            return queryset
+        return queryset.filter(status=Article.PUBLISHED)
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        article = self.object
+        if hasattr(article, "article"):
+            article = article.article
+        context["comments"] = article.comments.filter(approved=True)
+        context["comment_form"] = CommentForm()
+        return context
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
@@ -51,3 +64,16 @@ class ArticleDetailView(generic.DetailView):
             obj.save(update_fields=["views_count"])
 
         return obj
+
+
+class CreateCommentView(generic.CreateView):
+    model = Article
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        self.comment = form.save(commit=False)
+        self.comment.article = self.object
+        self.comment.save()
+        messages.success(self.request, "Comment successfully saved.")
+        return HttpResponseRedirect(self.get_success_url())

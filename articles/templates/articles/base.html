@@ -28,6 +28,13 @@
         {% endfor %}
     {% endif %}
 </nav>
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
 <div class="content">
     {% block content %}
     {% endblock %}

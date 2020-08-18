@@ -4,11 +4,34 @@
     {{ article.title }}
 {% endblock %}
 {% block content %}
-    <div class="article-detail">
+    <article class="article-detail">
         <h1>{{ article.title }}{% if article.status != article.PUBLISHED %} ({{ article.status }}){% endif %}</h1>
         {% include "articles/metadata_snippet.html" %}
         <div>
             {{ article.get_formatted_content|safe }}
         </div>
-    </div>
+    </article>
+    <section class="comments">
+        <h2>Comments</h2>
+        <form action="{% url 'create-comment' slug=article.slug %}" method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+        {% for comment in comments %}
+            <article class="comment">
+                <p class="metadata">
+                    {{ comment.username }} |
+                    <time datetime="{{ comment.created_at|date:'c' }}">
+                        {{ comment.created_at|date:"DATETIME_FORMAT" }}
+                    </time>
+                </p>
+                <p class="content">
+                    {{ comment.content }}
+                </p>
+            </article>
+        {% empty %}
+            No reaction yet, write your own!
+        {% endfor %}
+    </section>
 {% endblock %}
