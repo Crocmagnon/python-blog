@@ -16,5 +16,8 @@ class Command(BaseCommand):
             url = (settings.BLOG["base_url"] + url).replace(
                 "//", "/"
             ) + "?status__exact=pending"
-            message = f"There are {count} comments pending review.\n{url}"
+            comments = "comment"
+            if count > 1:
+                comments += "s"
+            message = f"There are {count} {comments} pending review.\n{url}"
             mail_admins("Comments pending", message)
