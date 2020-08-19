@@ -28,15 +28,18 @@ admins = os.getenv("ADMINS", "")
 if admins:
     ADMINS = list(map(lambda x: tuple(x.split(",")), admins.split(";")))
 
-DEFAULT_FROM_EMAIL = "blog@gabnotes.org"
-SERVER_EMAIL = "blog@gabnotes.org"
-EMAIL_HOST = os.getenv("EMAIL_HOST", "localhost")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
-EMAIL_PORT = 465
+DEFAULT_FROM_EMAIL = "Gab's Notes <blog@mg.gabnotes.org>"
+SERVER_EMAIL = "Gab's Notes <blog@mg.gabnotes.org>"
 EMAIL_SUBJECT_PREFIX = "[Blog] "
-EMAIL_USE_TLS = True
 EMAIL_TIMEOUT = 30
+
+ANYMAIL = {
+    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY", ""),
+    "MAILGUN_SENDER_DOMAIN": os.getenv("MAILGUN_SENDER_DOMAIN", ""),
+    "MAILGUN_API_URL": "https://api.eu.mailgun.net/v3",
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "true").lower() == "true"
@@ -61,6 +64,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "articles",
+    "anymail",
 ]
 
 MIDDLEWARE = [
@@ -159,5 +163,5 @@ AUTH_USER_MODEL = "articles.User"
 
 BLOG = {
     "description": "My take on tech-related subjects (but not only)",
-    "base_url": "https://gabnotes.org/",
+    "base_url": os.getenv("BLOG_BASE_URL", "https://gabnotes.org/"),
 }
