@@ -150,6 +150,10 @@ tr:hover {
     color: var(--main3);
 }
 
+p.helptext {
+    margin-bottom: 0;
+}
+
 form table th {
     vertical-align: top;
 }
@@ -180,6 +184,7 @@ form button[type=submit] {
     border: none;
     color: var(--background);
     cursor: pointer;
+    margin-top: 1em;
 }
 
 form .error, form .error .helptext, .errorlist {
@@ -195,6 +200,10 @@ form .error, form .error .helptext, .errorlist {
 
 .errorlist.nonfield {
     margin-bottom: 0;
+}
+
+tr.spacer {
+    padding: 1em;
 }
 
 textarea, input {
