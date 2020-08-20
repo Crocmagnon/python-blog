@@ -1,9 +1,11 @@
 import re
 
 import markdown
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.http import HttpRequest
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
@@ -63,6 +65,13 @@ class Article(AdminUrlMixin, models.Model):
 
     def get_absolute_url(self):
         return reverse("article-detail", kwargs={"slug": self.slug})
+
+    def get_full_absolute_url(self, request: HttpRequest = None):
+        url = self.get_absolute_url()
+        if request:
+            return request.build_absolute_uri(url)
+        else:
+            return (settings.BLOG["base_url"] + url).replace("//", "/")
 
     def get_abstract(self):
         html = self.get_formatted_content()
@@ -130,12 +139,16 @@ class Comment(AdminUrlMixin, models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
+    user_notified = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["created_at"]
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"{self.username} - {self.content[:50]}"
 
     def get_absolute_url(self):
         return self.article.get_absolute_url() + "#" + str(self.id)
+
+    def get_full_absolute_url(self, request: HttpRequest = None):
+        return self.article.get_full_absolute_url(request) + "#" + str(self.id)

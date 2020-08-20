@@ -116,7 +116,15 @@ class PageAdmin(ArticleAdmin):
 
 @register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("username", "email", "content", "article", "created_at", "status")
+    list_display = (
+        "username",
+        "email",
+        "content",
+        "article",
+        "created_at",
+        "status",
+        "user_notified",
+    )
     list_filter = ("status",)
     search_fields = ("username", "email", "content")
     actions = ["approve_comments", "reject_comments"]

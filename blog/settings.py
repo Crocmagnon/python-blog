@@ -162,6 +162,7 @@ else:
 AUTH_USER_MODEL = "articles.User"
 
 BLOG = {
+    "title": "Gab's Notes",
     "description": "My take on tech-related subjects (but not only)",
     "base_url": os.getenv("BLOG_BASE_URL", "https://gabnotes.org/"),
 }
