@@ -134,5 +134,8 @@ class Comment(AdminUrlMixin, models.Model):
     class Meta:
         ordering = ["created_at"]
 
+    def __str__(self):
+        return f"{self.username} - {self.content[:50]}"
+
     def get_absolute_url(self):
         return self.article.get_absolute_url() + "#" + str(self.id)
