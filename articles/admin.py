@@ -130,9 +130,9 @@ class CommentAdmin(admin.ModelAdmin):
     actions = ["approve_comments", "reject_comments"]
 
     def approve_comments(self, request, queryset):
-        count = queryset.update(status=Comment.APPROVED)
+        count = queryset.update(status=Comment.APPROVED, user_notified=False)
         messages.success(request, f"Approved {count} message(s).")
 
     def reject_comments(self, request, queryset):
-        count = queryset.update(status=Comment.REJECTED)
+        count = queryset.update(status=Comment.REJECTED, user_notified=False)
         messages.success(request, f"Rejected {count} message(s).")
