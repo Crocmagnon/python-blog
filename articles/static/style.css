@@ -140,6 +140,7 @@ tr:hover {
     vertical-align: 15%;
 }
 
+/* FORMS */
 .helptext {
     color: var(--main3);
     font-size: 80%;
@@ -153,8 +154,12 @@ form table th {
     vertical-align: top;
 }
 
-form table tr:not(.required) th {
+form table tr th {
     font-weight: normal;
+}
+
+form tr.required th {
+    font-weight: bold;
 }
 
 form table tr {
@@ -177,7 +182,7 @@ form button[type=submit] {
     cursor: pointer;
 }
 
-form table tr.error, form table tr.error .helptext, .errorlist {
+form .error, form .error .helptext, .errorlist {
     color: var(--error-text);
     background-color: var(--error-background);
 }
@@ -192,6 +197,11 @@ form table tr.error, form table tr.error .helptext, .errorlist {
     margin-bottom: 0;
 }
 
+textarea, input {
+    width: 100%;
+}
+
+/* COMMENTS */
 .comment {
     background-color: var(--background2);
     border-radius: .5ex;
@@ -210,6 +220,7 @@ form table tr.error, form table tr.error .helptext, .errorlist {
     color: var(--main3);
 }
 
+/* MESSAGES */
 .messages p {
     background-color: var(--background2);
     padding: .5ex 1ex;
@@ -230,6 +241,7 @@ form table tr.error, form table tr.error .helptext, .errorlist {
     color: var(--warning-text);
 }
 
+/* LINKS */
 a:hover, a:focus {
     text-decoration: none;
     background-color: var(--accent);
