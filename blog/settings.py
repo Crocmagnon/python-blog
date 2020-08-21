@@ -45,9 +45,9 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 TESTING = os.getenv("TESTING", "false").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost"]  # Required for healthcheck
 if DEBUG:
-    ALLOWED_HOSTS.extend(["localhost", "127.0.0.1"])
+    ALLOWED_HOSTS.extend(["127.0.0.1"])
 
 HOSTS = os.getenv("HOSTS")
 if HOSTS:
