@@ -45,7 +45,7 @@ class Article(AdminUrlMixin, models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT, default=1)
     views_count = models.IntegerField(default=0)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, max_length=255)
 
     objects = ArticleManager()
     with_pages = models.Manager()
