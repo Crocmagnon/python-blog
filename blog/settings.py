@@ -45,13 +45,13 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 TESTING = os.getenv("TESTING", "false").lower() == "true"
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-]
-HOST = os.getenv("HOST")
-if HOST:
-    ALLOWED_HOSTS.append(HOST)
+ALLOWED_HOSTS = []
+if DEBUG:
+    ALLOWED_HOSTS.extend(["localhost", "127.0.0.1"])
+
+HOSTS = os.getenv("HOSTS")
+if HOSTS:
+    ALLOWED_HOSTS.extend(HOSTS.split(";"))
 
 
 # Application definition
