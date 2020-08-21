@@ -1,8 +1,6 @@
 image: archlinux
 packages:
   - docker
-  - python-pip
-  - python-virtualenv
 sources:
   - https://git.sr.ht/~crocmagnon/blog
 secrets:
@@ -12,19 +10,14 @@ secrets:
 environment:
   TESTING: true
 tasks:
-  - test: |
-      python --version
-      cd blog
-      virtualenv venv
-      venv/bin/python -m pip install -r requirements.txt -r requirements-dev.txt --progress-bar off
-      venv/bin/python -m pytest
   - setup_docker: |
       ./blog/docker/setup-docker
-  - build: |
+  - build_and_test: |
       docker info
       docker login -u crocmagnon --password-stdin < .docker-secret
       docker pull crocmagnon/blog || true
       docker build --cache-from crocmagnon/blog:latest -t crocmagnon/blog blog/
+      docker run -t --rm crocmagnon/blog /app/docker/runtests.sh
       docker push crocmagnon/blog
   - deploy: |
       ssh blog -o StrictHostKeyChecking=no "/srv/blog/redeploy"

@@ -8,10 +8,10 @@ RUN apt-get update \
 WORKDIR /app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
-COPY manage.py ./
-COPY articles ./articles/
-COPY blog ./blog/
+COPY manage.py LICENSE .pre-commit-config.yaml .isort.cfg pyproject.toml requirements-dev.txt ./
 COPY docker ./docker/
+COPY blog ./blog/
+COPY articles ./articles/
 
 ENV SECRET_KEY "changeme"
 ENV DEBUG "false"

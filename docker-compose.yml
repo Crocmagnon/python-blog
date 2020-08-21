@@ -11,3 +11,8 @@ services:
       - ./db:/db
       - ./static:/app/staticfiles
     restart: on-failure
+  tests:
+    image: crocmagnon/blog
+    build: .
+    command: ["/app/docker/runtests.sh"]
+    healthcheck: {}
