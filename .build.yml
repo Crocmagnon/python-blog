@@ -1,6 +1,7 @@
 image: archlinux
 packages:
   - docker
+  - docker-compose
 sources:
   - https://git.sr.ht/~crocmagnon/blog
 secrets:
@@ -13,12 +14,13 @@ tasks:
   - setup_docker: |
       ./blog/docker/setup-docker
   - build_and_test: |
-      docker info
       docker login -u crocmagnon --password-stdin < .docker-secret
-      docker pull crocmagnon/blog || true
-      docker build --cache-from crocmagnon/blog:latest -t crocmagnon/blog blog/
-      docker run -t --rm crocmagnon/blog /app/docker/runtests.sh
-      docker push crocmagnon/blog
+      cd blog
+      docker-compose pull django tests || true
+      docker-compose build --pull django
+      docker-compose build tests
+      docker-compose run tests
+      docker-compose push django tests
   - deploy: |
       ssh blog -o StrictHostKeyChecking=no "/srv/blog/redeploy"
 triggers:

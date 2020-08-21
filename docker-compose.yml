@@ -1,7 +1,7 @@
 version: '2.4'
 services:
   django:
-    image: crocmagnon/blog
+    image: crocmagnon/blog:latest
     build: .
     ports:
       - 8000:8000
@@ -12,7 +12,7 @@ services:
       - ./static:/app/staticfiles
     restart: on-failure
   tests:
-    image: crocmagnon/blog
-    build: .
-    command: ["/app/docker/runtests.sh"]
-    healthcheck: {}
+    image: crocmagnon/blog:tests
+    build:
+      context: .
+      dockerfile: tests.Dockerfile
