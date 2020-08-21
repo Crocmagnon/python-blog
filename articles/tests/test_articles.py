@@ -6,10 +6,6 @@ from model_bakery import baker
 from articles.models import Article, Page, User
 
 
-def test_false():
-    assert False
-
-
 @pytest.mark.django_db
 def test_can_access_list(
     client: Client, published_article: Article, published_page: Page
