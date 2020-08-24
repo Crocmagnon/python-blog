@@ -14,7 +14,7 @@ def author():
 @pytest.mark.django_db
 def published_article(author):
     return Article.objects.create(
-        title="Some interesting title",
+        title="Some interesting article title",
         status=Article.PUBLISHED,
         author=author,
         published_at=timezone.now(),
@@ -27,7 +27,7 @@ def published_article(author):
 @pytest.mark.django_db
 def published_page(author):
     return Page.objects.create(
-        title="Some interesting title",
+        title="Some interesting page title",
         status=Article.PUBLISHED,
         author=author,
         published_at=timezone.now(),
