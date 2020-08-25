@@ -10,4 +10,4 @@ def drafts_count(request):
 
 
 def date_format(request):
-    return {"CUSTOM_ISO": "Y-m-d\TH:i:sO"}
+    return {"CUSTOM_ISO": r"Y-m-d\TH:i:sO"}
