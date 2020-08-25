@@ -11,6 +11,8 @@ from django.urls import reverse
 from django.utils import timezone
 from markdown.extensions.codehilite import CodeHiliteExtension
 
+from articles.markdown import LazyLoadingImageExtension
+
 
 class User(AbstractUser):
     pass
@@ -79,7 +81,11 @@ class Article(AdminUrlMixin, models.Model):
 
     def get_formatted_content(self):
         md = markdown.Markdown(
-            extensions=["extra", CodeHiliteExtension(linenums=False)]
+            extensions=[
+                "extra",
+                CodeHiliteExtension(linenums=False),
+                LazyLoadingImageExtension(),
+            ]
         )
         content = self.content
         content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
