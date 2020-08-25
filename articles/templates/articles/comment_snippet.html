@@ -5,7 +5,7 @@
             <p class="metadata">
                 <a class="permalink" title="Permalink" href="#{{ comment.id }}">🔗</a>
                 <span class="username">{{ comment.username }}</span> |
-                <time datetime="{{ comment.created_at|date:'c' }}">
+                <time datetime="{{ comment.created_at|date:CUSTOM_ISO }}">
                     {{ comment.created_at|date:"DATETIME_FORMAT" }}
                 </time>
                 {% include "articles/admin_link_snippet.html" with article=comment %}

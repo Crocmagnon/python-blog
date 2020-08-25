@@ -7,3 +7,7 @@ def pages(request):
 
 def drafts_count(request):
     return {"drafts_count": Article.with_pages.filter(status=Article.DRAFT).count()}
+
+
+def date_format(request):
+    return {"CUSTOM_ISO": "Y-m-d\TH:i:sO"}

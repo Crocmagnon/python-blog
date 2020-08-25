@@ -96,6 +96,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "articles.context_processors.pages",
                 "articles.context_processors.drafts_count",
+                "articles.context_processors.date_format",
             ],
         },
     },
