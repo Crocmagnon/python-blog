@@ -273,3 +273,4 @@ dmypy.json
 
 .idea
 staticfiles/
+media/
