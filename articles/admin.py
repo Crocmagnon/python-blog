@@ -20,6 +20,7 @@ class ArticleAdmin(admin.ModelAdmin):
         "created_at",
         "published_at",
         "updated_at",
+        "views_count",
     ]
     list_display_links = ["title"]
     list_filter = ["status"]
