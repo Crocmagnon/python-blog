@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "articles",
     "attachments",
     "anymail",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 MIDDLEWARE = [
@@ -175,3 +176,5 @@ BLOG = {
     "description": "My take on tech-related subjects (but not only)",
     "base_url": os.getenv("BLOG_BASE_URL", "https://gabnotes.org/"),
 }
+
+SHORTPIXEL_API_KEY = os.getenv("SHORTPIXEL_API_KEY")
