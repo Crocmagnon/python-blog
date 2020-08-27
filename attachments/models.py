@@ -14,6 +14,9 @@ class Attachment(models.Model):
     original_file = models.FileField()
     processed_file = models.FileField(blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.description} ({self.original_file.name})"
+
     def save(self, *args, **kwargs):
         if self.processed_file:
             return super().save(*args, **kwargs)
