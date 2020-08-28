@@ -1,5 +1,7 @@
 #id_content {
     font-family: "JetBrains Mono", monospace;
+    width: calc(100% - 1em);
+    resize: vertical;
 }
 
 label[for=id_content] {

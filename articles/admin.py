@@ -1,8 +1,6 @@
-from django import forms
 from django.contrib import admin, messages
 from django.contrib.admin import register
 from django.contrib.auth.admin import UserAdmin
-from django.db import models
 from django.shortcuts import redirect
 
 from .models import Article, Comment, Page, User
@@ -46,9 +44,6 @@ class ArticleAdmin(admin.ModelAdmin):
         "status",
         "published_at",
     ]
-    formfield_overrides = {
-        models.TextField: {"widget": forms.Textarea(attrs={"style": "width: 98%"})},
-    }
     prepopulated_fields = {"slug": ("title",)}
     change_form_template = "articles/article_change_form.html"
 
