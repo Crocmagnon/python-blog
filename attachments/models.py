@@ -14,6 +14,9 @@ class Attachment(models.Model):
     original_file = models.FileField()
     processed_file = models.FileField(blank=True, null=True)
 
+    class Meta:
+        ordering = ["description"]
+
     def __str__(self):
         return f"{self.description} ({self.original_file.name})"
 
