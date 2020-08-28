@@ -19,7 +19,11 @@ class AttachmentAdmin(admin.ModelAdmin):
         js = ["attachments/js/copy_url.js"]
 
     def processed_file_url(self, instance):
-        return instance.processed_file.url
+        if instance.processed_file:
+            return instance.processed_file.url
+        return ""
 
     def original_file_url(self, instance):
-        return instance.original_file.url
+        if instance.original_file:
+            return instance.original_file.url
+        return ""
