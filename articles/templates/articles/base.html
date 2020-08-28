@@ -8,7 +8,7 @@
     <link rel="stylesheet" id="code-light" href="{% static 'code-light.css' %}" type="text/css">
     <link rel="stylesheet" id="code-dark" href="{% static 'code-dark.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css">
-    <script src="{% static 'toggle-dark-mode.js' %}"></script>
+    <script src="{% static 'toggle-dark-mode.js' %}" async></script>
     <link rel="alternate" type="application/rss+xml" title="Gab's Notes » Feed" href="{% url 'complete-feed' %}">
     {% include "articles/favicon.html" %}
 </head>
