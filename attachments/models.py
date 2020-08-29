@@ -42,6 +42,7 @@ class Attachment(models.Model):
             "resize": 3,
             "resize_width": 640,
             "resize_height": 10000,
+            "keep_exif": 1,
             "file_paths": json.dumps(
                 [f"{self.original_file.name}:{self.original_file.path}"]
             ),
