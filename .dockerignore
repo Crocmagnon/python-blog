@@ -1,2 +1,6 @@
-*.db
-*.sqlite3
+db/
+media/
+staticfiles/
+.pytest_cache/
+.git/
+.idea/
