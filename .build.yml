@@ -20,7 +20,6 @@ tasks:
       docker build -t crocmagnon/blog:tests -f tests.Dockerfile .
       docker run --rm -t crocmagnon/blog:tests /app/docker/runtests.sh
       docker push crocmagnon/blog:latest
-      docker push crocmagnon/blog:tests
   - deploy: |
       ssh blog -o StrictHostKeyChecking=no "/srv/blog/redeploy"
 triggers:
