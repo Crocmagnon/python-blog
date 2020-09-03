@@ -56,7 +56,10 @@ class Article(AdminUrlMixin, models.Model):
         ordering = ["-published_at"]
 
     def __str__(self):
-        return self.title
+        type_ = "Article"
+        if hasattr(self, "page"):
+            type_ = "Page"
+        return f"{self.title} ({type_})"
 
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)

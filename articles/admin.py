@@ -125,6 +125,11 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ("username", "email", "content")
     actions = ["approve_comments", "reject_comments"]
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "article":
+            kwargs["queryset"] = Article.with_pages.all()
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
     def approve_comments(self, request, queryset):
         count = queryset.update(status=Comment.APPROVED, user_notified=False)
         messages.success(request, f"Approved {count} message(s).")
