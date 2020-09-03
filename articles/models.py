@@ -152,7 +152,7 @@ class Comment(AdminUrlMixin, models.Model):
     user_notified = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["created_at"]
 
     def __str__(self):
         return f"{self.username} - {self.content[:50]}"
