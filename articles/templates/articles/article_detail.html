@@ -11,5 +11,7 @@
             {{ article.get_formatted_content|safe }}
         </div>
     </article>
-    {% include 'articles/comment_snippet.html' %}
+    {% if article.comments_allowed %}
+        {% include 'articles/comment_snippet.html' %}
+    {% endif %}
 {% endblock %}

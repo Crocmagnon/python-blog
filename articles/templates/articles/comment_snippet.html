@@ -15,7 +15,9 @@
             </p>
         </article>
     {% empty %}
-        No reaction yet, write your own!
+        <p>
+            No reaction yet, write your own!
+        </p>
     {% endfor %}
     <form id="comment-form" action="{% url 'create-comment' slug=article.slug %}" method="post">
         {% csrf_token %}

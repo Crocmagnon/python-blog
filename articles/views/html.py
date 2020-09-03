@@ -1,3 +1,5 @@
+from typing import Union
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
@@ -5,7 +7,7 @@ from django.views import generic
 from django.views.generic.edit import FormMixin
 
 from articles.forms import CommentForm
-from articles.models import Article, Comment
+from articles.models import Article, Comment, Page
 
 
 class ArticlesListView(generic.ListView):
@@ -55,10 +57,10 @@ class ArticleDetailView(FormMixin, generic.DetailView):
         context["comments"] = article.comments.filter(status=Comment.APPROVED)
         return context
 
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
+    def get_object(self, queryset=None) -> Union[Article, Page]:
+        obj = super().get_object(queryset)  # type: Article
         if hasattr(obj, "page"):
-            obj = obj.page
+            obj = obj.page  # type: Page
         if not self.request.user.is_authenticated:
             obj.views_count = F("views_count") + 1
             obj.save(update_fields=["views_count"])
@@ -66,8 +68,14 @@ class ArticleDetailView(FormMixin, generic.DetailView):
         return obj
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        self.object = self.get_object()  # type: Union[Article, Page]
         form = self.get_form()
+
+        if not self.object.comments_allowed:
+            messages.error(self.request, "Comments are disabled on this article.")
+            # Bypassing self.form_invalid because we don't want its error message
+            return super().form_invalid(form)
+
         if form.is_valid():
             return self.form_valid(form)
         else:
