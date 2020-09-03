@@ -2,5 +2,4 @@ db/
 media/
 staticfiles/
 .pytest_cache/
-.git/
 .idea/
