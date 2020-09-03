@@ -14,21 +14,19 @@ class ArticlesListView(generic.ListView):
     model = Article
     paginate_by = 15
     context_object_name = "articles"
+    queryset = Article.without_pages.filter(status=Article.PUBLISHED)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context["title"] = "Articles"
         return context
 
-    def get_queryset(self):
-        return super().get_queryset().filter(status=Article.PUBLISHED)
-
 
 class DraftsListView(generic.ListView, LoginRequiredMixin):
     model = Article
     paginate_by = 15
     context_object_name = "articles"
-    queryset = Article.with_pages.filter(status=Article.DRAFT)
+    queryset = Article.objects.filter(status=Article.DRAFT)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
@@ -40,7 +38,6 @@ class ArticleDetailView(FormMixin, generic.DetailView):
     model = Article
     form_class = CommentForm
     context_object_name = "article"
-    queryset = Article.with_pages.all()
     template_name = "articles/article_detail.html"
 
     def get_queryset(self):

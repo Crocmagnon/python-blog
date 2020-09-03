@@ -50,8 +50,8 @@ class Article(AdminUrlMixin, models.Model):
     slug = models.SlugField(unique=True, max_length=255)
     comments_allowed = models.BooleanField(default=True)
 
-    objects = ArticleManager()
-    with_pages = models.Manager()
+    objects = models.Manager()
+    without_pages = ArticleManager()
 
     class Meta:
         ordering = ["-published_at"]
