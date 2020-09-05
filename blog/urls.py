@@ -16,11 +16,18 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import TemplateView
 
 from articles.views import feeds, html
 from blog import settings
 
 urlpatterns = [
+    path(
+        "robots.txt",
+        TemplateView.as_view(
+            template_name="blog/robots.txt", content_type="text/plain"
+        ),
+    ),
     path("admin/", admin.site.urls),
     path("", html.ArticlesListView.as_view(), name="articles-list"),
     path("drafts/", html.DraftsListView.as_view(), name="drafts-list"),
