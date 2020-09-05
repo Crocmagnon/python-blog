@@ -89,9 +89,7 @@ class ArticleDetailView(FormMixin, generic.DetailView):
         comment = form.save(commit=False)
         comment.article = self.object
         comment.save()
-        messages.success(
-            self.request, "Comment successfully saved, pending review.",
-        )
+        messages.success(self.request, "Comment successfully saved, pending review.")
         return super().form_valid(form)
 
     def get_success_url(self):

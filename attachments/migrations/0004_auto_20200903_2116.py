@@ -11,6 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="attachment", options={"ordering": ["description"]},
+            name="attachment",
+            options={"ordering": ["description"]},
         ),
     ]

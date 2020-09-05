@@ -11,9 +11,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="attachment", old_name="file", new_name="original_file",
+            model_name="attachment",
+            old_name="file",
+            new_name="original_file",
         ),
-        migrations.RemoveField(model_name="attachment", name="processed",),
+        migrations.RemoveField(
+            model_name="attachment",
+            name="processed",
+        ),
         migrations.AddField(
             model_name="attachment",
             name="processed_file",

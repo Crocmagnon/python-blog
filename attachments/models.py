@@ -65,7 +65,7 @@ class Attachment(models.Model):
         }
         check_data = {**base_data, **post_data}
         while res_data["Status"]["Code"] == "1":
-            response = requests.post(url=url, data=check_data,)
+            response = requests.post(url=url, data=check_data)
             res_data = response.json()[0]
 
         # Download image

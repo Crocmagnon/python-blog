@@ -17,9 +17,12 @@ class Command(BaseCommand):
             url = (settings.BLOG["base_url"] + url).replace(
                 "//", "/"
             ) + "?status__exact=pending"
-            message = ngettext(
-                "There is %(count)d comment pending review.\n%(url)s",
-                "There are %(count)d comments pending review.\n%(url)s",
-                count,
-            ) % {"count": count, "url": url}
+            message = (
+                ngettext(
+                    "There is %(count)d comment pending review.\n%(url)s",
+                    "There are %(count)d comments pending review.\n%(url)s",
+                    count,
+                )
+                % {"count": count, "url": url}
+            )
             mail_admins("Comments pending review", message)

@@ -45,6 +45,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"ordering": ["-published_at"],},
+            options={"ordering": ["-published_at"]},
         ),
     ]
