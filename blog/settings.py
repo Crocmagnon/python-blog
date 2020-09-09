@@ -99,6 +99,7 @@ TEMPLATES = [
                 "articles.context_processors.pages",
                 "articles.context_processors.drafts_count",
                 "articles.context_processors.date_format",
+                "articles.context_processors.git_version",
             ],
         },
     },

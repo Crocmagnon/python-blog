@@ -21,3 +21,14 @@ def date_format(request):
     if request.path in IGNORED_PATHS:
         return {}
     return {"CUSTOM_ISO": r"Y-m-d\TH:i:sO"}
+
+
+def git_version(request):
+    if request.path in IGNORED_PATHS:
+        return {}
+    try:
+        with open("/app/.version") as f:
+            version = f.read().strip()[:8]
+    except FileNotFoundError:
+        version = "latest"
+    return {"git_version": version}
