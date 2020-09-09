@@ -1,6 +1,7 @@
 #id_content {
     font-family: "JetBrains Mono", monospace;
     width: calc(100% - 1em);
+    height: 44.5em;
     resize: vertical;
 }
 
