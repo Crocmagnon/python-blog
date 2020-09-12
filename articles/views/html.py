@@ -1,5 +1,6 @@
 from typing import Union
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
@@ -18,7 +19,9 @@ class ArticlesListView(generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
-        context["title"] = "Articles"
+        context["title_header"] = "Articles"
+        context["blog_title"] = settings.BLOG["title"]
+        context["blog_description"] = settings.BLOG["description"]
         return context
 
 
@@ -31,6 +34,9 @@ class DraftsListView(generic.ListView, LoginRequiredMixin):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context["title"] = "Drafts"
+        context["title_header"] = context["title"]
+        context["blog_title"] = settings.BLOG["title"]
+        context["blog_description"] = settings.BLOG["description"]
         return context
 
 

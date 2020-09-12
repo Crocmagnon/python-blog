@@ -1,5 +1,5 @@
 {% load i18n %}
-<p class="date">
+<p class="metadata">
     {% if article.published_at %}
         <time datetime="{{ article.published_at|date:CUSTOM_ISO }}">{{ article.published_at|date }}</time>
     {% else %}

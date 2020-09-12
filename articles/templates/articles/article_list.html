@@ -1,10 +1,11 @@
 {% extends 'articles/base.html' %}
 
 {% block title %}
-    {{ title }}
+    {{ title_header }}
 {% endblock %}
 {% block content %}
-    <h1>{{ title }} list</h1>
+    <h1>{{ blog_title }}{% if title %} &middot; {{ title }}{% endif %}</h1>
+    <p class="metadata">{{ blog_description }}</p>
     {% for article in articles %}
         <article class="article-list">
             <h2><a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a></h2>

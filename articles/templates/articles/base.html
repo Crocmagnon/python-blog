@@ -14,7 +14,7 @@
 </head>
 <body>
 <nav>
-    <a href="{% url 'articles-list' %}">Gab's Notes</a>
+    <a href="{% url 'articles-list' %}">Articles list</a>
     |
     {% if user.is_authenticated %}
         <a href="{% url 'drafts-list' %}">View drafts <span class="pill">{{ drafts_count }}</span></a>
