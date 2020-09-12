@@ -27,13 +27,13 @@ class ArticleAdmin(admin.ModelAdmin):
         (
             "Metadata",
             {
-                "fields": (
+                "fields": [
                     ("title", "slug"),
                     ("author", "comments_allowed"),
                     ("status", "published_at"),
                     ("created_at", "updated_at"),
                     "views_count",
-                )
+                ]
             },
         ),
         ("Content", {"fields": ("content",)}),
@@ -95,20 +95,11 @@ class ArticleAdmin(admin.ModelAdmin):
 @register(Page)
 class PageAdmin(ArticleAdmin):
     list_display = ["position"] + ArticleAdmin.list_display
-    fieldsets = [
-        (
-            "Metadata",
-            {
-                "fields": (
-                    ("title", "slug", "position"),
-                    ("author", "status"),
-                    ("published_at", "created_at", "updated_at"),
-                    "views_count",
-                )
-            },
-        ),
-        ("Content", {"fields": ("content",)}),
-    ]
+
+    def get_fieldsets(self, request, obj=None):
+        article_fieldsets = ArticleAdmin.fieldsets
+        article_fieldsets[0][1]["fields"][0] = ("title", "slug", "position")
+        return article_fieldsets
 
 
 @register(Comment)
