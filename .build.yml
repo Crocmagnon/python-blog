@@ -9,17 +9,19 @@ secrets:
   - 5c948915-48c2-4542-8fc1-a5676f4d7126
 environment:
   TESTING: true
+  BLOG_TESTS: rg.fr-par.scw.cloud/crocmagnon/blog:tests
+  BLOG_LATEST: rg.fr-par.scw.cloud/crocmagnon/blog:latest
 tasks:
   - setup_docker: |
       ./blog/docker/setup-docker
   - build_and_test: |
       docker login -u crocmagnon --password-stdin < .docker-secret
       cd blog
-      docker pull crocmagnon/blog:latest || true
-      docker build --pull --cache-from crocmagnon/blog:latest -t crocmagnon/blog:latest -f Dockerfile .
-      docker build -t crocmagnon/blog:tests -f tests.Dockerfile .
-      docker run --rm -t crocmagnon/blog:tests /app/docker/runtests.sh
-      docker push crocmagnon/blog:latest
+      docker pull $BLOG_IMAGE || true
+      docker build --pull --cache-from $BLOG_LATEST -t $BLOG_LATEST -f Dockerfile .
+      docker build -t $BLOG_TESTS -f tests.Dockerfile .
+      docker run --rm -t $BLOG_TESTS /app/docker/runtests.sh
+      docker push $BLOG_LATEST
   - deploy: |
       ssh blog -o StrictHostKeyChecking=no "/srv/blog/redeploy"
 triggers:
