@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from articles.models import Article, Page
 
 IGNORED_PATHS = [
@@ -28,7 +30,10 @@ def git_version(request):
         return {}
     try:
         with open("/app/.version") as f:
-            version = f.read().strip()[:8]
+            version = f.read().strip()
+        url = settings.BLOG["repo"]["commit_url"].format(commit_sha=version)
+        version = version[:8]
     except FileNotFoundError:
         version = "latest"
-    return {"git_version": version}
+        url = settings.BLOG["repo"]["log"]
+    return {"git_version": version, "git_version_url": url}
