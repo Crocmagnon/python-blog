@@ -48,7 +48,6 @@ class Article(AdminUrlMixin, models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT, default=1)
     views_count = models.IntegerField(default=0)
     slug = models.SlugField(unique=True, max_length=255)
-    comments_allowed = models.BooleanField(default=True)
 
     objects = models.Manager()
     without_pages = ArticleManager()
@@ -118,47 +117,3 @@ class Page(Article):
 
     class Meta:
         ordering = ["position", "-published_at"]
-
-
-class Comment(AdminUrlMixin, models.Model):
-    PENDING = "pending"
-    APPROVED = "approved"
-    REJECTED = "rejected"
-    STATUS_CHOICES = (
-        (PENDING, "Pending"),
-        (APPROVED, "Approved"),
-        (REJECTED, "Rejected"),
-    )
-    username = models.CharField(
-        max_length=255, help_text="Will be displayed with your comment."
-    )
-    email = models.EmailField(
-        blank=True,
-        null=True,
-        help_text=(
-            "Not mandatory, fill only if you want me to be able to contact you. "
-            "It will never be displayed here nor shared with any third party."
-        ),
-    )
-    content = models.TextField(
-        max_length=500,
-        help_text="Your comment, limited to 500 characters. No formatting.",
-    )
-    article = models.ForeignKey(
-        Article, on_delete=models.CASCADE, related_name="comments"
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
-    user_notified = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ["created_at"]
-
-    def __str__(self):
-        return f"{self.username} - {self.content[:50]}"
-
-    def get_absolute_url(self):
-        return self.article.get_absolute_url() + "#" + str(self.id)
-
-    def get_full_absolute_url(self, request: HttpRequest = None):
-        return self.article.get_full_absolute_url(request) + "#" + str(self.id)

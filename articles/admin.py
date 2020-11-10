@@ -1,9 +1,11 @@
+import copy
+
 from django.contrib import admin, messages
 from django.contrib.admin import register
 from django.contrib.auth.admin import UserAdmin
 from django.shortcuts import redirect
 
-from .models import Article, Comment, Page, User
+from .models import Article, Page, User
 
 admin.site.register(User, UserAdmin)
 
@@ -29,7 +31,7 @@ class ArticleAdmin(admin.ModelAdmin):
             {
                 "fields": [
                     ("title", "slug"),
-                    ("author", "comments_allowed"),
+                    ("author",),
                     ("status", "published_at"),
                     ("created_at", "updated_at"),
                     "views_count",
@@ -100,27 +102,3 @@ class PageAdmin(ArticleAdmin):
         article_fieldsets = ArticleAdmin.fieldsets
         article_fieldsets[0][1]["fields"][0] = ("title", "slug", "position")
         return article_fieldsets
-
-
-@register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    list_display = (
-        "username",
-        "email",
-        "content",
-        "article",
-        "created_at",
-        "status",
-        "user_notified",
-    )
-    list_filter = ("status",)
-    search_fields = ("username", "email", "content")
-    actions = ["approve_comments", "reject_comments"]
-
-    def approve_comments(self, request, queryset):
-        count = queryset.update(status=Comment.APPROVED, user_notified=False)
-        messages.success(request, f"Approved {count} message(s).")
-
-    def reject_comments(self, request, queryset):
-        count = queryset.update(status=Comment.REJECTED, user_notified=False)
-        messages.success(request, f"Rejected {count} message(s).")

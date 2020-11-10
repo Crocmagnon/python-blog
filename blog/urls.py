@@ -34,9 +34,6 @@ urlpatterns = [
     path("feed/", feeds.CompleteFeed(), name="complete-feed"),
     path("<slug:slug>", html.ArticleDetailView.as_view(), name="article-detail-old"),
     path("<slug:slug>/", html.ArticleDetailView.as_view(), name="article-detail"),
-    path(
-        "<slug:slug>/comment/", html.ArticleDetailView.as_view(), name="create-comment"
-    ),
 ]
 
 if settings.DEBUG:

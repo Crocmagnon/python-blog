@@ -211,33 +211,6 @@ textarea, input {
     width: 100%;
 }
 
-/* COMMENTS */
-.comment {
-    background-color: var(--background2);
-    border-radius: .5ex;
-    padding: .5em 1em;
-}
-
-.comment + .comment, .comments form {
-    margin-top: 1em;
-}
-
-.comment p {
-    margin: 0;
-}
-
-.comment .metadata {
-    color: var(--main3);
-}
-
-.comment:target {
-    background-color: var(--warning-background);
-}
-
-.permalink {
-    font-size: 80%;
-}
-
 /* MESSAGES */
 .messages p {
     background-color: var(--background2);
