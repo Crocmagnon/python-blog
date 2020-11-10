@@ -103,6 +103,11 @@ code {
     padding: 1em;
 }
 
+section.comments {
+    border-top: 2px dashed var(--background3);
+    margin-top: 2em;
+}
+
 footer {
     border-top: 2px solid var(--background2);
     margin-top: 2em;
