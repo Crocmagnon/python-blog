@@ -42,3 +42,20 @@ def test_access_article_by_slug(client: Client, published_article: Article):
     content = res.content.decode("utf-8")
     assert published_article.title in content
     assert published_article.get_formatted_content() in content
+
+
+@pytest.mark.django_db
+def test_has_plausible_if_set(client: Client, settings):
+    settings.PLAUSIBLE_DOMAIN = "gabnotes.org"
+    res = client.get(reverse("articles-list"))
+    content = res.content.decode("utf-8")
+    assert "https://plausible.augendre.info/js/plausible.js" in content
+    assert 'data-domain="gabnotes.org"' in content
+
+
+@pytest.mark.django_db
+def test_doesnt_have_plausible_if_unset(client: Client, settings):
+    settings.PLAUSIBLE_DOMAIN = None
+    res = client.get(reverse("articles-list"))
+    content = res.content.decode("utf-8")
+    assert "https://plausible.augendre.info/js/plausible.js" not in content

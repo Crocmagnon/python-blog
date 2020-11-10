@@ -100,6 +100,7 @@ TEMPLATES = [
                 "articles.context_processors.drafts_count",
                 "articles.context_processors.date_format",
                 "articles.context_processors.git_version",
+                "articles.context_processors.plausible",
             ],
         },
     },
@@ -184,3 +185,5 @@ BLOG = {
 }
 
 SHORTPIXEL_API_KEY = os.getenv("SHORTPIXEL_API_KEY")
+
+PLAUSIBLE_DOMAIN = os.getenv("PLAUSIBLE_DOMAIN")

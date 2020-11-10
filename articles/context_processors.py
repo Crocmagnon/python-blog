@@ -37,3 +37,7 @@ def git_version(request):
         version = "latest"
         url = settings.BLOG["repo"]["log"]
     return {"git_version": version, "git_version_url": url}
+
+
+def plausible(request):
+    return {"plausible_domain": settings.PLAUSIBLE_DOMAIN}
