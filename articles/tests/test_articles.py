@@ -59,3 +59,12 @@ def test_doesnt_have_plausible_if_unset(client: Client, settings):
     res = client.get(reverse("articles-list"))
     content = res.content.decode("utf-8")
     assert "https://plausible.augendre.info/js/plausible.js" not in content
+
+
+@pytest.mark.django_db
+def test_logged_in_user_doesnt_have_plausible(client: Client, author: User, settings):
+    client.force_login(author)
+    settings.PLAUSIBLE_DOMAIN = "gabnotes.org"
+    res = client.get(reverse("articles-list"))
+    content = res.content.decode("utf-8")
+    assert "https://plausible.augendre.info/js/plausible.js" not in content

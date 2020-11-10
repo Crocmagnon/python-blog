@@ -6,13 +6,13 @@ from articles.models import Article, Page, User
 
 @pytest.fixture()
 @pytest.mark.django_db
-def author():
+def author() -> User:
     return User.objects.create_user("gaugendre")
 
 
 @pytest.fixture()
 @pytest.mark.django_db
-def published_article(author):
+def published_article(author: User) -> Article:
     return Article.objects.create(
         title="Some interesting article title",
         status=Article.PUBLISHED,
@@ -25,7 +25,7 @@ def published_article(author):
 
 @pytest.fixture()
 @pytest.mark.django_db
-def published_page(author):
+def published_page(author: User) -> Page:
     return Page.objects.create(
         title="Some interesting page title",
         status=Article.PUBLISHED,
