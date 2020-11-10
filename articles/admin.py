@@ -99,6 +99,6 @@ class PageAdmin(ArticleAdmin):
     list_display = ["position"] + ArticleAdmin.list_display
 
     def get_fieldsets(self, request, obj=None):
-        article_fieldsets = ArticleAdmin.fieldsets
+        article_fieldsets = copy.deepcopy(ArticleAdmin.fieldsets)
         article_fieldsets[0][1]["fields"][0] = ("title", "slug", "position")
         return article_fieldsets
