@@ -17,7 +17,7 @@ tasks:
   - build_and_test: |
       docker login rg.fr-par.scw.cloud/crocmagnon -u nologin --password-stdin < .docker-secret
       cd blog
-      docker pull $BLOG_IMAGE || true
+      docker pull $BLOG_LATEST || true
       docker build --pull --cache-from $BLOG_LATEST -t $BLOG_LATEST -f Dockerfile .
       docker build -t $BLOG_TESTS -f tests.Dockerfile .
       docker run --rm -t $BLOG_TESTS /app/docker/runtests.sh
