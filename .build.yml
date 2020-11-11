@@ -9,8 +9,6 @@ secrets:
   - 5c948915-48c2-4542-8fc1-a5676f4d7126
 environment:
   TESTING: true
-  DEPS_TESTS: rg.fr-par.scw.cloud/crocmagnon/blog:deps-tests
-  BLOG_TESTS: rg.fr-par.scw.cloud/crocmagnon/blog:tests
   DEPS_LATEST: rg.fr-par.scw.cloud/crocmagnon/blog:deps-latest
   BLOG_LATEST: rg.fr-par.scw.cloud/crocmagnon/blog:latest
 tasks:
@@ -20,21 +18,14 @@ tasks:
       docker login rg.fr-par.scw.cloud/crocmagnon -u nologin --password-stdin < .docker-secret
       cd blog
       docker pull $BLOG_LATEST || true
-      docker pull $BLOG_TESTS || true
       docker pull $DEPS_LATEST || true
-      docker pull $DEPS_TESTS || true
 
       docker build --pull --target venv --cache-from $DEPS_LATEST -t $DEPS_LATEST .
       docker build --pull --target prod --cache-from $BLOG_LATEST --cache-from $DEPS_LATEST -t $BLOG_LATEST -f Dockerfile .
-
-      docker build --pull --target venv-tests --cache-from $BLOG_LATEST --cache-from $DEPS_LATEST --cache-from $DEPS_TESTS -t $DEPS_TESTS .
-      docker build --pull --target tests --cache-from $BLOG_LATEST --cache-from $DEPS_LATEST --cache-from $DEPS_TESTS --cache-from $BLOG_TESTS -t $BLOG_TESTS -f Dockerfile .
-      docker run --rm -t $BLOG_TESTS /app/docker/runtests.sh
+      docker run --rm -t $BLOG_LATEST /app/docker/runtests.sh
 
       docker push $BLOG_LATEST
       docker push $DEPS_LATEST
-      docker push $DEPS_TESTS
-      docker push $BLOG_TESTS
   - deploy: |
       ssh blog -o StrictHostKeyChecking=no "/home/gaugendre/blog/redeploy"
 triggers:
