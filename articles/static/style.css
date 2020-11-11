@@ -1,5 +1,6 @@
 :root {
     --accent: #226997;
+    --accent-light: #7c96a9;
     --main: #111111;
     --main2: #575757;
     --main3: #7d7d7d;
@@ -117,6 +118,7 @@ footer {
 
 footer a {
     color: var(--main3);
+    border-bottom-color: var(--accent-light);
 }
 
 table {
@@ -242,6 +244,10 @@ a:hover, a:focus {
     text-decoration: none;
     background-color: var(--accent);
     color: var(--background);
+}
+
+footer a:hover, footer a:focus {
+    background-color: var(--accent-light);
 }
 
 @media (prefers-color-scheme: dark) {
