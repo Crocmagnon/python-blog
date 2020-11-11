@@ -1,8 +1,4 @@
-FROM ubuntu:latest as git
-RUN apt-get update \
-    && apt-get install -y git \
-    && mkdir /app
-
+FROM alpine/git:v2.26.2 AS git
 ADD . /app
 WORKDIR /app
 RUN git rev-parse HEAD | tee /version
