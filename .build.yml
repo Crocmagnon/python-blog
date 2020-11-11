@@ -5,7 +5,7 @@ sources:
   - https://git.sr.ht/~crocmagnon/blog
 secrets:
   - 388c4445-d732-440b-8ff5-fc5dfb46f04a
-  - 29bc352f-0807-46e9-a4ef-2f869f94afa3
+  - 78118477-73c2-4805-a613-c7aab23c92a8
   - 5c948915-48c2-4542-8fc1-a5676f4d7126
 environment:
   TESTING: true
@@ -36,7 +36,7 @@ tasks:
       docker push $DEPS_TESTS
       docker push $BLOG_TESTS
   - deploy: |
-      ssh blog -o StrictHostKeyChecking=no "/srv/blog/redeploy"
+      ssh blog -o StrictHostKeyChecking=no "/home/gaugendre/blog/redeploy"
 triggers:
   - action: email
     condition: failure
