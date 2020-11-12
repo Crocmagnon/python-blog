@@ -3,6 +3,7 @@ packages:
   - python38
   - py38-sqlite3
   - jpeg-turbo
+  - py37-ansible
 sources:
   - https://git.sr.ht/~crocmagnon/blog
 secrets:
@@ -24,7 +25,7 @@ tasks:
       cd blog
       poetry run ./docker/runtests.sh
   - deploy: |
-      ansible-playbook -i ~/ansiblehosts blog/ansible/playbook.yml
+      ansible-playbook -i ~/ansiblehosts --ssh-common-args "-o StrictHostKeyChecking=no" blog/ansible/playbook.yml
 triggers:
   - action: email
     condition: failure
