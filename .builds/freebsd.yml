@@ -1,0 +1,29 @@
+image: freebsd/12.x
+packages:
+  - python38
+  - py38-sqlite3
+  - jpeg-turbo
+sources:
+  - https://git.sr.ht/~crocmagnon/blog
+secrets:
+  - 78118477-73c2-4805-a613-c7aab23c92a8  # SSH config for blog
+  - 5c948915-48c2-4542-8fc1-a5676f4d7126  # Deploy SSH key
+environment:
+  TESTING: true
+  POETRY_VERSION: 1.1.4
+tasks:
+  - install_poetry: |
+      mkdir $HOME/bin
+      ln -s $(which python3.8) $HOME/bin/python
+      curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+      echo "source $HOME/.poetry/env" >> ~/.buildenv
+  - install_deps: |
+      cd blog
+      poetry install -n
+  - test: |
+      cd blog
+      poetry run ./docker/runtests.sh
+triggers:
+  - action: email
+    condition: failure
+    to: Gabriel Augendre <gabriel@augendre.info>
