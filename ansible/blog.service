@@ -11,7 +11,7 @@ rcvar="blog_enable"
 
 load_rc_config $name
 : ${blog_enable="NO"}
-: ${blog_listen_addr="0.0.0.0:8000"}
+: ${blog_listen_addr="127.0.0.1:8000"}
 
 pidfile="/var/run/${name}.pid"
 logfile="/var/log/${name}.log"

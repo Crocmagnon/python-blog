@@ -6,46 +6,66 @@
     PATH: /root/.poetry/bin:{{ ansible_env.PATH }}
 
   tasks:
-  - name: install dependencies
-    pkgng:
-      name: git,python38,py38-sqlite3,jpeg-turbo,nginx,curl,vim
-  - name: make python3.8 default
-    file:
-      path: /usr/local/bin/python3
-      src: /usr/local/bin/python3.8
-      state: link
-  - name: fetch code
-    git:
-      repo: https://git.sr.ht/~crocmagnon/blog
-      dest: /srv/blog
-      force: yes
-  - name: install poetry
-    shell:
-      cmd: POETRY_VERSION=1.1.4 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-      creates: /root/.poetry/bin/poetry
-  - name: create venv
-    shell:
-      cmd: python -m venv /srv/blogvenv
-      creates: /srv/blogvenv/bin/python
-  - name: install deps
-    shell:
-      chdir: /srv/blog
-      cmd: . /srv/blogvenv/bin/activate && poetry install --remove-untracked
-  - name: install service
-    copy:
-      remote_src: yes
-      src: /srv/blog/ansible/blog.service
-      dest: /usr/local/etc/rc.d/blog
-      owner: root
-      group: wheel
-      mode: 0755
-  - name: enable and restart blog service
-    service:
-      name: blog
-      state: restarted
-      enabled: yes
-#  - name: enable nginx service
-#    service:
-#      name: nginx
-#      state: started
-#      enabled: yes
+    - name: install system dependencies
+      pkgng:
+        name: git,python38,py38-sqlite3,jpeg-turbo,nginx,curl,vim
+    - name: make python3.8 default
+      file:
+        path: /usr/local/bin/python3
+        src: /usr/local/bin/python3.8
+        state: link
+    - name: fetch code
+      git:
+        repo: https://git.sr.ht/~crocmagnon/blog
+        dest: /srv/blog
+        force: yes
+    - name: install poetry
+      shell:
+        cmd: POETRY_VERSION=1.1.4 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+        creates: /root/.poetry/bin/poetry
+    - name: create venv
+      shell:
+        cmd: python -m venv /srv/blogvenv
+        creates: /srv/blogvenv/bin/python
+    - name: install python dependencies
+      shell:
+        chdir: /srv/blog
+        cmd: . /srv/blogvenv/bin/activate && poetry install --remove-untracked
+    - name: install service
+      copy:
+        remote_src: yes
+        src: /srv/blog/ansible/blog.service
+        dest: /usr/local/etc/rc.d/blog
+        owner: root
+        group: wheel
+        mode: 0755
+    - name: enable and restart blog service
+      service:
+        name: blog
+        state: restarted
+        enabled: yes
+    - name: backup old nginx conf
+      copy:
+        remote_src: yes
+        src: /usr/local/etc/nginx/nginx.conf
+        dest: /usr/local/etc/nginx/nginx.conf.BKP
+    - name: install nginx conf
+      copy:
+        remote_src: yes
+        src: /srv/blog/ansible/nginx.conf
+        dest: /usr/local/etc/nginx/nginx.conf
+        owner: root
+        group: wheel
+        mode: 0644
+      notify:
+        - restart nginx
+    - name: enable nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
