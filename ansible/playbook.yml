@@ -6,10 +6,6 @@
     PATH: /root/.poetry/bin:{{ ansible_env.PATH }}
 
   tasks:
-  - name: upgrade packages
-    pkgng:
-      name: '*'
-      state: latest
   - name: install dependencies
     pkgng:
       name: git,python38,py38-sqlite3,jpeg-turbo,nginx,curl,vim
@@ -18,7 +14,7 @@
       path: /usr/local/bin/python3
       src: /usr/local/bin/python3.8
       state: link
-  - name: clone/update code
+  - name: fetch code
     git:
       repo: https://git.sr.ht/~crocmagnon/blog
       dest: /srv/blog
