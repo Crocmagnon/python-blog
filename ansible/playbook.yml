@@ -1,0 +1,55 @@
+---
+- name: deploy blog
+  hosts: blognas
+  remote_user: root
+  environment:
+    PATH: /root/.poetry/bin:{{ ansible_env.PATH }}
+
+  tasks:
+  - name: upgrade packages
+    pkgng:
+      name: '*'
+      state: latest
+  - name: install dependencies
+    pkgng:
+      name: git,python38,py38-sqlite3,jpeg-turbo,nginx,curl,vim
+  - name: make python3.8 default
+    file:
+      path: /usr/local/bin/python3
+      src: /usr/local/bin/python3.8
+      state: link
+  - name: clone/update code
+    git:
+      repo: https://git.sr.ht/~crocmagnon/blog
+      dest: /srv/blog
+      force: yes
+  - name: install poetry
+    shell:
+      cmd: POETRY_VERSION=1.1.4 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+      creates: /root/.poetry/bin/poetry
+  - name: create venv
+    shell:
+      cmd: python -m venv /srv/blogvenv
+      creates: /srv/blogvenv/bin/python
+  - name: install deps
+    shell:
+      chdir: /srv/blog
+      cmd: . /srv/blogvenv/bin/activate && poetry install --remove-untracked
+  - name: install service
+    copy:
+      remote_src: yes
+      src: /srv/blog/ansible/blog.service
+      dest: /usr/local/etc/rc.d/blog
+      owner: root
+      group: wheel
+      mode: 0755
+  - name: enable and restart blog service
+    service:
+      name: blog
+      state: restarted
+      enabled: yes
+#  - name: enable nginx service
+#    service:
+#      name: nginx
+#      state: started
+#      enabled: yes

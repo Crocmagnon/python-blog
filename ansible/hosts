@@ -1,0 +1,1 @@
+blognas ansible_host=192.168.0.54 ansible_port=22 ansible_python_interpreter=/usr/local/bin/python
