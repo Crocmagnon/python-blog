@@ -8,32 +8,36 @@ from django.views import generic
 from articles.models import Article, Page
 
 
-class ArticlesListView(generic.ListView):
-    model = Article
+class BaseArticleListView(generic.ListView):
     paginate_by = 15
-    context_object_name = "articles"
-    queryset = Article.without_pages.filter(status=Article.PUBLISHED)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=object_list, **kwargs)
-        context["title_header"] = "Articles"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context["blog_title"] = settings.BLOG["title"]
         context["blog_description"] = settings.BLOG["description"]
         return context
 
 
-class DraftsListView(generic.ListView, LoginRequiredMixin):
+class ArticlesListView(BaseArticleListView):
     model = Article
-    paginate_by = 15
+    context_object_name = "articles"
+    queryset = Article.without_pages.filter(status=Article.PUBLISHED)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title_header"] = "Articles"
+        return context
+
+
+class DraftsListView(BaseArticleListView, LoginRequiredMixin):
+    model = Article
     context_object_name = "articles"
     queryset = Article.objects.filter(status=Article.DRAFT)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=object_list, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context["title"] = "Drafts"
         context["title_header"] = context["title"]
-        context["blog_title"] = settings.BLOG["title"]
-        context["blog_description"] = settings.BLOG["description"]
         return context
 
 
