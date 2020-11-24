@@ -9,8 +9,6 @@ from articles.models import Article, Page
 
 
 class BaseArticleListView(generic.ListView):
-    paginate_by = 15
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["blog_title"] = settings.BLOG["title"]

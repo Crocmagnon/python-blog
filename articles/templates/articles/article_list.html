@@ -6,16 +6,20 @@
 {% block content %}
     <h1>{{ blog_title }}{% if title %} &middot; {{ title }}{% endif %}</h1>
     <p class="metadata">{{ blog_description }}</p>
+    <ul>
     {% for article in articles %}
-        <article class="article-list">
-            <h2><a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a></h2>
-            {% include "articles/metadata_snippet.html" %}
-            {{ article.get_abstract|safe }}
-            <p class="read-more"><a href="{% url 'article-detail' slug=article.slug %}">Read more...</a></p>
-        </article>
+        <li>
+            {% if article.published_at %}
+                <time datetime="{{ article.published_at|date:CUSTOM_ISO }}">{{ article.published_at|date }}</time>
+            {% else %}
+                <time datetime="{{ article.updated_at|date:CUSTOM_ISO }}">{{ article.updated_at|date }}</time>
+            {% endif %}
+            : <a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a>
+        </li>
     {% empty %}
-        <p>No article here. Come back later 🙂</p>
+        <li>No article here. Come back later 🙂</li>
     {% endfor %}
+    </ul>
     <nav class="pagination">
         <div class="older">
             {% if page_obj.has_next %}
