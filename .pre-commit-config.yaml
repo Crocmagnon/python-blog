@@ -8,6 +8,8 @@ repos:
 #        types: [json]
       - id: check-toml
         types: [toml]
+      - id: check-yaml
+        types: [yaml]
 #      - id: check-xml
 #        types: [xml]
       - id: end-of-file-fixer
