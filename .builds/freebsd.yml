@@ -24,6 +24,11 @@ tasks:
   - test: |
       cd blog
       poetry run ./docker/runtests.sh
+  - check-branch: |
+      cd blog
+      if [ "$(git rev-parse master)" != "$(git rev-parse HEAD)" ]; then \
+         complete-build; \
+      fi
   - deploy: |
       ansible-playbook -i ~/ansiblehosts --ssh-common-args "-o StrictHostKeyChecking=no" blog/ansible/playbook.yml
 triggers:
