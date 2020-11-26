@@ -1,25 +1,26 @@
 {% extends 'articles/base.html' %}
 
-{% block title %}
-    {{ title_header }}
-{% endblock %}
+{% block title %}{% endblock %}
 {% block content %}
     <h1>{{ blog_title }}{% if title %} &middot; {{ title }}{% endif %}</h1>
-    <p class="metadata">{{ blog_description }}</p>
-    <ul>
-    {% for article in articles %}
-        <li>
-            {% if article.published_at %}
-                <time datetime="{{ article.published_at|date:CUSTOM_ISO }}">{{ article.published_at|date }}</time>
-            {% else %}
-                <time datetime="{{ article.updated_at|date:CUSTOM_ISO }}">{{ article.updated_at|date }}</time>
-            {% endif %}
-            : <a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a>
-        </li>
-    {% empty %}
-        <li>No article here. Come back later 🙂</li>
-    {% endfor %}
-    </ul>
+    <p class="metadata">{{ blog_description }} {% include "articles/admin_link_snippet.html" %}</p>
+    <section class="blog-posts">
+        <h2>Blog posts</h2>
+        <ul>
+        {% for article in articles %}
+            <li>
+                {% if article.published_at %}
+                    <time datetime="{{ article.published_at|date:CUSTOM_ISO }}">{{ article.published_at|date }}</time>
+                {% else %}
+                    <time datetime="{{ article.updated_at|date:CUSTOM_ISO }}">{{ article.updated_at|date }}</time>
+                {% endif %}
+                : <a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a>
+            </li>
+        {% empty %}
+            <li>No article here. Come back later 🙂</li>
+        {% endfor %}
+        </ul>
+    </section>
     <nav class="pagination">
         <div class="older">
             {% if page_obj.has_next %}
@@ -32,4 +33,10 @@
             {% endif %}
         </div>
     </nav>
+    <section class="index-page">
+        <h2>{{ index_page.title }}</h2>
+        <div>
+            {{ index_page.get_formatted_content|safe }}
+        </div>
+    </section>
 {% endblock %}

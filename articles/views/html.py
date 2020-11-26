@@ -9,6 +9,8 @@ from articles.models import Article, Page
 
 
 class BaseArticleListView(generic.ListView):
+    paginate_by = 10
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["blog_title"] = settings.BLOG["title"]
@@ -23,7 +25,10 @@ class ArticlesListView(BaseArticleListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title_header"] = "Articles"
+        index_page = Page.objects.filter(
+            status=Article.PUBLISHED, position=0
+        ).first()  # type: Page
+        context["index_page"] = index_page
         return context
 
 
