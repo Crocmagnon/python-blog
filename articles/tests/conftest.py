@@ -33,4 +33,5 @@ def published_page(author: User) -> Page:
         published_at=timezone.now(),
         slug="some-page-slug",
         content="## some page markdown\n\n[a page link](https://page.com)",
+        position=2,
     )
