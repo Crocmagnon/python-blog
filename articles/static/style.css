@@ -48,6 +48,10 @@ a {
     border-bottom: .3ex solid var(--accent);
 }
 
+.index-page h2 {
+    margin-top: 2em;
+}
+
 .article-list h2 a {
     border-color: transparent;
 }

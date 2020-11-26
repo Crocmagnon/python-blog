@@ -15,23 +15,26 @@ def test_can_access_list(
     content = res.content.decode("utf-8")
     for art in [published_article, published_page]:
         assert art.title in content
-    assert published_article.get_abstract() in content
+    assert published_article.get_abstract() not in content
     assert published_page.get_formatted_content() not in content
 
 
 @pytest.mark.django_db
-def test_abstract_shown_on_list(client: Client, author: User):
+def test_only_title_shown_on_list(client: Client, author: User):
+    title = "This is a very long title mouahahaha"
     abstract = "Some abstract"
     after = "Some content after abstract"
     baker.make(
         Article,
+        title=title,
         status=Article.PUBLISHED,
         author=author,
         content=f"{abstract}\n<!--more-->\n{after}",
     )  # type: Article
     res = client.get(reverse("articles-list"))
     content = res.content.decode("utf-8")
-    assert abstract in content
+    assert title in content
+    assert abstract not in content
     assert after not in content
 
 

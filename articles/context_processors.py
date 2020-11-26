@@ -10,7 +10,7 @@ IGNORED_PATHS = [
 def pages(request):
     if request.path in IGNORED_PATHS:
         return {}
-    return {"pages": Page.objects.filter(status=Article.PUBLISHED)}
+    return {"pages": Page.objects.filter(status=Article.PUBLISHED).exclude(position=0)}
 
 
 def drafts_count(request):
