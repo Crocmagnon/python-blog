@@ -6,7 +6,19 @@ import requests
 from django.conf import settings
 from django.core.files import File
 from django.db import models
+from django.db.models.fields.files import FieldFile
 from PIL import Image
+
+from articles.utils import build_full_absolute_url
+
+
+class AbsoluteUrlFieldFile(FieldFile):
+    def get_full_absolute_url(self, request):
+        return build_full_absolute_url(request, self.url)
+
+
+class AbsoluteUrlFileField(models.FileField):
+    attr_class = AbsoluteUrlFieldFile
 
 
 class AttachmentManager(models.Manager):
@@ -16,8 +28,8 @@ class AttachmentManager(models.Manager):
 
 class Attachment(models.Model):
     description = models.CharField(max_length=500)
-    original_file = models.FileField()
-    processed_file = models.FileField(blank=True, null=True)
+    original_file = AbsoluteUrlFileField()
+    processed_file = AbsoluteUrlFileField(blank=True, null=True)
     open_graph_image = models.BooleanField(blank=True)
 
     objects = AttachmentManager()

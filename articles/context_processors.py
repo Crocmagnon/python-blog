@@ -44,5 +44,10 @@ def plausible(request):
     return {"plausible_domain": settings.PLAUSIBLE_DOMAIN}
 
 
-def open_graph_image(request):
-    return {"open_graph_image": Attachment.objects.get_open_graph_image()}
+def open_graph_image_url(request):
+    open_graph_image = Attachment.objects.get_open_graph_image()
+    return {
+        "open_graph_image_url": open_graph_image.processed_file.get_full_absolute_url(
+            request
+        )
+    }
