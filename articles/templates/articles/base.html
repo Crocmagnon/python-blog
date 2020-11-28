@@ -4,6 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Gabriel Augendre">
+    <meta name="color-scheme" content="light dark">
+    {% if article %}
+        <meta name="keywords" content="{{ article.keywords }}">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="{{ blog_title }}">
+        <meta property="og:title" content="{{ article.title }}" />
+    {% endif %}
+    {% if open_graph_image %}
+        <meta name="og:image" content="{{ open_graph_image.processed_file.url }}">
+    {% endif %}
     <title>{% block title %}Home | {% endblock %}Gab's Notes</title>
     <link rel="stylesheet" id="code-light" href="{% static 'code-light.css' %}" type="text/css">
     <link rel="stylesheet" id="code-dark" href="{% static 'code-dark.css' %}" type="text/css">

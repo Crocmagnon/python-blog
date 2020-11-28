@@ -28,7 +28,7 @@ class ArticlesListView(BaseArticleListView):
         index_page = Page.objects.filter(
             status=Article.PUBLISHED, position=0
         ).first()  # type: Page
-        context["index_page"] = index_page
+        context["article"] = index_page
         return context
 
 

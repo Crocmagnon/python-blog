@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.admin import register
 from django.utils.html import format_html
 
@@ -13,6 +13,7 @@ class AttachmentAdmin(admin.ModelAdmin):
         "original_file_url",
         "processed_file",
         "processed_file_url",
+        "open_graph_image",
     ]
     list_display_links = ["description"]
     fields = [
@@ -21,11 +22,14 @@ class AttachmentAdmin(admin.ModelAdmin):
         "original_file_url",
         "processed_file",
         "processed_file_url",
+        "open_graph_image",
     ]
     readonly_fields = [
         "original_file_url",
         "processed_file_url",
+        "open_graph_image",
     ]
+    actions = ["set_as_open_graph_image"]
 
     class Media:
         js = ["attachments/js/copy_url.js"]
@@ -47,3 +51,13 @@ class AttachmentAdmin(admin.ModelAdmin):
                 instance.original_file.url,
             )
         return ""
+
+    def set_as_open_graph_image(self, request, queryset):
+        if len(queryset) != 1:
+            messages.error(request, "You must select only one attachment")
+            return
+        Attachment.objects.update(open_graph_image=False)
+        queryset.update(open_graph_image=True)
+        messages.success(request, "Done")
+
+    set_as_open_graph_image.short_description = "Set as open graph image"

@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from articles.models import Article, Page
+from attachments.models import Attachment
 
 IGNORED_PATHS = [
     "/robots.txt",
@@ -41,3 +42,7 @@ def git_version(request):
 
 def plausible(request):
     return {"plausible_domain": settings.PLAUSIBLE_DOMAIN}
+
+
+def open_graph_image(request):
+    return {"open_graph_image": Attachment.objects.get_open_graph_image()}

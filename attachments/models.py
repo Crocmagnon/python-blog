@@ -9,10 +9,18 @@ from django.db import models
 from PIL import Image
 
 
+class AttachmentManager(models.Manager):
+    def get_open_graph_image(self):
+        return self.filter(open_graph_image=True).first()
+
+
 class Attachment(models.Model):
     description = models.CharField(max_length=500)
     original_file = models.FileField()
     processed_file = models.FileField(blank=True, null=True)
+    open_graph_image = models.BooleanField(blank=True)
+
+    objects = AttachmentManager()
 
     class Meta:
         ordering = ["description"]

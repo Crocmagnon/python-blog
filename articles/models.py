@@ -48,6 +48,7 @@ class Article(AdminUrlMixin, models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT, default=1)
     views_count = models.IntegerField(default=0)
     slug = models.SlugField(unique=True, max_length=255)
+    keywords = models.CharField(max_length=255, blank=True)
 
     objects = models.Manager()
     without_pages = ArticleManager()

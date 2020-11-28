@@ -31,7 +31,7 @@ class ArticleAdmin(admin.ModelAdmin):
             {
                 "fields": [
                     ("title", "slug"),
-                    ("author",),
+                    ("author", "keywords"),
                     ("status", "published_at"),
                     ("created_at", "updated_at"),
                     "views_count",
