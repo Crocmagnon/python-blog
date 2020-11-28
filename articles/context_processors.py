@@ -45,9 +45,10 @@ def plausible(request):
 
 
 def open_graph_image_url(request):
+    if request.path in IGNORED_PATHS:
+        return {}
     open_graph_image = Attachment.objects.get_open_graph_image()
-    return {
-        "open_graph_image_url": open_graph_image.processed_file.get_full_absolute_url(
-            request
-        )
-    }
+    url = ""
+    if open_graph_image:
+        url = open_graph_image.processed_file.get_full_absolute_url(request)
+    return {"open_graph_image_url": url}
