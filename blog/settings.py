@@ -101,6 +101,7 @@ TEMPLATES = [
                 "articles.context_processors.date_format",
                 "articles.context_processors.git_version",
                 "articles.context_processors.plausible",
+                "articles.context_processors.open_graph_image",
             ],
         },
     },
