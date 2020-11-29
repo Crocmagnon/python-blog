@@ -8,9 +8,11 @@
     <meta name="color-scheme" content="light dark">
     {% if article %}
         <meta name="keywords" content="{{ article.keywords }}">
-        <meta property="og:type" content="article">
-        <meta property="og:site_name" content="{{ blog_title }}">
+        <meta name="description" content="{{ article.get_description }}">
         <meta property="og:title" content="{{ article.title }}" />
+        <meta property="og:type" content="article">
+        <meta property="og:description" content="{{ article.get_description }}">
+        <meta property="og:site_name" content="{{ blog_title }}">
     {% endif %}
     {% if open_graph_image_url %}
         <meta property="og:image" content="{{ open_graph_image_url }}">

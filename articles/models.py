@@ -1,5 +1,7 @@
 import re
+from functools import cached_property
 
+import html2text
 import markdown
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
@@ -72,6 +74,24 @@ class Article(AdminUrlMixin, models.Model):
     def get_abstract(self):
         html = self.get_formatted_content()
         return html.split("<!--more-->")[0]
+
+    @cached_property
+    def get_description(self):
+        html = self.get_formatted_content()
+        converter = html2text.HTML2Text()
+        converter.ignore_images = True
+        converter.ignore_links = True
+        converter.ignore_tables = True
+        converter.ignore_emphasis = True
+        text = converter.handle(html)
+        total_length = 0
+        text_result = []
+        for word in text.split():
+            if len(word) + 1 + total_length > 160:
+                break
+            text_result.append(word)
+            total_length += len(word) + 1
+        return " ".join(text_result) + "..."
 
     def get_formatted_content(self):
         md = markdown.Markdown(

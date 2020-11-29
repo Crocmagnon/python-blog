@@ -29,6 +29,7 @@ django-anymail = {version = "^7.2", extras = ["mailgun"]}
 pillow = "^7.2"
 django-cleanup = "^5.0"
 requests = "^2.24"
+html2text = "^2020.1.16"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.7"
