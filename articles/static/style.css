@@ -48,7 +48,7 @@ a {
     border-bottom: .3ex solid var(--accent);
 }
 
-.index-page h2 {
+.index-page h2, .article-detail h2 {
     margin-top: 2em;
 }
 
