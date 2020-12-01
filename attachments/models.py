@@ -30,7 +30,7 @@ class Attachment(models.Model):
     description = models.CharField(max_length=500)
     original_file = AbsoluteUrlFileField()
     processed_file = AbsoluteUrlFileField(blank=True, null=True)
-    open_graph_image = models.BooleanField(blank=True)
+    open_graph_image = models.BooleanField(blank=True, default=False)
 
     objects = AttachmentManager()
 
