@@ -117,3 +117,11 @@ def test_logged_in_user_doesnt_have_plausible(client: Client, author: User, sett
     res = client.get(reverse("articles-list"))
     content = res.content.decode("utf-8")
     assert "https://plausible.augendre.info/js/plausible.js" not in content
+
+
+@pytest.mark.django_db
+def test_image_is_lazy(client: Client, published_article: Article):
+    res = client.get(reverse("article-detail", kwargs={"slug": published_article.slug}))
+    assert res.status_code == 200
+    content = res.content.decode("utf-8")
+    assert content.count('loading="lazy"') == 2

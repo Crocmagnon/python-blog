@@ -19,7 +19,13 @@ def published_article(author: User) -> Article:
         author=author,
         published_at=timezone.now(),
         slug="some-article-slug",
-        content="## some article markdown\n\n[an article link](https://article.com)",
+        content=(
+            "## some article markdown\n\n"
+            "[an article link](https://article.com)\n"
+            "![an image](https://article.com)\n"
+            "![a referenced image][1]\n\n"
+            "[1]: https://example.com/image.png"
+        ),
     )
 
 

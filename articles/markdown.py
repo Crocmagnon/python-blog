@@ -11,14 +11,16 @@ from markdown.inlinepatterns import (
 class LazyImageInlineProcessor(ImageInlineProcessor):
     def handleMatch(self, m, data):
         el, match_start, index = super().handleMatch(m, data)
-        el.set("loading", "lazy")
+        if el is not None:
+            el.set("loading", "lazy")
         return el, match_start, index
 
 
 class LazyImageReferenceInlineProcessor(ImageReferenceInlineProcessor):
     def makeTag(self, href, title, text):
         el = super().makeTag(href, title, text)
-        el.set("loading", "lazy")
+        if el is not None:
+            el.set("loading", "lazy")
         return el
 
 
