@@ -110,11 +110,13 @@ class Article(AdminUrlMixin, models.Model):
             self.published_at = timezone.now()
         self.status = self.PUBLISHED
         self.save()
+        return self
 
     def unpublish(self):
         self.published_at = None
         self.status = self.DRAFT
         self.save()
+        return self
 
     def save(self, *args, **kwargs):
         if not self.slug:
