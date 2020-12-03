@@ -5,6 +5,7 @@ from blog import settings
 
 
 class CompleteFeed(Feed):
+    FEED_LIMIT = 15
     title = "Gab's Notes"
     link = settings.BLOG["base_url"]
     description = settings.BLOG["description"]
@@ -12,7 +13,7 @@ class CompleteFeed(Feed):
     def items(self):
         return Article.without_pages.filter(status=Article.PUBLISHED).order_by(
             "-published_at"
-        )[:15]
+        )[: self.FEED_LIMIT]
 
     def item_title(self, item: Article):
         return item.title
