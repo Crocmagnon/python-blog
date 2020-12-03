@@ -30,7 +30,7 @@
     - name: install python dependencies
       shell:
         chdir: /srv/blog
-        cmd: . /srv/blogvenv/bin/activate && poetry install --remove-untracked
+        cmd: . /srv/blogvenv/bin/activate && poetry install --no-dev --remove-untracked
     - name: install service
       copy:
         remote_src: yes
