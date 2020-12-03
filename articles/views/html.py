@@ -32,7 +32,7 @@ class ArticlesListView(BaseArticleListView):
         return context
 
 
-class DraftsListView(BaseArticleListView, LoginRequiredMixin):
+class DraftsListView(LoginRequiredMixin, BaseArticleListView):
     model = Article
     context_object_name = "articles"
     queryset = Article.objects.filter(status=Article.DRAFT)

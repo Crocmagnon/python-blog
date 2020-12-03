@@ -25,6 +25,19 @@ def published_article(author: User) -> Article:
 
 @pytest.fixture()
 @pytest.mark.django_db
+def unpublished_article(author: User) -> Article:
+    return Article.objects.create(
+        title="Some interesting article title, but sorry it is not public yet",
+        status=Article.DRAFT,
+        author=author,
+        published_at=None,
+        slug="some-draft-article-slug",
+        content="## some draft article markdown\n\n[a draft article link](https://article.com)",
+    )
+
+
+@pytest.fixture()
+@pytest.mark.django_db
 def published_page(author: User) -> Page:
     return Page.objects.create(
         title="Some interesting page title",

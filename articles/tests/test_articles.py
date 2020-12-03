@@ -40,11 +40,57 @@ def test_only_title_shown_on_list(client: Client, author: User):
 
 @pytest.mark.django_db
 def test_access_article_by_slug(client: Client, published_article: Article):
-    res = client.get(reverse("article-detail", kwargs={"slug": published_article.slug}))
+    _test_access_article_by_slug(client, published_article)
+
+
+@pytest.mark.django_db
+def test_access_page_by_slug(client: Client, published_page: Page):
+    _test_access_article_by_slug(client, published_page)
+
+
+def _test_access_article_by_slug(client: Client, item: Article):
+    res = client.get(reverse("article-detail", kwargs={"slug": item.slug}))
     assert res.status_code == 200
     content = res.content.decode("utf-8")
-    assert published_article.title in content
-    assert published_article.get_formatted_content() in content
+    assert item.title in content
+    assert item.get_formatted_content() in content
+
+
+@pytest.mark.django_db
+def test_anonymous_cant_access_draft_detail(
+    client: Client, unpublished_article: Article
+):
+    res = client.get(
+        reverse("article-detail", kwargs={"slug": unpublished_article.slug})
+    )
+    assert res.status_code == 404
+
+
+@pytest.mark.django_db
+def test_user_can_access_draft_detail(
+    client: Client, author: User, unpublished_article: Article
+):
+    client.force_login(author)
+    _test_access_article_by_slug(client, unpublished_article)
+
+
+@pytest.mark.django_db
+def test_anonymous_cant_access_drafts_list(
+    client: Client, unpublished_article: Article
+):
+    res = client.get(reverse("drafts-list"))
+    assert res.status_code == 302
+
+
+@pytest.mark.django_db
+def test_user_can_access_drafts_list(
+    client: Client, author: User, unpublished_article: Article
+):
+    client.force_login(author)
+    res = client.get(reverse("drafts-list"))
+    assert res.status_code == 200
+    content = res.content.decode("utf-8")
+    assert unpublished_article.title in content
 
 
 @pytest.mark.django_db
