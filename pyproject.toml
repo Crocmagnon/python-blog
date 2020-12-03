@@ -10,6 +10,7 @@ DJANGO_SETTINGS_MODULE = "blog.settings"
 testpaths = [
     "articles",
     "blog",
+    "attachments",
 ]
 
 [tool.poetry]
@@ -37,6 +38,7 @@ pytest = "^6.0"
 pytest-django = "^3.9"
 model-bakery = "^1.1"
 pytest-cov = "^2.10.1"
+pytest-recording = "^0.11.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

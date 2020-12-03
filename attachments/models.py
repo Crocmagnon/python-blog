@@ -47,7 +47,7 @@ class Attachment(models.Model):
         if self.id is None:
             super().save(*args, **kwargs)
         try:
-            image = Image.open(self.original_file.path)
+            Image.open(self.original_file.path)
         except IOError:
             return super().save(*args, **kwargs)
 

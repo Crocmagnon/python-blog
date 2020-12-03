@@ -1,0 +1,99 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2309'
+      Content-Type:
+      - multipart/form-data; boundary=db4d499839441a0f66c79bbf8317b966
+      User-Agent:
+      - python-requests/2.25.0
+    method: POST
+    uri: https://api.shortpixel.com/v2/post-reducer.php
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA61TXW+bQBB8z6+IeK59H2ADfnMaVbHixKRubKlVFJ2PPfsiMIQ7rJAo/73HSdjE
+        wm0q9R4Q7Mzuzu4xv87OzXmzz/o4c810qZxRK2bjX7MYTNShzpc92QI3oBRbW2xecm6+nD3h/cB1
+        ZoVcyy1L7r9Pa+5G63yEEMtlX22yQufyBZI+z1JUossLuXy+CN1LuWB3oc5nV9HL/WB5/XMnJxVf
+        LkQ+e3pNtOYojmPPDzgfxK4HvljROGAioAK4gCHwVT/frluCnWmmVGIk/lWEQG4QYN8bYsqCcIh9
+        jkXAXZ8KsqLCxWzYVbr6D3V7idFYHVdfwio6En87bk/WEBoJH9HxYvLtj+kNoTu9ubu5fLUXTUjo
+        da21wUOPHMFQb/00rKoTWHvuhtI5+IcGnYxDj9O76W6xX043/EOmYGyT5tYfmOIeoT3snlN3hMmI
+        uu1VRFBw2OpJmhfZDlLzapNIn4Rt2jVUdbwAlZUmQSGZGo89jiOgxe308eivTjLOkojpTZ2DSlUg
+        G0FKxb24kDtAB4v9g7kGHvmcwazf388efgN919avTQQAAA==
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Thu, 03 Dec 2020 22:01:24 GMT
+      Server:
+      - nginx/1.15.2
+      Set-Cookie:
+      - ShortPixel=ShortPixel_ns71; path=/
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.25.0
+    method: GET
+    uri: http://api.shortpixel.com/f/388074602a89607c0f8c372f1b2f30a6-lossy.png
+  response:
+    body:
+      string: !!binary |
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAACc1BMVEXf39/n5+ft7e3v7+/w8PDw
+        8O/u7u7r6+vm5ubh2trg4ODr6+vq6urg4ODi4uHt7e3r6+vh4eHh4eHt7Ozo6eng39/c0tLb6enp
+        6enRh4eTWFjd3d3n5+esX1/c3Nzl5OSyfXy/b2/b29ri4uFvbGuXenvZ2dng4N+kpKbr7OzX19bf
+        3t3W1dXd3dzW1tXc29vZ2NfV1dTV1NTa2tnY19bV1NTU1NPX1tbX1tXT09LW1dXS0dDU09LR0M/Q
+        yMjQ0M/V1dTY19a6ubmmpqbBwcHR0NDX1tXW1dXU09LPz87Qz87w8PDx8fH29fXy8vLv7/D09PTz
+        8/P19fXv7+/p6enY2Nnk5OTm5ubg4ODq6urb29zj4+Pa2tvn5+fm5+fr6+vl5eXr7Ozv8PDd3d3V
+        1dXX19fc3NzOz8/f19bnzc3j4+Li4uLa2trb29vf39/g4eHNzs/hu7z1n5/g39/e3t3Z2dnOz9DP
+        yr/CvauytsPQoKTjiIjd3NzU1NPU1NTIycne3t7X2NnLx7vdtkvnvT2trJeemZrKysro5+fo6Oni
+        3dHqxFr8xyL+0DnYrzyShmnX1tbb2trm5uXp6Ofk5OXZ1MnnwFb8xiH+0Tzsuy3IlxqUglbR0NDP
+        z8/S0tLRzMHatUv7xR/+0Trtuy7KmR6chk61s7HS0tG6urrGxcXFxcfLtHr7xCL/0DiTfEShoJ/Z
+        2djQz8+/vr7Oy8fgxpD3zWXtuSzMmyGeh0+vrq3DwsLBwMDMy8y/uKnjx47WuX2/nVGdiFO1tLHe
+        3d3g397c29vOzczY19bY19eRkI2Sh2+ek4CemZK6ubja2dnd3Nva2di8i5n6AAAAS3RSTlMGqvfz
+        8/Pz96sHBrKzBwayswcGsrMHswey0SUGspAGsvBkBrK8DAayswcGsrMHBrKzBwayswcGsrMHBrKz
+        Bwar+fX19fX19fX5rQfYmwlAAAAAnklEQVQYGQXBQUrDQAAF0HnJD50kBUEFhW7qzgMU3Iln8Vje
+        RPAe7noA0W2I2CG+p6CwbaWUHiYvKHAZyrvEaOtwGWjRJaW2tlv+pjYMY5LVvq+zFlfoZLlfbtvO
+        sQO97pAhN2v9qbXWWl/79B6sB4/AWxLdeP49ASJx7QlAJPYFgEjMwGIiEpOvO0x8fkdidAScfEjs
+        ASxzeEYBNvgHumshAGNFansAAAAASUVORK5CYII=
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - '941'
+      Content-Type:
+      - image/png
+      Date:
+      - Thu, 03 Dec 2020 22:01:24 GMT
+      Server:
+      - nginx/1.15.2
+      Set-Cookie:
+      - ShortPixel=ShortPixel_ns71; path=/
+    status:
+      code: 200
+      message: OK
+version: 1
