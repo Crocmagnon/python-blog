@@ -188,3 +188,5 @@ BLOG = {
 SHORTPIXEL_API_KEY = os.getenv("SHORTPIXEL_API_KEY")
 
 PLAUSIBLE_DOMAIN = os.getenv("PLAUSIBLE_DOMAIN")
+
+LOGIN_URL = "admin:login"
