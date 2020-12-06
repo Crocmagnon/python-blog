@@ -6,14 +6,12 @@ import markdown
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.http import HttpRequest
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
 from markdown.extensions.codehilite import CodeHiliteExtension
 
 from articles.markdown import LazyLoadingImageExtension
-from articles.utils import build_full_absolute_url
 
 
 class User(AbstractUser):
@@ -66,10 +64,6 @@ class Article(AdminUrlMixin, models.Model):
 
     def get_absolute_url(self):
         return reverse("article-detail", kwargs={"slug": self.slug})
-
-    def get_full_absolute_url(self, request: HttpRequest = None):
-        url = self.get_absolute_url()
-        return build_full_absolute_url(request, url)
 
     def get_abstract(self):
         html = self.get_formatted_content()
