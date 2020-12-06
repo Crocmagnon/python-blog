@@ -9,11 +9,7 @@
         <ul>
         {% for article in articles %}
             <li>
-                {% if article.published_at %}
-                    <time datetime="{{ article.published_at|date:CUSTOM_ISO }}">{{ article.published_at|date }}</time>
-                {% else %}
-                    <time datetime="{{ article.updated_at|date:CUSTOM_ISO }}">{{ article.updated_at|date }}</time>
-                {% endif %}
+                {% include "articles/datetime_snippet.html" %}
                 : <a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a>
             </li>
         {% empty %}

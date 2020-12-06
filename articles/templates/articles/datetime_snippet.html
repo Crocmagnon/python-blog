@@ -1,0 +1,5 @@
+{% if article.published_at %}
+    <time datetime="{{ article.published_at|date:CUSTOM_ISO }}">{{ article.published_at|date:ISO_DATE }}</time>
+{% else %}
+    <time datetime="{{ article.updated_at|date:CUSTOM_ISO }}">{{ article.updated_at|date:ISO_DATE }}</time>
+{% endif %}

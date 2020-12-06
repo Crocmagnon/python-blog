@@ -23,7 +23,7 @@ def drafts_count(request):
 def date_format(request):
     if request.path in IGNORED_PATHS:
         return {}
-    return {"CUSTOM_ISO": r"Y-m-d\TH:i:sO"}
+    return {"CUSTOM_ISO": r"Y-m-d\TH:i:sO", "ISO_DATE": "Y-m-d"}
 
 
 def git_version(request):
