@@ -1,21 +1,14 @@
 {% extends 'articles/base.html' %}
 
 {% block title %}{{ article.title }} | {% endblock %}
+
 {% block content %}
-    <article class="article-detail">
+    <article>
         <h1>{{ article.title }}{% if article.status != article.PUBLISHED %}
             ({{ article.status }}){% endif %}</h1>
-        {% include "articles/metadata_snippet.html" %}
+        {% include "articles/snippets/metadata.html" %}
         <div>
             {{ article.get_formatted_content|safe }}
         </div>
     </article>
-    <section class="comments">
-        <h2>Comments</h2>
-        <p>
-            Comments are hard to manage. I tried enabling them but I only got spam.
-            If you want to react to this content or interact with me, please head to the
-            <a href="/about-me/">about me</a> page.&nbsp;😉
-        </p>
-    </section>
 {% endblock %}

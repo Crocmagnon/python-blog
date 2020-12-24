@@ -5,7 +5,7 @@ from django.contrib.admin import register
 from django.contrib.auth.admin import UserAdmin
 from django.shortcuts import redirect
 
-from .models import Article, Page, User
+from .models import Article, User
 
 admin.site.register(User, UserAdmin)
 
@@ -35,6 +35,7 @@ class ArticleAdmin(admin.ModelAdmin):
                     ("status", "published_at"),
                     ("created_at", "updated_at"),
                     "views_count",
+                    "has_code",
                 ]
             },
         ),
@@ -92,13 +93,3 @@ class ArticleAdmin(admin.ModelAdmin):
             messages.success(request, "Item has been unpublished")
             return redirect(".")
         return super().response_change(request, obj)
-
-
-@register(Page)
-class PageAdmin(ArticleAdmin):
-    list_display = ["position"] + ArticleAdmin.list_display
-
-    def get_fieldsets(self, request, obj=None):
-        article_fieldsets = copy.deepcopy(ArticleAdmin.fieldsets)
-        article_fieldsets[0][1]["fields"][0] = ("title", "slug", "position")
-        return article_fieldsets

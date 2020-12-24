@@ -1,17 +1,11 @@
 from django.conf import settings
 
-from articles.models import Article, Page
+from articles.models import Article
 from attachments.models import Attachment
 
 IGNORED_PATHS = [
     "/robots.txt",
 ]
-
-
-def pages(request):
-    if request.path in IGNORED_PATHS:
-        return {}
-    return {"pages": Page.objects.filter(status=Article.PUBLISHED).exclude(position=0)}
 
 
 def drafts_count(request):
@@ -52,3 +46,11 @@ def open_graph_image_url(request):
     if open_graph_image:
         url = open_graph_image.processed_file.get_full_absolute_url(request)
     return {"open_graph_image_url": url}
+
+
+def blog_metadata(request):
+    context = {}
+    context["blog_title"] = settings.BLOG["title"]
+    context["blog_description"] = settings.BLOG["description"]
+    context["blog_author"] = settings.BLOG["author"]
+    return context

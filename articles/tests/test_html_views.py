@@ -3,20 +3,16 @@ from django.test import Client
 from django.urls import reverse
 from model_bakery import baker
 
-from articles.models import Article, Page, User
+from articles.models import Article, User
 
 
 @pytest.mark.django_db
-def test_can_access_list(
-    client: Client, published_article: Article, published_page: Page
-):
+def test_can_access_list(client: Client, published_article: Article):
     res = client.get(reverse("articles-list"))
     assert res.status_code == 200
     content = res.content.decode("utf-8")
-    for art in [published_article, published_page]:
-        assert art.title in content
+    assert published_article.title in content
     assert published_article.get_abstract() not in content
-    assert published_page.get_formatted_content() not in content
 
 
 @pytest.mark.django_db
@@ -41,11 +37,6 @@ def test_only_title_shown_on_list(client: Client, author: User):
 @pytest.mark.django_db
 def test_access_article_by_slug(client: Client, published_article: Article):
     _test_access_article_by_slug(client, published_article)
-
-
-@pytest.mark.django_db
-def test_access_page_by_slug(client: Client, published_page: Page):
-    _test_access_article_by_slug(client, published_page)
 
 
 def _test_access_article_by_slug(client: Client, item: Article):

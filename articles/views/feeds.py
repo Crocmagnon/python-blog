@@ -11,7 +11,7 @@ class CompleteFeed(Feed):
     description = settings.BLOG["description"]
 
     def items(self):
-        return Article.without_pages.filter(status=Article.PUBLISHED).order_by(
+        return Article.objects.filter(status=Article.PUBLISHED).order_by(
             "-published_at"
         )[: self.FEED_LIMIT]
 

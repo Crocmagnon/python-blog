@@ -1,38 +1,44 @@
 {% extends 'articles/base.html' %}
 
+{% block override_header %}
+    {% include "articles/snippets/style_home.html" %}
+{% endblock %}
+
 {% block title %}{% endblock %}
+
 {% block content %}
-    <h1>{{ blog_title }}{% if title %} &middot; {{ title }}{% endif %}</h1>
-    <p class="metadata">{{ blog_description }} {% include "articles/admin_link_snippet.html" %}</p>
-    <section class="blog-posts">
+    <section>
         <h2>Blog posts</h2>
-        <ul>
-        {% for article in articles %}
-            <li>
-                {% include "articles/datetime_snippet.html" %}
-                : <a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a>
-            </li>
-        {% empty %}
-            <li>No article here. Come back later 🙂</li>
-        {% endfor %}
-        </ul>
+        <table>
+            <tr><th scope="col">Date</th><th scope="col">Title</th></tr>
+            {% for article in articles %}
+                <tr>
+                    <td>{% include "articles/snippets/datetime.html" %}</td>
+                    <td><a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a></td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="2">No article here. Come back later 🙂</td></tr>
+            {% endfor %}
+        </table>
     </section>
     <nav class="pagination">
-        <div class="older">
+        <div>
             {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}">⇠ Older</a>
             {% endif %}
         </div>
-        <div class="newer">
+        <div>
             {% if page_obj.has_previous %}
                 <a href="?page={{ page_obj.previous_page_number }}">Newer ⇢</a>
             {% endif %}
         </div>
     </nav>
-    <section class="index-page">
-        <h2>{{ article.title }}</h2>
-        <div>
-            {{ article.get_formatted_content|safe }}
-        </div>
-    </section>
+    {% if article %}
+        <section>
+            <h2>{{ article.title }}{% include "articles/snippets/admin_link.html" %}</h2>
+            <div>
+                {{ article.get_formatted_content|safe }}
+            </div>
+        </section>
+    {% endif %}
 {% endblock %}

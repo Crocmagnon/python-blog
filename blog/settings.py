@@ -96,12 +96,12 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "articles.context_processors.pages",
                 "articles.context_processors.drafts_count",
                 "articles.context_processors.date_format",
                 "articles.context_processors.git_version",
                 "articles.context_processors.plausible",
                 "articles.context_processors.open_graph_image_url",
+                "articles.context_processors.blog_metadata",
             ],
         },
     },
@@ -176,6 +176,7 @@ AUTH_USER_MODEL = "articles.User"
 
 BLOG = {
     "title": "Gab's Notes",
+    "author": "Gabriel Augendre",
     "description": "My take on tech-related subjects (but not only).",
     "base_url": os.getenv("BLOG_BASE_URL", "https://gabnotes.org/"),
     "repo": {

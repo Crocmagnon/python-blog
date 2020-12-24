@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if article.published_at %}
     <time datetime="{{ article.published_at|date:CUSTOM_ISO }}">{{ article.published_at|date:ISO_DATE }}</time>
 {% else %}

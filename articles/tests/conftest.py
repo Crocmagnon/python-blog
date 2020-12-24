@@ -1,7 +1,7 @@
 import pytest
 from django.utils import timezone
 
-from articles.models import Article, Page, User
+from articles.models import Article, User
 
 
 @pytest.fixture()
@@ -39,18 +39,4 @@ def unpublished_article(author: User) -> Article:
         published_at=None,
         slug="some-draft-article-slug",
         content="## some draft article markdown\n\n[a draft article link](https://article.com)",
-    )
-
-
-@pytest.fixture()
-@pytest.mark.django_db
-def published_page(author: User) -> Page:
-    return Page.objects.create(
-        title="Some interesting page title",
-        status=Article.PUBLISHED,
-        author=author,
-        published_at=timezone.now(),
-        slug="some-page-slug",
-        content="## some page markdown\n\n[a page link](https://page.com)",
-        position=2,
     )

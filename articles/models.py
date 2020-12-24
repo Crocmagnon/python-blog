@@ -18,11 +18,6 @@ class User(AbstractUser):
     pass
 
 
-class ArticleManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(page__isnull=True)
-
-
 class AdminUrlMixin:
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
@@ -49,18 +44,14 @@ class Article(AdminUrlMixin, models.Model):
     views_count = models.IntegerField(default=0)
     slug = models.SlugField(unique=True, max_length=255)
     keywords = models.CharField(max_length=255, blank=True)
-
-    objects = models.Manager()
-    without_pages = ArticleManager()
+    has_code = models.BooleanField(default=False, blank=True)
+    is_home = models.BooleanField(default=False, blank=True)
 
     class Meta:
         ordering = ["-published_at"]
 
     def __str__(self):
-        type_ = "Article"
-        if hasattr(self, "page"):
-            type_ = "Page"
-        return f"{self.title} ({type_})"
+        return f"{self.title}"
 
     def get_absolute_url(self):
         return reverse("article-detail", kwargs={"slug": self.slug})
@@ -116,11 +107,3 @@ class Article(AdminUrlMixin, models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
-
-
-class Page(Article):
-    objects = models.Manager()
-    position = models.IntegerField(default=0)
-
-    class Meta:
-        ordering = ["position", "-published_at"]

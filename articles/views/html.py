@@ -1,11 +1,9 @@
-from typing import Union
-
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
 from django.views import generic
 
-from articles.models import Article, Page
+from articles.models import Article
 
 
 class BaseArticleListView(generic.ListView):
@@ -21,14 +19,14 @@ class BaseArticleListView(generic.ListView):
 class ArticlesListView(BaseArticleListView):
     model = Article
     context_object_name = "articles"
-    queryset = Article.without_pages.filter(status=Article.PUBLISHED)
+    queryset = Article.objects.filter(status=Article.PUBLISHED)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        index_page = Page.objects.filter(
-            status=Article.PUBLISHED, position=0
-        ).first()  # type: Page
-        context["article"] = index_page
+        home_article = Article.objects.filter(
+            status=Article.PUBLISHED, is_home=True
+        ).first()  # type: Article
+        context["article"] = home_article
         return context
 
 
@@ -55,10 +53,8 @@ class ArticleDetailView(generic.DetailView):
             return queryset
         return queryset.filter(status=Article.PUBLISHED)
 
-    def get_object(self, queryset=None) -> Union[Article, Page]:
+    def get_object(self, queryset=None) -> Article:
         obj = super().get_object(queryset)  # type: Article
-        if hasattr(obj, "page"):
-            obj = obj.page  # type: Page
         if not self.request.user.is_authenticated:
             obj.views_count = F("views_count") + 1
             obj.save(update_fields=["views_count"])

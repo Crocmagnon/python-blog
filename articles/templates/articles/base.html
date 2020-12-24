@@ -6,57 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Gabriel Augendre">
     <meta name="color-scheme" content="light dark">
-    {% if article %}
-        <meta name="keywords" content="{{ article.keywords }}">
-        <meta name="description" content="{{ article.get_description }}">
-        <meta property="og:title" content="{{ article.title }}" />
-        <meta property="og:type" content="article">
-        <meta property="og:description" content="{{ article.get_description }}">
-        <meta property="og:site_name" content="{{ blog_title }}">
-    {% endif %}
-    {% if open_graph_image_url %}
-        <meta property="og:image" content="{{ open_graph_image_url }}">
-    {% endif %}
-    <title>{% block title %}Home | {% endblock %}Gab's Notes by Gabriel Augendre</title>
-    <link rel="stylesheet" id="code-light" href="{% static 'code-light.css' %}" type="text/css">
-    <link rel="stylesheet" id="code-dark" href="{% static 'code-dark.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css">
-    <script src="{% static 'scripts.js' %}" async></script>
+    {% include "articles/snippets/page_metadata.html" %}
+    <title>{% block title %}Home | {% endblock %}{{ blog_title }} by {{ blog_author }}</title>
     <link rel="alternate" type="application/rss+xml" title="Gab's Notes » Feed" href="{% url 'complete-feed' %}">
-    {% include "articles/favicon.html" %}
-    {% include "articles/analytics.html" %}
+    {% include "articles/snippets/style.html" %}
+    {% if article and article.has_code %}
+        {% include "articles/snippets/code_style.html" %}
+    {% endif %}
+    {% if user.is_authenticated %}
+        <script src="{% static 'edit-keymap.js' %}" async></script>
+    {% endif %}
+    {% include "articles/snippets/favicon.html" %}
+    {% include "articles/snippets/analytics.html" %}
+    {% block override_header %}{% endblock %}
 </head>
 <body>
-<nav>
-    <a href="{% url 'articles-list' %}">Articles list</a>
-    &centerdot;
-    {% if user.is_authenticated %}
-        <a href="{% url 'admin:articles_article_add' %}">Write</a>
-        <a href="{% url 'drafts-list' %}">View drafts <span class="pill">{{ drafts_count }}</span></a>
+<header>
+    <h1>{{ blog_title }}</h1>
+    <p>{{ blog_description }}</p>
+    <nav>
+        <a href="{% url 'articles-list' %}">Home</a>
         &centerdot;
-        <a href="{% url 'admin:index' %}">Admin</a>
-        <a href="{% url 'admin:logout' %}?next=/">Log out</a>
-    {% else %}
-        <a href="{% url 'admin:login' %}?next=/">Log in</a>
-    {% endif %}
-    {% if pages %}
+        <a href="{% url 'complete-feed' %}">RSS</a>
         &centerdot;
-        {% for page in pages %}
-            <a href="{% url 'article-detail' slug=page.slug %}">{{ page.title }}</a>
-        {% endfor %}
-    {% endif %}
-</nav>
-{% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-            <p class="{{ message.level_tag }}">{{ message|safe }}</p>
-        {% endfor %}
-    </div>
-{% endif %}
-<div class="content">
-    {% block content %}
-    {% endblock %}
-</div>
+        {% if user.is_authenticated %}
+            <a href="{% url 'admin:articles_article_add' %}">Write</a>
+            &centerdot;
+            <a href="{% url 'drafts-list' %}">View drafts <span class="pill">{{ drafts_count }}</span></a>
+            &centerdot;
+            <a href="{% url 'admin:index' %}">Admin</a>
+            &centerdot;
+            <a href="{% url 'admin:logout' %}?next=/">Log out</a>
+        {% else %}
+            <a href="{% url 'admin:login' %}?next=/">Log in</a>
+        {% endif %}
+    </nav>
+</header>
+
+{% block content %}
+{% endblock %}
 
 <footer>
     <p>
