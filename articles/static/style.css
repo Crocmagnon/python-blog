@@ -102,10 +102,12 @@ code {
 .codehilite {
     border-radius: .5ex;
     background-color: var(--background2);
+    border: 1px solid var(--background3);
 }
 
 .codehilite pre {
-    padding: 1em;
+    padding: 0;
+    margin: 1em;
 }
 
 section.comments {
@@ -150,6 +152,28 @@ tr:hover {
     padding: .5ex 1ex;
     border-radius: 1ex;
     vertical-align: 15%;
+}
+
+blockquote {
+    background-color: var(--background2);
+    margin: 0;
+    padding: 1px .5em 1px 1.5em;
+    border-left: 6px solid var(--background3);
+}
+
+details {
+    padding: .6rem 1rem;
+    background: var(--background2);
+    border: 1px solid var(--background3);
+    border-radius: 4px;
+}
+
+summary {
+    cursor: pointer;
+}
+
+details .codehilite {
+    border: none;
 }
 
 /* FORMS */
