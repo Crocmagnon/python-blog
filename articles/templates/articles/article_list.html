@@ -8,28 +8,25 @@
 
 {% block content %}
     <section>
-        <h2>Blog posts</h2>
-        <table>
-            <tr><th scope="col">Date</th><th scope="col">Title</th></tr>
-            {% for article in articles %}
-                <tr>
-                    <td>{% include "articles/snippets/datetime.html" %}</td>
-                    <td><a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a></td>
-                </tr>
-            {% empty %}
-                <tr><td colspan="2">No article here. Come back later 🙂</td></tr>
-            {% endfor %}
-        </table>
+        <h2 id="blog-posts">Blog posts</h2>
+        {% for article in articles %}
+            <p>
+                {% include "articles/snippets/datetime.html" %}<br>
+                <a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a>
+            </p>
+        {% empty %}
+            <p>No article here. Come back later 🙂</p>
+        {% endfor %}
     </section>
     <nav class="pagination">
         <div>
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">⇠ Older</a>
+                <a href="?page={{ page_obj.next_page_number }}#blog-posts"><button>⇠ Older</button></a>
             {% endif %}
         </div>
         <div>
             {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">Newer ⇢</a>
+                <a href="?page={{ page_obj.previous_page_number }}#blog-posts"><button>Newer ⇢</button></a>
             {% endif %}
         </div>
     </nav>
