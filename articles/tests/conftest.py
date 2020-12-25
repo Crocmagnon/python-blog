@@ -1,4 +1,5 @@
 import pytest
+from django.core.management import call_command
 from django.utils import timezone
 
 from articles.models import Article, User
@@ -40,3 +41,9 @@ def unpublished_article(author: User) -> Article:
         slug="some-draft-article-slug",
         content="## some draft article markdown\n\n[a draft article link](https://article.com)",
     )
+
+
+@pytest.fixture(autouse=True, scope="session")
+def collect_static():
+    call_command("collectstatic", "--no-input", "--clear")
+    call_command("assets", "build", "--manifest", "django")

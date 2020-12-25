@@ -1,5 +1,5 @@
 #!/bin/sh
 set -euxo pipefail
-TESTING=true python -m pytest
+python -m pytest
 pre-commit run --all-files
-TESTING=true python manage.py makemigrations --check
+python manage.py makemigrations --check

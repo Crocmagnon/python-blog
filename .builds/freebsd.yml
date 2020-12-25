@@ -10,7 +10,6 @@ secrets:
   - ea931da1-9acd-47b0-b6c9-52b8b61c4647  # Ansible hosts file
   - 5c948915-48c2-4542-8fc1-a5676f4d7126  # Deploy SSH key
 environment:
-  TESTING: true
   POETRY_VERSION: 1.1.4
 tasks:
   - install_poetry: |

@@ -43,7 +43,6 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "true").lower() == "true"
-TESTING = os.getenv("TESTING", "false").lower() == "true"
 
 ALLOWED_HOSTS = ["localhost"]  # Required for healthcheck
 if DEBUG:
@@ -161,14 +160,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-if TESTING:
-    # ManifestStaticFilesStorage requires collectstatic to be run
-    # and collectstatic is not run for tests
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-else:
-    STATICFILES_STORAGE = (
-        "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
-    )
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
