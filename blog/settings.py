@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "attachments",
     "anymail",
     "django_cleanup.apps.CleanupConfig",
+    "django_assets",
 ]
 
 MIDDLEWARE = [
@@ -169,6 +170,12 @@ else:
         "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
     )
 
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "django_assets.finders.AssetsFinder",
+]
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -191,3 +198,6 @@ SHORTPIXEL_API_KEY = os.getenv("SHORTPIXEL_API_KEY")
 PLAUSIBLE_DOMAIN = os.getenv("PLAUSIBLE_DOMAIN")
 
 LOGIN_URL = "admin:login"
+
+ASSETS_AUTO_BUILD = DEBUG
+ASSETS_DEBUG = False

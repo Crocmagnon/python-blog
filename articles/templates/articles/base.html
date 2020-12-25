@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,18 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Gabriel Augendre">
     <meta name="color-scheme" content="light dark">
-    {% include "articles/snippets/page_metadata.html" %}
     <title>{% block title %}Home | {% endblock %}{{ blog_title }} by {{ blog_author }}</title>
     <link rel="alternate" type="application/rss+xml" title="Gab's Notes » Feed" href="{% url 'complete-feed' %}">
-    <link rel="stylesheet" href="{% static "newcss.css" %}">
-    <link rel="stylesheet" href="{% static "public.css" %}">
-    {% if article and article.has_code %}
-        <link rel="stylesheet" href="{% static "codehilite.css" %}">
-    {% endif %}
-    {% if user.is_authenticated %}
-        <link rel="stylesheet" href="{% static "authenticated.css" %}">
-        <script src="{% static 'edit-keymap.js' %}" async></script>
-    {% endif %}
+    {% include "articles/snippets/page_metadata.html" %}
+    {% include "articles/snippets/load_styles_and_scripts.html" %}
     {% include "articles/snippets/favicon.html" %}
     {% include "articles/snippets/analytics.html" %}
     {% block append_header %}{% endblock %}

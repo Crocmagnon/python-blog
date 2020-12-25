@@ -28,6 +28,7 @@ blog_prestart()
 	. /srv/blog/.env
 	yes yes | /srv/blogvenv/bin/python /srv/blog/manage.py migrate
 	/srv/blogvenv/bin/python /srv/blog/manage.py collectstatic --noinput --clear
+	/srv/blogvenv/bin/python /srv/blog/manage.py assets build --manifest django
 }
 
 run_rc_command "$1"
