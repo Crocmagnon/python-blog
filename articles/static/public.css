@@ -1,0 +1,14 @@
+body {
+    max-width: 640px;
+}
+
+footer {
+    border-top: 2px solid var(--nc-bg-3);
+    margin-top: 2em;
+    font-size: 80%;
+    color: var(--nc-tx-2);
+}
+
+footer > :first-child {
+    margin-top: 1em;
+}

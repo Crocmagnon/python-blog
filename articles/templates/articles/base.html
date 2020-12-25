@@ -9,11 +9,13 @@
     {% include "articles/snippets/page_metadata.html" %}
     <title>{% block title %}Home | {% endblock %}{{ blog_title }} by {{ blog_author }}</title>
     <link rel="alternate" type="application/rss+xml" title="Gab's Notes » Feed" href="{% url 'complete-feed' %}">
-    {% include "articles/snippets/style.html" %}
+    <link rel="stylesheet" href="{% static "newcss.css" %}">
+    <link rel="stylesheet" href="{% static "public.css" %}">
     {% if article and article.has_code %}
-        {% include "articles/snippets/code_style.html" %}
+        <link rel="stylesheet" href="{% static "codehilite.css" %}">
     {% endif %}
     {% if user.is_authenticated %}
+        <link rel="stylesheet" href="{% static "authenticated.css" %}">
         <script src="{% static 'edit-keymap.js' %}" async></script>
     {% endif %}
     {% include "articles/snippets/favicon.html" %}
