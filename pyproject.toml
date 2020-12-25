@@ -32,7 +32,7 @@ django-cleanup = "^5.0"
 requests = "^2.24"
 html2text = "^2020.1.16"
 django-assets = "^2.0"
-cssmin = "^0.2.0"
+rcssmin = "^1.0.6"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.7"
