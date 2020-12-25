@@ -1,5 +1,11 @@
 {% extends 'articles/base.html' %}
 
+{% block append_header %}
+    <style>
+        {{ article.custom_css }}
+    </style>
+{% endblock %}
+
 {% block title %}{{ article.title }} | {% endblock %}
 
 {% block content %}

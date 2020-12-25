@@ -46,6 +46,7 @@ class Article(AdminUrlMixin, models.Model):
     keywords = models.CharField(max_length=255, blank=True)
     has_code = models.BooleanField(default=False, blank=True)
     is_home = models.BooleanField(default=False, blank=True)
+    custom_css = models.TextField(blank=True)
 
     class Meta:
         ordering = ["-published_at"]

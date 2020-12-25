@@ -1,5 +1,8 @@
-#id_content {
+#id_content, #id_custom_css {
     font-family: "JetBrains Mono", monospace;
+}
+
+#id_content {
     width: calc(100% - 1em);
     height: 44.5em;
     resize: vertical;

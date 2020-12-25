@@ -1,7 +1,9 @@
 {% extends 'articles/base.html' %}
 
-{% block override_header %}
-    {% include "articles/snippets/style_home.html" %}
+{% block append_header %}
+    <style>
+        {{ article.custom_css }}
+    </style>
 {% endblock %}
 
 {% block title %}{% endblock %}

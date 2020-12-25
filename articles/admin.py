@@ -39,7 +39,15 @@ class ArticleAdmin(admin.ModelAdmin):
                 ]
             },
         ),
-        ("Content", {"fields": ("content",)}),
+        (
+            "Content",
+            {
+                "fields": (
+                    "content",
+                    "custom_css",
+                )
+            },
+        ),
     ]
     readonly_fields = [
         "created_at",
