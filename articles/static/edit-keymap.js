@@ -1,5 +1,5 @@
 window.onload = function () {
-    const adminLinkElement = document.querySelector(".article-detail .metadata a.admin-link");
+    const adminLinkElement = document.querySelector("a#admin-link");
     if (adminLinkElement === undefined || adminLinkElement === null) {
         return;
     }
