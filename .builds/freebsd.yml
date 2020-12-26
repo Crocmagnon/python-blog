@@ -15,14 +15,14 @@ tasks:
   - install_poetry: |
       mkdir $HOME/bin
       ln -s $(which python3.9) $HOME/bin/python
-      curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-      echo "source $HOME/.poetry/env" >> ~/.buildenv
+      python -m ensurepip
+      python -m pip install poetry==$POETRY_VERSION
   - install_deps: |
       cd blog
-      poetry install -n
+      python -m poetry install -n
   - test: |
       cd blog
-      poetry run ./docker/runtests.sh
+      python -m poetry run ./docker/runtests.sh
   - check-branch: |
       cd blog
       if [ "$(git rev-parse master)" != "$(git rev-parse HEAD)" ]; then \
