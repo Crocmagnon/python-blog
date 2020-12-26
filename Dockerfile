@@ -2,22 +2,20 @@
 FROM python:3.8.6-buster AS venv
 
 # https://python-poetry.org/docs/#installation
-ENV POETRY_VERSION=1.0.10
+ENV POETRY_VERSION=1.1.4
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 
 ENV PATH /root/.poetry/bin:$PATH
 ENV PYTHONPATH $PYTHONPATH:/root/.poetry/lib
+ARG POETRY_OPTIONS
 
 WORKDIR /app
 COPY pyproject.toml poetry.lock ./
-# Will install dev deps as well, so that we can run tests in this image
+
 RUN python -m venv --copies /app/venv \
     && . /app/venv/bin/activate \
     && poetry config cache-dir /app/poetry-cache \
-    && (python -c "from poetry.factory import Factory; l = Factory().create_poetry('.').locker; exit(0) if l.is_locked() and l.is_fresh() else exit(1)" \
-            && echo "poetry.lock is up to date") \
-        || (>&2 echo "poetry.lock is outdated. Run `poetry lock` on your machine and commit the file." && exit 1) \
-    && poetry install
+    && poetry install $POETRY_OPTIONS
 
 
 ## Get git versions
