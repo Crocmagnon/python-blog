@@ -1,4 +1,4 @@
 {% if plausible_domain is not None and not user.is_authenticated %}
-<link rel="dns-prefetch" href="https://plausible.augendre.info">
+<link rel="preconnect" href="https://plausible.augendre.info">
 <script async defer data-domain="{{ plausible_domain }}" src="https://plausible.augendre.info/js/plausible.js"></script>
 {% endif %}
