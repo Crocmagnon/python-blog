@@ -2,35 +2,39 @@
 - name: deploy blog
   hosts: blognas
   remote_user: root
-  environment:
-    PATH: /root/.poetry/bin:{{ ansible_env.PATH }}
+#  environment:
+#    PATH: /root/.poetry/bin:{{ ansible_env.PATH }}
 
   tasks:
     - name: install system dependencies
       pkgng:
-        name: git,python38,py38-sqlite3,jpeg-turbo,nginx,curl,vim
-    - name: make python3.8 default
+        name: git,python39,py39-sqlite3,jpeg-turbo,nginx,curl,vim
+    - name: make python3.9 default
       file:
         path: /usr/local/bin/python3
-        src: /usr/local/bin/python3.8
+        src: /usr/local/bin/python3.9
         state: link
+    - name: install pip
+      shell:
+        cmd: python -m ensurepip
+        creates: /usr/local/lib/python3.9/site-packages/pip
     - name: fetch code
       git:
         repo: https://git.sr.ht/~crocmagnon/blog
         dest: /srv/blog
         force: yes
-    - name: install poetry
-      shell:
-        cmd: POETRY_VERSION=1.1.4 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-        creates: /root/.poetry/bin/poetry
     - name: create venv
       shell:
         cmd: python -m venv /srv/blogvenv
         creates: /srv/blogvenv/bin/python
+    - name: install poetry
+      shell:
+        cmd: . /srv/blogvenv/bin/activate && python -m pip install poetry==1.1.4
+        creates: /srv/blogvenv/bin/poetry
     - name: install python dependencies
       shell:
         chdir: /srv/blog
-        cmd: . /srv/blogvenv/bin/activate && poetry install --no-dev --remove-untracked
+        cmd: . /srv/blogvenv/bin/activate && poetry install --no-dev
     - name: install service
       copy:
         remote_src: yes
