@@ -28,17 +28,14 @@ RUN git rev-parse HEAD | tee /version
 ## Beginning of runtime image
 FROM python:3.8.6-slim-buster as prod
 
-RUN apt-get update \
-    # Git is required for pre-commit checks
-    && apt-get install -y --no-install-recommends git \
-    && echo "Europe/Paris" > /etc/timezone \
+RUN echo "Europe/Paris" > /etc/timezone \
     && mkdir /db
 
 COPY --from=venv /app/venv /app/venv/
 ENV PATH /app/venv/bin:$PATH
 
 WORKDIR /app
-COPY manage.py LICENSE .pre-commit-config.yaml pyproject.toml ./
+COPY manage.py LICENSE pyproject.toml ./
 COPY docker ./docker/
 COPY blog ./blog/
 COPY attachments ./attachments/

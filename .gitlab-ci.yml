@@ -67,7 +67,6 @@ publish:
   <<: *build
   stage: publish
   variables:
-    GIT_STRATEGY: none
     POETRY_OPTIONS: "--no-dev"
   before_script:
     - export IMAGE=$IMAGE_LATEST

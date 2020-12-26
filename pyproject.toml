@@ -5,6 +5,7 @@ target-version = ['py38']
 profile = "black"
 
 [tool.pytest.ini_options]
+addopts = "--color=yes"
 minversion = "6.0"
 DJANGO_SETTINGS_MODULE = "blog.settings"
 testpaths = [
