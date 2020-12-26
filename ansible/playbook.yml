@@ -2,8 +2,6 @@
 - name: deploy blog
   hosts: blognas
   remote_user: root
-#  environment:
-#    PATH: /root/.poetry/bin:{{ ansible_env.PATH }}
 
   tasks:
     - name: install system dependencies
@@ -34,7 +32,7 @@
     - name: install python dependencies
       shell:
         chdir: /srv/blog
-        cmd: . /srv/blogvenv/bin/activate && poetry install --no-dev
+        cmd: . /srv/blogvenv/bin/activate && python -m poetry install --no-dev
     - name: install service
       copy:
         remote_src: yes
