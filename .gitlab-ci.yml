@@ -75,12 +75,16 @@ publish:
   only:
     - master
 
-#deploy:
-#  tags:
-#    - it4nw
-#  stage: deploy
-#  image: tobedefined # todo: look for image with ssh
-#  script:
-#    - exit 1
-#  only:
-#    - master
+deploy:
+  stage: deploy
+  image: ubuntu
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y --no-install-recommends )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh blog -o StrictHostKeyChecking=no "/home/gaugendre/blog/update"
+  only:
+    - master
