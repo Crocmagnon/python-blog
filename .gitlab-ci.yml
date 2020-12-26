@@ -16,6 +16,7 @@ variables:
   PRE_COMMIT_IMAGE: rg.fr-par.scw.cloud/crocmagnon/pre-commit:latest
 
 .build: &build
+  image: docker:20.10.1
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $IMAGE_REGISTRY
