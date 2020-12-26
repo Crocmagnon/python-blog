@@ -1,5 +1,5 @@
-#!/bin/sh
-set -euxo pipefail
+#!/bin/bash
+set -eux
 yes yes | python manage.py migrate
 python manage.py collectstatic --noinput --clear
 python manage.py assets build --manifest django
