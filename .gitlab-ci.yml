@@ -56,6 +56,7 @@ pre_commit:
   image: $PRE_COMMIT_IMAGE
   script:
     - pre-commit run --all-files --color always --show-diff-on-failure
+  needs: []
 
 missing_migrations:
   <<: *tests
