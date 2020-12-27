@@ -11,3 +11,8 @@
         <input type="submit" value="Save & preview" name="_preview">
     </div>
 {% endblock %}
+
+{% block object-tools-items %}
+    <li><a href="https://www.markdownguide.org/cheat-sheet/" class="historylink" target="_blank">Markdown cheat sheet</a></li>
+    {{ block.super }}
+{% endblock %}
