@@ -83,7 +83,7 @@ class Article(AdminUrlMixin, models.Model):
         md = markdown.Markdown(
             extensions=[
                 "extra",
-                CodeHiliteExtension(linenums=False),
+                CodeHiliteExtension(linenums=False, guess_lang=False),
                 LazyLoadingImageExtension(),
             ]
         )
