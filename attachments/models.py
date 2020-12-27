@@ -40,6 +40,10 @@ class Attachment(models.Model):
     def __str__(self):
         return f"{self.description} ({self.original_file.name})"
 
+    def reprocess(self):
+        self.processed_file = None
+        self.save()
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 

@@ -9,6 +9,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for attachment in Attachment.objects.all():
             self.stdout.write(f"Processing {attachment}...")
-            attachment.processed_file = None
-            attachment.save()
+            attachment.reprocess()
         self.stdout.write(self.style.SUCCESS("Successfully processed all attachments."))

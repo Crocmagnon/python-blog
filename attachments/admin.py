@@ -29,7 +29,10 @@ class AttachmentAdmin(admin.ModelAdmin):
         "processed_file_url",
         "open_graph_image",
     ]
-    actions = ["set_as_open_graph_image"]
+    actions = [
+        "set_as_open_graph_image",
+        "reprocess_selected_attachments",
+    ]
 
     class Media:
         js = ["attachments/js/copy_url.js"]
@@ -61,3 +64,13 @@ class AttachmentAdmin(admin.ModelAdmin):
         messages.success(request, "Done")
 
     set_as_open_graph_image.short_description = "Set as open graph image"
+
+    def reprocess_selected_attachments(self, request, queryset):
+        if len(queryset) == 0:
+            messages.error(request, "You must select at least one attachment")
+            return
+        for attachment in queryset:
+            attachment.reprocess()
+        messages.success(request, "Attachments were successfully reprocessed.")
+
+    reprocess_selected_attachments.short_description = "Reprocess selected attachments"
