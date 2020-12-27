@@ -41,15 +41,15 @@ class Attachment(models.Model):
         return f"{self.description} ({self.original_file.name})"
 
     def save(self, *args, **kwargs):
-        if self.processed_file:
-            return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
-        if self.id is None:
-            super().save(*args, **kwargs)
+        if self.processed_file:
+            return
+
         try:
             Image.open(self.original_file.path)
         except IOError:
-            return super().save(*args, **kwargs)
+            return
 
         # Submit job to shortpixel
         base_data = {
