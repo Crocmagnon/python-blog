@@ -41,11 +41,13 @@ class ArticleAdmin(admin.ModelAdmin):
         ),
         (
             "Content",
+            {"fields": ("content",)},
+        ),
+        (
+            "Custom CSS",
             {
-                "fields": (
-                    "content",
-                    "custom_css",
-                )
+                "fields": ("custom_css",),
+                "classes": ("collapse",),
             },
         ),
     ]
