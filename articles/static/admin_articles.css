@@ -6,7 +6,7 @@
 
 #id_content {
     width: calc(100% - 1em);
-    height: 44.5em;
+    height: 35.5em;
 }
 
 label[for=id_content], label[for=id_custom_css] {
