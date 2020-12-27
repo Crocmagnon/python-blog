@@ -41,6 +41,10 @@ def test_access_article_by_slug(client: Client, published_article: Article):
 
 def _test_access_article_by_slug(client: Client, item: Article):
     res = client.get(reverse("article-detail", kwargs={"slug": item.slug}))
+    _assert_article_is_rendered(item, res)
+
+
+def _assert_article_is_rendered(item: Article, res):
     assert res.status_code == 200
     content = res.content.decode("utf-8")
     assert item.title in content
@@ -55,6 +59,17 @@ def test_anonymous_cant_access_draft_detail(
         reverse("article-detail", kwargs={"slug": unpublished_article.slug})
     )
     assert res.status_code == 404
+
+
+@pytest.mark.django_db
+def test_anonymous_can_access_draft_detail_with_key(
+    client: Client, unpublished_article: Article
+):
+    res = client.get(
+        reverse("article-detail", kwargs={"slug": unpublished_article.slug})
+        + f"?draft_key={unpublished_article.draft_key}"
+    )
+    _assert_article_is_rendered(unpublished_article, res)
 
 
 @pytest.mark.django_db

@@ -1,3 +1,5 @@
+import uuid
+
 import pytest
 from django.core.management import call_command
 from django.utils import timezone
@@ -40,6 +42,7 @@ def unpublished_article(author: User) -> Article:
         published_at=None,
         slug="some-draft-article-slug",
         content="## some draft article markdown\n\n[a draft article link](https://article.com)",
+        draft_key=uuid.uuid4(),
     )
 
 

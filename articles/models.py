@@ -1,4 +1,5 @@
 import re
+import uuid
 from functools import cached_property
 
 import html2text
@@ -12,6 +13,7 @@ from django.utils import timezone
 from markdown.extensions.codehilite import CodeHiliteExtension
 
 from articles.markdown import LazyLoadingImageExtension
+from articles.utils import build_full_absolute_url
 
 
 class User(AbstractUser):
@@ -47,6 +49,7 @@ class Article(AdminUrlMixin, models.Model):
     has_code = models.BooleanField(default=False, blank=True)
     is_home = models.BooleanField(default=False, blank=True)
     custom_css = models.TextField(blank=True)
+    draft_key = models.UUIDField(default=uuid.uuid4)
 
     class Meta:
         ordering = ["-published_at"]
@@ -108,3 +111,12 @@ class Article(AdminUrlMixin, models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+    @property
+    def draft_public_url(self):
+        url = self.get_absolute_url() + f"?draft_key={self.draft_key}"
+        return build_full_absolute_url(request=None, url=url)
+
+    def refresh_draft_key(self):
+        self.draft_key = uuid.uuid4()
+        self.save()

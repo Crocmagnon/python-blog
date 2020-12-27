@@ -48,10 +48,14 @@ class ArticleDetailView(generic.DetailView):
     template_name = "articles/article_detail.html"
 
     def get_queryset(self):
+        key = self.request.GET.get("draft_key")
+        if key:
+            return Article.objects.filter(draft_key=key)
+
         queryset = super().get_queryset()
-        if self.request.user.is_authenticated:
-            return queryset
-        return queryset.filter(status=Article.PUBLISHED)
+        if not self.request.user.is_authenticated:
+            queryset = queryset.filter(status=Article.PUBLISHED)
+        return queryset
 
     def get_object(self, queryset=None) -> Article:
         obj = super().get_object(queryset)  # type: Article

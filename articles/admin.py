@@ -36,6 +36,7 @@ class ArticleAdmin(admin.ModelAdmin):
                     ("created_at", "updated_at"),
                     "views_count",
                     "has_code",
+                    "draft_public_url",
                 ]
             },
         ),
@@ -57,6 +58,7 @@ class ArticleAdmin(admin.ModelAdmin):
         "views_count",
         "status",
         "published_at",
+        "draft_public_url",
     ]
     prepopulated_fields = {"slug": ("title",)}
     change_form_template = "articles/article_change_form.html"
@@ -80,7 +82,17 @@ class ArticleAdmin(admin.ModelAdmin):
         messages.success(request, f"{len(queryset)} articles unpublished.")
 
     unpublish.short_description = "Unpublish selected articles"
-    actions = [publish, unpublish]
+
+    def refresh_draft_key(self, request, queryset):
+        if not request.user.has_perm("articles.change_article"):
+            messages.warning(request, "You're not allowed to do this.")
+            return
+        for article in queryset:
+            article.refresh_draft_key()
+        messages.success(request, f"{len(queryset)} draft keys refreshed.")
+
+    refresh_draft_key.short_description = "Refresh draft key of selected articles"
+    actions = [publish, unpublish, refresh_draft_key]
 
     class Media:
         css = {"all": ("admin_articles.css",)}
