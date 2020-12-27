@@ -1,5 +1,6 @@
 body {
-    max-width: 640px;
+    /* Overriding so that it doesn't change even when updating the library. */
+    max-width: 750px;
 }
 
 footer {

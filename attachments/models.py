@@ -64,8 +64,8 @@ class Attachment(models.Model):
         post_data = {
             "lossy": 1,
             "resize": 3,
-            "resize_width": 640,
-            "resize_height": 10000,
+            "resize_width": settings.SHORTPIXEL_RESIZE_WIDTH,
+            "resize_height": settings.SHORTPIXEL_RESIZE_HEIGHT,
             "keep_exif": 1,
             "file_paths": json.dumps(
                 [f"{self.original_file.name}:{self.original_file.path}"]
