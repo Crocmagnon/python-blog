@@ -182,6 +182,7 @@ BLOG = {
         "commit_url": "https://git.sr.ht/~crocmagnon/blog/commit/{commit_sha}",
         "homepage": "https://git.sr.ht/~crocmagnon/blog",
         "log": "https://git.sr.ht/~crocmagnon/blog/log",
+        "pipelines_url": "https://gitlab.com/gaugendre/blog/pipelines",
     },
 }
 
