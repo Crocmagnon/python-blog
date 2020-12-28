@@ -21,9 +21,18 @@ class ArticleAdmin(admin.ModelAdmin):
         "published_at",
         "updated_at",
         "views_count",
+        "has_code",
+        "is_home",
+        "has_custom_css",
+        "read_time",
     ]
     list_display_links = ["title"]
-    list_filter = ["status"]
+    list_filter = [
+        "status",
+        "has_code",
+        "status",
+        "is_home",
+    ]
     date_hierarchy = "created_at"
     fieldsets = [
         (
@@ -34,8 +43,8 @@ class ArticleAdmin(admin.ModelAdmin):
                     ("author", "keywords"),
                     ("status", "published_at"),
                     ("created_at", "updated_at"),
-                    "views_count",
-                    "has_code",
+                    ("views_count", "read_time"),
+                    ("has_code", "has_custom_css"),
                 ]
             },
         ),
@@ -57,6 +66,8 @@ class ArticleAdmin(admin.ModelAdmin):
         "views_count",
         "status",
         "published_at",
+        "read_time",
+        "has_custom_css",
     ]
     prepopulated_fields = {"slug": ("title",)}
     change_form_template = "articles/article_change_form.html"
@@ -113,3 +124,11 @@ class ArticleAdmin(admin.ModelAdmin):
             messages.success(request, "Item has been unpublished")
             return redirect(".")
         return super().response_change(request, obj)
+
+    def read_time(self, instance: Article):
+        return f"{instance.get_read_time()} min"
+
+    def has_custom_css(self, instance: Article):
+        return bool(instance.custom_css)
+
+    has_custom_css.boolean = True
