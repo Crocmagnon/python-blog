@@ -36,7 +36,6 @@ class ArticleAdmin(admin.ModelAdmin):
                     ("created_at", "updated_at"),
                     "views_count",
                     "has_code",
-                    "draft_public_url",
                 ]
             },
         ),
@@ -58,7 +57,6 @@ class ArticleAdmin(admin.ModelAdmin):
         "views_count",
         "status",
         "published_at",
-        "draft_public_url",
     ]
     prepopulated_fields = {"slug": ("title",)}
     change_form_template = "articles/article_change_form.html"
