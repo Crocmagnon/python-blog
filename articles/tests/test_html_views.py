@@ -48,7 +48,7 @@ def _assert_article_is_rendered(item: Article, res):
     assert res.status_code == 200
     content = res.content.decode("utf-8")
     assert item.title in content
-    assert item.get_formatted_content() in content
+    assert item.get_formatted_content in content
 
 
 @pytest.mark.django_db

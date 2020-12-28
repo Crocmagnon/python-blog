@@ -4,6 +4,7 @@ from functools import cached_property
 
 import html2text
 import markdown
+import readtime
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -61,12 +62,12 @@ class Article(AdminUrlMixin, models.Model):
         return reverse("article-detail", kwargs={"slug": self.slug})
 
     def get_abstract(self):
-        html = self.get_formatted_content()
+        html = self.get_formatted_content
         return html.split("<!--more-->")[0]
 
     @cached_property
     def get_description(self):
-        html = self.get_formatted_content()
+        html = self.get_formatted_content
         converter = html2text.HTML2Text()
         converter.ignore_images = True
         converter.ignore_links = True
@@ -82,6 +83,7 @@ class Article(AdminUrlMixin, models.Model):
             total_length += len(word) + 1
         return " ".join(text_result) + "..."
 
+    @cached_property
     def get_formatted_content(self):
         md = markdown.Markdown(
             extensions=[
@@ -120,3 +122,6 @@ class Article(AdminUrlMixin, models.Model):
     def refresh_draft_key(self):
         self.draft_key = uuid.uuid4()
         self.save()
+
+    def get_read_time(self):
+        return readtime.of_html(self.get_formatted_content).minutes

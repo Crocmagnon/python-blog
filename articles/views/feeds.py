@@ -19,7 +19,7 @@ class CompleteFeed(Feed):
         return item.title
 
     def item_description(self, item: Article):
-        return item.get_formatted_content()
+        return item.get_formatted_content
 
     def item_pubdate(self, item: Article):
         return item.published_at
