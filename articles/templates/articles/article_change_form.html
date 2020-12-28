@@ -1,17 +1,5 @@
 {% extends 'admin/change_form.html' %}
 
-{% block submit_buttons_bottom %}
-    {{ block.super }}
-    <div class="submit-row">
-        {% if original.status != original.PUBLISHED %}
-            <input type="submit" value="Save & publish" name="_publish">
-        {% elif original.status != original.DRAFT %}
-            <input type="submit" value="Save & unpublish" name="_unpublish">
-        {% endif %}
-        <input type="submit" value="Save & preview" name="_preview">
-    </div>
-{% endblock %}
-
 {% block object-tools-items %}
     <li><a href="https://www.markdownguide.org/cheat-sheet/" class="historylink" target="_blank">Markdown cheat sheet</a></li>
     {{ block.super }}

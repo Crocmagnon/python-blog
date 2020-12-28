@@ -1,0 +1,11 @@
+{% extends "admin/submit_line.html" %}
+{% load i18n admin_urls %}
+{% block submit-row %}
+    {{ block.super }}
+    {% if original.status != original.PUBLISHED %}
+        <input type="submit" value="Save & publish" name="_publish">
+    {% elif original.status != original.DRAFT %}
+        <input type="submit" value="Save & unpublish" name="_unpublish">
+    {% endif %}
+    <input type="submit" value="Save & preview" name="_preview">
+{% endblock %}
