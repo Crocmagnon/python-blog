@@ -124,4 +124,7 @@ class Article(AdminUrlMixin, models.Model):
         self.save()
 
     def get_read_time(self):
-        return readtime.of_html(self.get_formatted_content).minutes
+        content = self.get_formatted_content
+        if content:
+            return readtime.of_html(content).minutes
+        return 0

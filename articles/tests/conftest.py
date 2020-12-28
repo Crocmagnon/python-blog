@@ -10,7 +10,7 @@ from articles.models import Article, User
 @pytest.fixture()
 @pytest.mark.django_db
 def author() -> User:
-    return User.objects.create_user("gaugendre")
+    return User.objects.create_user("gaugendre", is_staff=True, is_superuser=True)
 
 
 @pytest.fixture()
