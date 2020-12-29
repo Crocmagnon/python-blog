@@ -1,14 +1,14 @@
 from django_assets import Bundle, register
 
 public_no_code = Bundle(
-    "newcss.css",
+    "vendor/newcss.css",
     "public.css",
     filters="rcssmin",
     output="public_bundled.css",
 )
 public_with_code = Bundle(
-    "newcss.css",
-    "codehilite.css",
+    "vendor/newcss.css",
+    "vendor/codehilite.css",
     "public.css",
     filters="rcssmin",
     output="public_code_bundled.css",
