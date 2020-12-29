@@ -1,11 +1,15 @@
 {% extends "admin/submit_line.html" %}
-{% load i18n admin_urls %}
+{% load static %}
 {% block submit-row %}
     {{ block.super }}
     {% if original.status != original.PUBLISHED %}
-        <input type="submit" value="Save & publish" name="_publish">
+        <input type="submit" value="Save and publish" name="_publish">
     {% elif original.status != original.DRAFT %}
-        <input type="submit" value="Save & unpublish" name="_unpublish">
+        <input type="submit" value="Save and unpublish" name="_unpublish">
     {% endif %}
-    <input type="submit" value="Save & preview" name="_preview">
+    <input type="submit" value="Save and view" name="_preview">
+    {% if original %}
+        <input type="button" value="Live preview" id="_live_preview">
+    {% endif %}
+    <script type="text/javascript" src="{% static "live-preview.js" %}"></script>
 {% endblock %}

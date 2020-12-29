@@ -30,6 +30,18 @@ class AdminUrlMixin:
         )
 
 
+def format_article_content(content):
+    md = markdown.Markdown(
+        extensions=[
+            "extra",
+            CodeHiliteExtension(linenums=False, guess_lang=False),
+            LazyLoadingImageExtension(),
+        ]
+    )
+    content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
+    return md.convert(content)
+
+
 class Article(AdminUrlMixin, models.Model):
     DRAFT = "draft"
     PUBLISHED = "published"
@@ -85,16 +97,7 @@ class Article(AdminUrlMixin, models.Model):
 
     @cached_property
     def get_formatted_content(self):
-        md = markdown.Markdown(
-            extensions=[
-                "extra",
-                CodeHiliteExtension(linenums=False, guess_lang=False),
-                LazyLoadingImageExtension(),
-            ]
-        )
-        content = self.content
-        content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
-        return md.convert(content)
+        return format_article_content(self.content)
 
     def publish(self):
         if not self.published_at:
