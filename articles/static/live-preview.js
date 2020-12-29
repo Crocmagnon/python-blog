@@ -24,11 +24,7 @@ function openPreviewPopup(event) {
 
 function loadPreview() {
     const id = Number(window.location.pathname.match(/\d+/)[0]);
-    const body = new FormData();
-    const articleContent = document.getElementById("id_content").value;
-    body.set("content", articleContent);
-    const csrfToken = document.querySelector("input[name=csrfmiddlewaretoken]").value;
-    body.set("csrfmiddlewaretoken", csrfToken);
+    const body = prepareBody();
     fetch(`/api/render/${id}/`, {method: "POST", body: body})
         .then(function (response) {
             response.text().then(value => {
@@ -39,13 +35,54 @@ function loadPreview() {
         })
 }
 
+function prepareBody() {
+    const body = new FormData();
+    const inputs = [
+        {
+            selector: "#id_content",
+            property: "value",
+            to: "content",
+        },
+        {
+            selector: "input[name=csrfmiddlewaretoken]",
+            property: "value",
+            to: "csrfmiddlewaretoken",
+        },
+        {
+            selector: "#id_has_code",
+            property: "checked",
+            to: "has_code",
+        },
+        {
+            selector: "#id_title",
+            property: "value",
+            to: "title",
+        },
+        {
+            selector: "#id_custom_css",
+            property: "value",
+            to: "custom_css",
+        },
+    ];
+    for (const input of inputs) {
+        const element = document.querySelector(input.selector);
+        body.set(input.to, element[input.property]);
+    }
+    return body;
+}
+
 function setupLivePreview() {
     const debouncedLoadPreview = debounce(loadPreview, 500);
-    const content = document.getElementById("id_content");
-    content.addEventListener("input", event => {
+
+    function listener(event) {
         event.preventDefault();
         debouncedLoadPreview();
-    });
+    }
+    const ids = ["id_content", "id_title", "id_has_code", "id_custom_css"];
+    for (const id of ids) {
+        const element = document.getElementById(id);
+        element.addEventListener("input", listener);
+    }
 }
 
 /**

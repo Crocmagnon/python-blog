@@ -11,6 +11,11 @@ from articles.models import Article
 def render_article(request, article_pk):
     template = "articles/article_detail.html"
     article = Article.objects.get(pk=article_pk)
-    article.content = request.POST.get("content")
+    article.content = request.POST.get("content", article.content)
+    article.title = request.POST.get("title", article.title)
+    article.custom_css = request.POST.get("custom_css", article.custom_css)
+    has_code = request.POST.get("has_code")
+    if has_code is not None:
+        article.has_code = has_code == "true"
     html = render(request, template, context={"article": article})
     return HttpResponse(html)
