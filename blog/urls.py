@@ -15,10 +15,9 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.views.generic import TemplateView
 
-from articles.views import api, feeds, html
 from blog import settings
 
 urlpatterns = [
@@ -29,11 +28,7 @@ urlpatterns = [
         ),
     ),
     path("admin/", admin.site.urls),
-    path("", html.ArticlesListView.as_view(), name="articles-list"),
-    path("drafts/", html.DraftsListView.as_view(), name="drafts-list"),
-    path("feed/", feeds.CompleteFeed(), name="complete-feed"),
-    path("api/render/<int:article_pk>/", api.render_article, name="api-render-article"),
-    path("<slug:slug>/", html.ArticleDetailView.as_view(), name="article-detail"),
+    path("", include("articles.urls")),
 ]
 
 if settings.DEBUG:
