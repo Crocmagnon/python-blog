@@ -1,3 +1,5 @@
+let preview = null;
+
 window.onload = function () {
     const previewButton = document.querySelector("input#_live_preview");
     previewButton.addEventListener("click", openPreviewPopup);
@@ -8,8 +10,6 @@ window.onbeforeunload = function () {
     }
 };
 
-let preview = null;
-
 function openPreviewPopup(event) {
     event.preventDefault();
     const params = "width=800,height=1000,menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes";
@@ -17,7 +17,6 @@ function openPreviewPopup(event) {
         preview.close();
     }
     preview = window.open("about:blank", "Preview", params);
-
     setTimeout(loadPreview, 1000);
     setupLivePreview();
 }
@@ -26,13 +25,15 @@ function loadPreview() {
     const id = Number(window.location.pathname.match(/\d+/)[0]);
     const body = prepareBody();
     fetch(`/api/render/${id}/`, {method: "POST", body: body})
-        .then(function (response) {
-            response.text().then(value => {
-                preview.document.open("text/html", "replace");
-                preview.document.write(value);
-                preview.document.close();
-            });
+        .then(response => {
+            return response.text();
         })
+        .then(value => {
+            preview.document.open("text/html", "replace");
+            preview.document.write(value);
+            preview.document.close();
+        })
+        .catch(console.error);
 }
 
 function prepareBody() {
