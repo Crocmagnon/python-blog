@@ -71,6 +71,7 @@ class ArticleAdmin(admin.ModelAdmin):
     ]
     prepopulated_fields = {"slug": ("title",)}
     change_form_template = "articles/article_change_form.html"
+    search_fields = ["title", "content"]
 
     def publish(self, request, queryset):
         if not request.user.has_perm("articles.change_article"):

@@ -33,6 +33,7 @@ class AttachmentAdmin(admin.ModelAdmin):
         "set_as_open_graph_image",
         "reprocess_selected_attachments",
     ]
+    search_fields = ["description", "original_file", "processed_file"]
 
     class Media:
         js = ["attachments/js/copy_url.js"]
