@@ -34,6 +34,7 @@ def format_article_content(content):
     md = markdown.Markdown(
         extensions=[
             "extra",
+            "admonition",
             CodeHiliteExtension(linenums=False, guess_lang=False),
             LazyLoadingImageExtension(),
         ]
