@@ -17,4 +17,18 @@
             {{ article.get_formatted_content|safe }}
         </div>
     </article>
+    {% if article.get_related_articles %}
+        <section>
+            <hr>
+            <h4>You might also like</h4>
+            {% for related in article.get_related_articles %}
+                <article>
+                    <h5>
+                        <a href="{% url "article-detail" slug=related.slug %}">{{ related.title }}</a>
+                    </h5>
+                    <p>{{ related.get_description }}</p>
+                </article>
+            {% endfor %}
+        </section>
+    {% endif %}
 {% endblock %}

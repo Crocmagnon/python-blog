@@ -1,3 +1,4 @@
+import random
 import re
 import uuid
 from functools import cached_property
@@ -132,3 +133,21 @@ class Article(AdminUrlMixin, models.Model):
         if content:
             return readtime.of_html(content).minutes
         return 0
+
+    @cached_property
+    def get_related_articles(self):
+        related_articles = set()
+        for keyword in self.get_formatted_keywords:
+            potential_articles = Article.objects.filter(
+                keywords__icontains=keyword,
+                status=Article.PUBLISHED,
+            ).exclude(pk=self.pk)
+            for article in potential_articles:
+                if keyword in article.get_formatted_keywords:
+                    related_articles.add(article)
+        sample_size = min([len(related_articles), 3])
+        return random.sample(related_articles, sample_size)
+
+    @cached_property
+    def get_formatted_keywords(self):
+        return list(map(lambda k: k.strip().lower(), self.keywords.split(",")))
