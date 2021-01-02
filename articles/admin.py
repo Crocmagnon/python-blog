@@ -25,6 +25,7 @@ class ArticleAdmin(admin.ModelAdmin):
         "is_home",
         "has_custom_css",
         "read_time",
+        "keywords",
     ]
     list_display_links = ["title"]
     list_filter = [
