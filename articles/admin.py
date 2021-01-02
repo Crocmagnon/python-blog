@@ -16,7 +16,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = [
         "title",
         "status",
-        "author",
+        "keywords",
         "created_at",
         "published_at",
         "updated_at",
@@ -25,7 +25,6 @@ class ArticleAdmin(admin.ModelAdmin):
         "is_home",
         "has_custom_css",
         "read_time",
-        "keywords",
     ]
     list_display_links = ["title"]
     list_filter = [
