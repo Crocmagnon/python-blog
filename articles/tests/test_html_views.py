@@ -1,4 +1,5 @@
 import pytest
+from django.template import Context, Template
 from django.test import Client
 from django.urls import reverse
 from model_bakery import baker
@@ -48,7 +49,15 @@ def _assert_article_is_rendered(item: Article, res):
     assert res.status_code == 200
     content = res.content.decode("utf-8")
     assert item.title in content
-    assert item.get_formatted_content in content
+    html = item.get_formatted_content
+    html = get_spaceless_html(html)
+    assert html in content
+
+
+def get_spaceless_html(html):
+    context = Context({})
+    html = Template("{% spaceless %}" + html + "{% endspaceless %}").render(context)
+    return html
 
 
 @pytest.mark.django_db
