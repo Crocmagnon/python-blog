@@ -1,10 +1,7 @@
 import random
-import re
 import uuid
 from functools import cached_property, reduce
 
-import html2text
-import markdown
 import readtime
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
@@ -12,39 +9,20 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
-from markdown.extensions.codehilite import CodeHiliteExtension
 
-from articles.markdown import LazyLoadingImageExtension
-from articles.utils import build_full_absolute_url
+from articles.utils import (
+    build_full_absolute_url,
+    format_article_content,
+    get_html_to_text_converter,
+    truncate_words_after_char_count,
+)
 
 
 class User(AbstractUser):
     pass
 
 
-class AdminUrlMixin:
-    def get_admin_url(self):
-        content_type = ContentType.objects.get_for_model(self.__class__)
-        return reverse(
-            "admin:%s_%s_change" % (content_type.app_label, content_type.model),
-            args=(self.id,),
-        )
-
-
-def format_article_content(content):
-    md = markdown.Markdown(
-        extensions=[
-            "extra",
-            "admonition",
-            CodeHiliteExtension(linenums=False, guess_lang=False),
-            LazyLoadingImageExtension(),
-        ]
-    )
-    content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
-    return md.convert(content)
-
-
-class Article(AdminUrlMixin, models.Model):
+class Article(models.Model):
     DRAFT = "draft"
     PUBLISHED = "published"
     STATUS_CHOICES = [
@@ -82,20 +60,9 @@ class Article(AdminUrlMixin, models.Model):
     @cached_property
     def get_description(self):
         html = self.get_formatted_content
-        converter = html2text.HTML2Text()
-        converter.ignore_images = True
-        converter.ignore_links = True
-        converter.ignore_tables = True
-        converter.ignore_emphasis = True
+        converter = get_html_to_text_converter()
         text = converter.handle(html)
-        total_length = 0
-        text_result = []
-        for word in text.split():
-            if len(word) + 1 + total_length > 160:
-                break
-            text_result.append(word)
-            total_length += len(word) + 1
-        return " ".join(text_result) + "..."
+        return truncate_words_after_char_count(text, 160)
 
     @cached_property
     def get_formatted_content(self):
@@ -165,3 +132,10 @@ class Article(AdminUrlMixin, models.Model):
 
         css = self.custom_css.replace("\n", " ")
         return reduce(reducer, css, "")
+
+    def get_admin_url(self):
+        content_type = ContentType.objects.get_for_model(self.__class__)
+        return reverse(
+            "admin:%s_%s_change" % (content_type.app_label, content_type.model),
+            args=(self.id,),
+        )

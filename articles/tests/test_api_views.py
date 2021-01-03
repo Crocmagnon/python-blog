@@ -2,7 +2,8 @@ import pytest
 from django.test import Client
 from django.urls import reverse
 
-from articles.models import Article, format_article_content
+from articles.models import Article
+from articles.utils import format_article_content
 
 
 @pytest.mark.django_db
