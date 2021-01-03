@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-  - publish
+  - build and publish
   - deploy
 
 variables:
@@ -32,7 +32,7 @@ variables:
     - docker push $IMAGE
     - docker push $DEPS
 
-build-tests:
+build for tests:
   <<: *build
   stage: build
   variables:
@@ -45,28 +45,28 @@ build-tests:
   stage: test
   image: $IMAGE_TESTS
 
-unit_tests:
+unit tests:
   <<: *tests
   script:
     - cd /app
     - python -m pytest
 
-pre_commit:
+pre-commit:
   stage: test
   image: $PRE_COMMIT_IMAGE
   script:
     - pre-commit run --all-files --color always --show-diff-on-failure
   needs: []
 
-missing_migrations:
+missing migrations:
   <<: *tests
   script:
     - cd /app
     - python manage.py makemigrations --check
 
-publish:
+build and publish latest:
   <<: *build
-  stage: publish
+  stage: build and publish
   variables:
     POETRY_OPTIONS: "--no-dev"
   before_script:
