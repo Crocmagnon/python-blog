@@ -7,6 +7,10 @@ h1, h2, h3 {
     border-bottom: unset;
 }
 
+img {
+    border-radius: 5px;
+}
+
 footer {
     font-size: 80%;
     color: var(--nc-tx-2);
