@@ -1,15 +1,10 @@
 <nav>
     <a href="{% url 'articles-list' %}">Home</a>
-    &centerdot;
     <a href="{% url 'complete-feed' %}">RSS</a>
-    &centerdot;
     {% if user.is_authenticated %}
         <a href="{% url 'admin:articles_article_add' %}">Write</a>
-        &centerdot;
         <a href="{% url 'drafts-list' %}">View drafts <span class="pill">{{ drafts_count }}</span></a>
-        &centerdot;
         <a href="{% url 'admin:index' %}">Admin</a>
-        &centerdot;
         <a href="{% url 'admin:logout' %}?next={{ request.get_full_path }}">Log out</a>
     {% else %}
         <a href="{% url 'admin:login' %}?next={{ request.get_full_path }}">Log in</a>
