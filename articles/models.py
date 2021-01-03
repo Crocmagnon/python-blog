@@ -1,7 +1,7 @@
 import random
 import re
 import uuid
-from functools import cached_property
+from functools import cached_property, reduce
 
 import html2text
 import markdown
@@ -153,3 +153,15 @@ class Article(AdminUrlMixin, models.Model):
         return list(
             filter(None, map(lambda k: k.strip().lower(), self.keywords.split(",")))
         )
+
+    @cached_property
+    def get_minified_custom_css(self):
+        def reducer(res, next_char):
+            if len(res) == 0:
+                return next_char
+            if res[-1] == next_char == " ":
+                return res
+            return res + next_char
+
+        css = self.custom_css.replace("\n", " ")
+        return reduce(reducer, css, "")
