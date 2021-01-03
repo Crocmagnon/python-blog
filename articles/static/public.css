@@ -22,7 +22,7 @@ footer > :first-child {
 
 nav a:not(:first-child):before {
     content: '\00B7';
-    padding-right: 5px;
+    margin: 0 5px;
     color: var(--nc-tx-1);
     text-decoration: none;
     display: inline-block;
