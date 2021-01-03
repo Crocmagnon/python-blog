@@ -150,4 +150,6 @@ class Article(AdminUrlMixin, models.Model):
 
     @cached_property
     def get_formatted_keywords(self):
-        return list(map(lambda k: k.strip().lower(), self.keywords.split(",")))
+        return list(
+            filter(None, map(lambda k: k.strip().lower(), self.keywords.split(",")))
+        )
