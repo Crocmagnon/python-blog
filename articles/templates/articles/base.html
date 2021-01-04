@@ -1,3 +1,4 @@
+{% load static compress %}
 <!DOCTYPE html>
 <html lang="en">
 {% spaceless %}
@@ -9,10 +10,29 @@
     <title>{% block title %}Home | {% endblock %}{{ blog_title }} by {{ blog_author }}</title>
     <link rel="alternate" type="application/rss+xml" title="Gab's Notes » Feed" href="{% url 'complete-feed' %}">
     {% include "articles/snippets/page_metadata.html" %}
-    {% include "articles/snippets/load_styles_and_scripts.html" %}
+
+    {% compress css inline %}
+        <link rel="stylesheet" href="{% static "vendor/newcss.css" %}" type="text/css">
+        <link rel="stylesheet" href="{% static "public.css" %}" type="text/css">
+        <link rel="stylesheet" href="{% static "admonitions.css" %}" type="text/css">
+        {% if article and article.has_code %}
+            <link rel="stylesheet" href="{% static "vendor/codehilite.css" %}" type="text/css">
+        {% endif %}
+        {% if user.is_authenticated %}
+            <link rel="stylesheet" href="{% static "authenticated.css" %}">
+        {% endif %}
+        {% block append_css %}
+        {% endblock %}
+    {% endcompress %}
+
+    {% compress js inline %}
+        {% if user.is_authenticated %}
+            <script src="{% static 'edit-keymap.js' %}" async></script>
+        {% endif %}
+    {% endcompress %}
+
     {% include "articles/snippets/favicon.html" %}
     {% include "articles/snippets/analytics.html" %}
-    {% block append_header %}{% endblock %}
 </head>
 <body>
 <header>

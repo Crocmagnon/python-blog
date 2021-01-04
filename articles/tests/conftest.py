@@ -44,9 +44,3 @@ def unpublished_article(author: User) -> Article:
         content="## some draft article markdown\n\n[a draft article link](https://article.com)",
         draft_key=uuid.uuid4(),
     )
-
-
-@pytest.fixture(autouse=True, scope="session")
-def collect_static():
-    call_command("collectstatic", "--no-input", "--clear")
-    call_command("assets", "build", "--manifest", "django")

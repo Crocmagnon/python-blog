@@ -70,7 +70,7 @@ INSTALLED_APPS = [
     "attachments",
     "anymail",
     "django_cleanup.apps.CleanupConfig",
-    "django_assets",
+    "compressor",
 ]
 
 MIDDLEWARE = [
@@ -165,7 +165,7 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "django_assets.finders.AssetsFinder",
+    "compressor.finders.CompressorFinder",
 ]
 
 MEDIA_URL = "/media/"
@@ -194,5 +194,16 @@ PLAUSIBLE_DOMAIN = os.getenv("PLAUSIBLE_DOMAIN")
 
 LOGIN_URL = "admin:login"
 
-ASSETS_AUTO_BUILD = DEBUG
-ASSETS_DEBUG = False
+# ASSETS_AUTO_BUILD = DEBUG
+# ASSETS_DEBUG = False
+
+COMPRESS_ENABLED = True
+COMPRESS_FILTERS = {
+    "css": [
+        "compressor.filters.css_default.CssAbsoluteFilter",
+        "compressor.filters.cssmin.rCSSMinFilter",
+    ],
+    "js": ["compressor.filters.jsmin.JSMinFilter"],
+}
+if DEBUG:
+    COMPRESS_DEBUG_TOGGLE = "nocompress"

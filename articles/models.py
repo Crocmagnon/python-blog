@@ -121,18 +121,6 @@ class Article(models.Model):
             filter(None, map(lambda k: k.strip().lower(), self.keywords.split(",")))
         )
 
-    @cached_property
-    def get_minified_custom_css(self):
-        def reducer(res, next_char):
-            if len(res) == 0:
-                return next_char
-            if res[-1] == next_char == " ":
-                return res
-            return res + next_char
-
-        css = self.custom_css.replace("\n", " ")
-        return reduce(reducer, css, "")
-
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
         return reverse(

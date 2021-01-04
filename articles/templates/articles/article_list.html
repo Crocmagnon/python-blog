@@ -1,8 +1,8 @@
 {% extends 'articles/base.html' %}
 
-{% block append_header %}
+{% block append_css %}
     <style>
-        {{ article.get_minified_custom_css }}
+        {{ article.custom_css }}
     </style>
     <style>
         .pagination {
