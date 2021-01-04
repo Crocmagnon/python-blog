@@ -1,7 +1,6 @@
 import uuid
 
 import pytest
-from django.core.management import call_command
 from django.utils import timezone
 
 from articles.models import Article, User
