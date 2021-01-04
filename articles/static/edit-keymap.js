@@ -1,10 +1,12 @@
+'use strict';
+// Explicitely not using ES 6 features because the compressor doesn't support them.
 window.onload = function () {
-    const adminLinkElement = document.querySelector("a#admin-link");
+    var adminLinkElement = document.querySelector("a#admin-link");
     if (adminLinkElement === undefined || adminLinkElement === null) {
         return;
     }
-    const adminLocation = adminLinkElement.href;
-    document.addEventListener("keydown", event => {
+    var adminLocation = adminLinkElement.href;
+    document.addEventListener("keydown", function(event) {
         if (event.code === "KeyE") {
             window.location = adminLocation;
         }

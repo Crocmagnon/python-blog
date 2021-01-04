@@ -1,4 +1,19 @@
+{% load static compress %}
+
 {% if plausible_domain is not None and not user.is_authenticated %}
-<link rel="preconnect" href="https://plausible.augendre.info">
-<script async defer data-domain="{{ plausible_domain }}" src="https://plausible.augendre.info/js/plausible.js"></script>
+    <script async defer data-domain="{{ plausible_domain }}"
+            src="https://plausible.augendre.info/js/plausible.js">
+    </script>
 {% endif %}
+
+{% compress js inline %}
+    {% if goatcounter_domain is not None and not user.is_authenticated %}
+        <script>
+            window.goatcounter = {
+                endpoint: 'https://{{ goatcounter_domain }}/count',
+                allow_local: true,
+            }
+        </script>
+        <script async defer src="{% static "vendor/goatcounter.js" %}"></script>
+    {% endif %}
+{% endcompress %}

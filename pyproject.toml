@@ -34,6 +34,7 @@ requests = "^2.24"
 html2text = "^2020.1.16"
 readtime = "^1.1.1"
 django-compressor = "^2.4"
+"calmjs.parse" = "^1.2.5"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.7"

@@ -99,7 +99,7 @@ TEMPLATES = [
                 "articles.context_processors.drafts_count",
                 "articles.context_processors.date_format",
                 "articles.context_processors.git_version",
-                "articles.context_processors.plausible",
+                "articles.context_processors.analytics",
                 "articles.context_processors.open_graph_image_url",
                 "articles.context_processors.blog_metadata",
             ],
@@ -191,6 +191,7 @@ SHORTPIXEL_RESIZE_WIDTH = int(os.getenv("SHORTPIXEL_RESIZE_WIDTH", 750))
 SHORTPIXEL_RESIZE_HEIGHT = int(os.getenv("SHORTPIXEL_RESIZE_HEIGHT", 10000))
 
 PLAUSIBLE_DOMAIN = os.getenv("PLAUSIBLE_DOMAIN")
+GOATCOUNTER_DOMAIN = os.getenv("GOATCOUNTER_DOMAIN")
 
 LOGIN_URL = "admin:login"
 
@@ -203,7 +204,9 @@ COMPRESS_FILTERS = {
         "compressor.filters.css_default.CssAbsoluteFilter",
         "compressor.filters.cssmin.rCSSMinFilter",
     ],
-    "js": ["compressor.filters.jsmin.JSMinFilter"],
+    "js": [
+        "compressor.filters.jsmin.CalmjsFilter",
+    ],
 }
 if DEBUG:
     COMPRESS_DEBUG_TOGGLE = "nocompress"

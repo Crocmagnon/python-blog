@@ -32,7 +32,6 @@
     {% endcompress %}
 
     {% include "articles/snippets/favicon.html" %}
-    {% include "articles/snippets/analytics.html" %}
 </head>
 <body>
 <header>
@@ -60,6 +59,7 @@
         for ongoing builds <a href="{{ blog_pipelines_url }}">here</a>.
     </p>
 </footer>
+{% include "articles/snippets/analytics.html" %}
 </body>
 {% endspaceless %}
 </html>

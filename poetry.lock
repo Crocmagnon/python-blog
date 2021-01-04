@@ -55,6 +55,17 @@ html5lib = ["html5lib"]
 lxml = ["lxml"]
 
 [[package]]
+name = "calmjs.parse"
+version = "1.2.5"
+description = "Various parsers for ECMA standards."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+ply = ">=3.6"
+
+[[package]]
 name = "certifi"
 version = "2020.12.5"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -326,6 +337,14 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [package.extras]
 dev = ["pre-commit", "tox"]
+
+[[package]]
+name = "ply"
+version = "3.11"
+description = "Python Lex & Yacc"
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "pre-commit"
@@ -606,7 +625,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "0b9ac9fa575f31f30485f510b5da016453e0387bc8805e56ea52f5dc09de095d"
+content-hash = "e55cff591236bac6ee7f57a2da6cb48fcf0484f5a1d17a26949c3c724dad0087"
 
 [metadata.files]
 appdirs = [
@@ -629,6 +648,11 @@ beautifulsoup4 = [
     {file = "beautifulsoup4-4.9.3-py2-none-any.whl", hash = "sha256:4c98143716ef1cb40bf7f39a8e3eec8f8b009509e74904ba3a7b315431577e35"},
     {file = "beautifulsoup4-4.9.3-py3-none-any.whl", hash = "sha256:fff47e031e34ec82bf17e00da8f592fe7de69aeea38be00523c04623c04fb666"},
     {file = "beautifulsoup4-4.9.3.tar.gz", hash = "sha256:84729e322ad1d5b4d25f805bfa05b902dd96450f43842c4e99067d5e1369eb25"},
+]
+"calmjs.parse" = [
+    {file = "calmjs.parse-1.2.5-py2-none-any.whl", hash = "sha256:dd2c576169e683f0a06b5e8908d7b9d134e756ae75763c21b721d9937b0b422a"},
+    {file = "calmjs.parse-1.2.5-py3-none-any.whl", hash = "sha256:163ae575c478944c3a54c8e26d5cca794a977c5bf160f6aaa3731b51ae88ab99"},
+    {file = "calmjs.parse-1.2.5.zip", hash = "sha256:693d18bcfdb14f2a33f64288680adc138275d39de5980fb46f5b882df6e1dbde"},
 ]
 certifi = [
     {file = "certifi-2020.12.5-py2.py3-none-any.whl", hash = "sha256:719a74fb9e33b9bd44cc7f3a8d94bc35e4049deebe19ba7d8e108280cfd59830"},
@@ -880,6 +904,10 @@ pillow = [
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
     {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
+]
+ply = [
+    {file = "ply-3.11-py2.py3-none-any.whl", hash = "sha256:096f9b8350b65ebd2fd1346b12452efe5b9607f7482813ffca50c22722a807ce"},
+    {file = "ply-3.11.tar.gz", hash = "sha256:00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3"},
 ]
 pre-commit = [
     {file = "pre_commit-2.9.3-py2.py3-none-any.whl", hash = "sha256:6c86d977d00ddc8a60d68eec19f51ef212d9462937acf3ea37c7adec32284ac0"},
