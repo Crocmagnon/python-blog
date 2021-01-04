@@ -9,6 +9,7 @@
     <meta name="color-scheme" content="light dark">
     <title>{% block title %}Home | {% endblock %}{{ blog_title }} by {{ blog_author }}</title>
     <link rel="alternate" type="application/rss+xml" title="Gab's Notes » Feed" href="{% url 'complete-feed' %}">
+    {% include "articles/snippets/analytics_head.html" %}
     {% include "articles/snippets/page_metadata.html" %}
 
     {% compress css inline %}
