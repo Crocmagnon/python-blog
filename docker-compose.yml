@@ -15,6 +15,9 @@ services:
     restart: on-failure
     init: true
     tty: true
+    depends_on:
+      - nginx
+      - memcached
   nginx:
     image: nginx:1.19.2
     ports:
@@ -23,8 +26,10 @@ services:
       - staticfiles:/app/static
       - media:/app/media
       - ./docker/nginx-dev.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - django
+  memcached:
+    image: memcached:1.6.9
+    restart: always
+    command: ["memcached", "-m", "128"]
 
 volumes:
   staticfiles: {}
