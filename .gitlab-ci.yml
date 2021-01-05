@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-  - build and publish
+  - publish
   - deploy
 
 variables:
@@ -10,8 +10,9 @@ variables:
   IMAGE_REGISTRY: rg.fr-par.scw.cloud/crocmagnon
   IMAGE_TESTS: $CI_REGISTRY_IMAGE:tests-latest
   IMAGE_DEPS_TESTS: $CI_REGISTRY_IMAGE:tests-deps
-  IMAGE_LATEST: rg.fr-par.scw.cloud/crocmagnon/blog:latest
+  IMAGE_LATEST: $CI_REGISTRY_IMAGE:latest
   IMAGE_DEPS_LATEST: $CI_REGISTRY_IMAGE:deps
+  IMAGE_LATEST_PUBLIC: rg.fr-par.scw.cloud/crocmagnon/blog:latest
 
   PRE_COMMIT_IMAGE: rg.fr-par.scw.cloud/crocmagnon/pre-commit:latest
 
@@ -41,9 +42,22 @@ build for tests:
     - export IMAGE=$IMAGE_TESTS
     - export DEPS=$IMAGE_DEPS_TESTS
 
+build latest:
+  <<: *build
+  stage: build
+  variables:
+    POETRY_OPTIONS: "--no-dev"
+  before_script:
+    - export IMAGE=$IMAGE_LATEST
+    - export DEPS=$IMAGE_DEPS_LATEST
+  only:
+    - master
+
 .tests: &tests
   stage: test
   image: $IMAGE_TESTS
+  needs:
+    - build for tests
 
 unit tests:
   <<: *tests
@@ -64,14 +78,18 @@ missing migrations:
     - cd /app
     - python manage.py makemigrations --check
 
-build and publish latest:
-  <<: *build
-  stage: build and publish
-  variables:
-    POETRY_OPTIONS: "--no-dev"
+publish latest:
+  stage: publish
+  image: docker:20.10.1
+  services:
+    - docker:20.10.1-dind
   before_script:
-    - export IMAGE=$IMAGE_LATEST
-    - export DEPS=$IMAGE_DEPS_LATEST
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $IMAGE_REGISTRY
+  script:
+    - docker pull $IMAGE_LATEST
+    - docker tag $IMAGE_LATEST $IMAGE_LATEST_PUBLIC
+    - docker push $IMAGE_LATEST_PUBLIC
   only:
     - master
 
