@@ -109,6 +109,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "blog.wsgi.application"
 
+MEMCACHED_LOCATION = os.getenv("MEMCACHED_LOCATION")
+if MEMCACHED_LOCATION:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.PyLibMCCache",
+            "LOCATION": MEMCACHED_LOCATION,
+        }
+    }
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

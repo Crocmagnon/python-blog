@@ -10,6 +10,11 @@ ENV PYTHONPATH $PYTHONPATH:/root/.poetry/lib
 ARG POETRY_OPTIONS
 
 WORKDIR /app
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libmemcached-dev
+
 COPY pyproject.toml poetry.lock ./
 
 RUN python -m venv --copies /app/venv \
@@ -30,6 +35,10 @@ FROM python:3.8.6-slim-buster as prod
 
 RUN echo "Europe/Paris" > /etc/timezone \
     && mkdir /db
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libmemcached-dev
 
 COPY --from=venv /app/venv /app/venv/
 ENV PATH /app/venv/bin:$PATH
