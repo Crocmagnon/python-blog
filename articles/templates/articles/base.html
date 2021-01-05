@@ -22,15 +22,10 @@
         {% if user.is_authenticated %}
             <link rel="stylesheet" href="{% static "authenticated.css" %}">
         {% endif %}
-        {% block append_css %}
-        {% endblock %}
     {% endcompress %}
 
-    {% compress js inline %}
-        {% if user.is_authenticated %}
-            <script src="{% static 'edit-keymap.js' %}" async></script>
-        {% endif %}
-    {% endcompress %}
+    {% block append_css %}
+    {% endblock %}
 
     {% include "articles/snippets/favicon.html" %}
 </head>
@@ -60,7 +55,14 @@
         for ongoing builds <a href="{{ blog_pipelines_url }}">here</a>.
     </p>
 </footer>
+
 {% include "articles/snippets/analytics.html" %}
+{% compress js inline %}
+    {% if user.is_authenticated %}
+        <script src="{% static 'edit-keymap.js' %}" async defer></script>
+    {% endif %}
+{% endcompress %}
+
 </body>
 {% endspaceless %}
 </html>

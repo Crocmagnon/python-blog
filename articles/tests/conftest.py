@@ -1,6 +1,7 @@
 import uuid
 
 import pytest
+from django.core.management import call_command
 from django.utils import timezone
 
 from articles.models import Article, User
@@ -43,3 +44,14 @@ def unpublished_article(author: User) -> Article:
         content="## some draft article markdown\n\n[a draft article link](https://article.com)",
         draft_key=uuid.uuid4(),
     )
+
+
+@pytest.fixture(autouse=True)
+def enable_compressor(settings):
+    settings.COMPRESS_ENABLED = True
+
+
+@pytest.fixture(autouse=True, scope="session")
+def collect_static():
+    call_command("collectstatic", "--no-input", "--clear")
+    call_command("compress", "--force")

@@ -39,3 +39,41 @@ def test_save_article_doesnt_change_existing_slug(published_article: Article):
     published_article.title = "This is a brand new title"
     published_article.save()
     assert published_article.slug == original_slug
+
+
+@pytest.mark.django_db
+def test_empty_custom_css_minified(published_article):
+    published_article.custom_css = ""
+    assert published_article.get_minified_custom_css == ""
+
+
+@pytest.mark.django_db
+def test_simple_custom_css_minified(published_article):
+    published_article.custom_css = ".cls {\n    background-color:  red;\n}"
+    assert published_article.get_minified_custom_css == ".cls{background-color:red}"
+
+
+@pytest.mark.django_db
+def test_larger_custom_css_minified(published_article):
+    published_article.custom_css = """\
+.profile {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.profile img {
+    max-width: 200px;
+    min-width: 100px;
+    max-height: 200px;
+    min-height: 100px;
+    border-radius: 10%;
+    padding: 1rem;
+    flex-shrink: 1;
+    flex-grow: 0;
+    padding: 0;
+}"""
+    assert (
+        published_article.get_minified_custom_css
+        == ".profile{display:flex;justify-content:space-evenly;flex-wrap:wrap}.profile img{max-width:200px;min-width:100px;max-height:200px;min-height:100px;border-radius:10%;padding:1rem;flex-shrink:1;flex-grow:0;padding:0}"
+    )

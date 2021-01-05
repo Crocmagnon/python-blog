@@ -1,9 +1,7 @@
 {% extends 'articles/base.html' %}
 
 {% block append_css %}
-    <style>
-        {{ article.custom_css }}
-    </style>
+    <style>{{ article.get_minified_custom_css }}</style>
 {% endblock %}
 
 {% block title %}{{ article.title }} | {% endblock %}

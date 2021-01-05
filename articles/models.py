@@ -1,7 +1,8 @@
 import random
 import uuid
-from functools import cached_property, reduce
+from functools import cached_property
 
+import rcssmin
 import readtime
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
@@ -120,6 +121,10 @@ class Article(models.Model):
         return list(
             filter(None, map(lambda k: k.strip().lower(), self.keywords.split(",")))
         )
+
+    @cached_property
+    def get_minified_custom_css(self):
+        return rcssmin.cssmin(self.custom_css)
 
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)

@@ -117,6 +117,13 @@ if MEMCACHED_LOCATION:
             "LOCATION": MEMCACHED_LOCATION,
         }
     }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "cache",
+        }
+    }
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -203,10 +210,7 @@ GOATCOUNTER_DOMAIN = os.getenv("GOATCOUNTER_DOMAIN")
 
 LOGIN_URL = "admin:login"
 
-# ASSETS_AUTO_BUILD = DEBUG
-# ASSETS_DEBUG = False
-
-COMPRESS_ENABLED = True
+# COMPRESS_ENABLED = True  # Enable this if you want to force compression during dev
 COMPRESS_FILTERS = {
     "css": [
         "compressor.filters.css_default.CssAbsoluteFilter",
@@ -218,3 +222,6 @@ COMPRESS_FILTERS = {
 }
 if DEBUG:
     COMPRESS_DEBUG_TOGGLE = "nocompress"
+
+COMPRESS_OFFLINE = True
+COMPRESS_OFFLINE_CONTEXT = "articles.compressor.offline_context"
