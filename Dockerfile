@@ -53,8 +53,18 @@ COPY --from=git /version /app/.version
 
 ENV SECRET_KEY "changeme"
 ENV DEBUG "false"
-ENV HOST ""
 ENV DB_BASE_DIR "/db"
+#ENV HOSTS="host1;host2"
+#ENV ADMINS='Full Name,email@example.com'
+#ENV MAILGUN_API_KEY='key-yourapikey'
+#ENV MAILGUN_SENDER_DOMAIN='mailgun.example.com'
+#ENV BLOG_BASE_URL='https://url-of-your-blog.example.com'
+#ENV SHORTPIXEL_API_KEY='YOURAPIKEY'
+#ENV SHORTPIXEL_RESIZE_WIDTH='750'
+#ENV SHORTPIXEL_RESIZE_HEIGHT='10000'
+#ENV PLAUSIBLE_DOMAIN='url-of-your-blog.example.com'
+#ENV GOATCOUNTER_DOMAIN='blog.goatcounter.example.com'
+#ENV MEMCACHED_LOCATION='memcached:11211'
 
 HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000', timeout=2)"
 
