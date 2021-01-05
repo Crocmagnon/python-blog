@@ -1,7 +1,7 @@
 {% load static compress %}
+{% spaceless %}
 <!DOCTYPE html>
 <html lang="en">
-{% spaceless %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,12 +35,14 @@
     <p>{{ blog_description }}</p>
     {% include "articles/snippets/navigation.html" %}
 </header>
+{% endspaceless %}
 
 <main>
     {% block content %}
     {% endblock %}
 </main>
 
+{% spaceless %}
 <footer>
     <hr>
     <p>
@@ -64,5 +66,5 @@
 {% endcompress %}
 
 </body>
-{% endspaceless %}
 </html>
+{% endspaceless %}

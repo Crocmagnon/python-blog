@@ -50,14 +50,7 @@ def _assert_article_is_rendered(item: Article, res):
     content = res.content.decode("utf-8")
     assert item.title in content
     html = item.get_formatted_content
-    html = get_spaceless_html(html)
     assert html in content
-
-
-def get_spaceless_html(html):
-    context = Context({})
-    html = Template("{% spaceless %}" + html + "{% endspaceless %}").render(context)
-    return html
 
 
 @pytest.mark.django_db
