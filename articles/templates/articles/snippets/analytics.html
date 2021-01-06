@@ -7,8 +7,8 @@
         </script>
     {% endif %}
 
-    {% compress js inline %}
-        {% if goatcounter_domain is not None %}
+    {% if goatcounter_domain is not None %}
+        {% compress js inline %}
             <script>
                 window.goatcounter = {
                     endpoint: 'https://{{ goatcounter_domain }}/count',
@@ -16,6 +16,10 @@
                 }
             </script>
             <script async defer src="{% static "vendor/goatcounter.js" %}"></script>
-        {% endif %}
-    {% endcompress %}
+        {% endcompress %}
+        <noscript>
+            <img src="https://{{ goatcounter_domain }}/count?p={{ request.get_full_path }}"
+                 alt="GoatCounter tracking pixel">
+        </noscript>
+    {% endif %}
 {% endif %}
