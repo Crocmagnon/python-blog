@@ -471,6 +471,17 @@ pytest = ">=3.5.0"
 vcrpy = ">=2.0.1"
 
 [[package]]
+name = "pytest-rerunfailures"
+version = "9.1.1"
+description = "pytest plugin to re-run tests to eliminate flaky failures"
+category = "dev"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+pytest = ">=5.0"
+
+[[package]]
 name = "pytz"
 version = "2020.5"
 description = "World timezone definitions, modern and historical"
@@ -633,7 +644,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "95c3ac9ea5b53ca0646c04fe708143d8affe331c1a0b71204b59315f00347d4f"
+content-hash = "54f79231676e4ef08e19081303d6bdf9c18bd2db967b7df46bc489a056046d41"
 
 [metadata.files]
 appdirs = [
@@ -959,6 +970,10 @@ pytest-django = [
 pytest-recording = [
     {file = "pytest-recording-0.11.0.tar.gz", hash = "sha256:deea1ae6a129c9d8f8669ed7d12539748f00c8f9ef4de4f563055263e47bed08"},
     {file = "pytest_recording-0.11.0-py3-none-any.whl", hash = "sha256:c2cc321f93ceffb2146ead0c51198e4ce86986723265ce6d4a87d3b16071eb85"},
+]
+pytest-rerunfailures = [
+    {file = "pytest-rerunfailures-9.1.1.tar.gz", hash = "sha256:1cb11a17fc121b3918414eb5eaf314ee325f2e693ac7cb3f6abf7560790827f2"},
+    {file = "pytest_rerunfailures-9.1.1-py3-none-any.whl", hash = "sha256:2eb7d0ad651761fbe80e064b0fd415cf6730cdbc53c16a145fd84b66143e609f"},
 ]
 pytz = [
     {file = "pytz-2020.5-py2.py3-none-any.whl", hash = "sha256:16962c5fb8db4a8f63a26646d8886e9d769b6c511543557bc84e9569fb9a9cb4"},
