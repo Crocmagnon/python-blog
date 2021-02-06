@@ -10,6 +10,7 @@ repos:
         types: [toml]
       - id: check-yaml
         types: [yaml]
+        args: [--allow-multiple-documents]
 #      - id: check-xml
 #        types: [xml]
       - id: end-of-file-fixer

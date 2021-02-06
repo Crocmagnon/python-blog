@@ -1,0 +1,162 @@
+---
+kind: pipeline
+type: docker
+name: pre-commit
+steps:
+  - name: pre-commit
+    image: rg.fr-par.scw.cloud/crocmagnon/pre-commit:latest
+    commands:
+      - pre-commit run --all-files --color always --show-diff-on-failure
+
+---
+kind: pipeline
+type: docker
+name: build test images
+environment:
+  POETRY_OPTIONS: ""
+steps:
+  - name: build deps image
+    image: plugins/docker
+    settings:
+      registry: rg.fr-par.scw.cloud/crocmagnon
+      username: { from_secret: registry_username }
+      password: { from_secret: registry_password }
+      cache_from:
+        - rg.fr-par.scw.cloud/crocmagnon/blog:tests-deps
+      repo: rg.fr-par.scw.cloud/crocmagnon/blog
+      tags: tests-deps
+      target: venv
+      build_args_from_env:
+        - POETRY_OPTIONS
+      pull_image: true
+      purge: false
+      storage_driver: overlay2
+  - name: build tests image
+    image: plugins/docker
+    settings:
+      registry: rg.fr-par.scw.cloud/crocmagnon
+      username: { from_secret: registry_username }
+      password: { from_secret: registry_password }
+      cache_from:
+        - rg.fr-par.scw.cloud/crocmagnon/blog:tests-latest
+        - rg.fr-par.scw.cloud/crocmagnon/blog:tests-deps
+      repo: rg.fr-par.scw.cloud/crocmagnon/blog
+      tags: tests-latest
+      build_args_from_env:
+        - POETRY_OPTIONS
+      pull_image: true
+      purge: false
+      storage_driver: overlay2
+
+---
+kind: pipeline
+type: docker
+name: build prod images
+environment:
+  POETRY_OPTIONS: "--no-dev"
+steps:
+  - name: build deps image
+    image: plugins/docker
+    settings:
+      registry: rg.fr-par.scw.cloud/crocmagnon
+      username: { from_secret: registry_username }
+      password: { from_secret: registry_password }
+      cache_from:
+        - rg.fr-par.scw.cloud/crocmagnon/blog:deps
+      repo: rg.fr-par.scw.cloud/crocmagnon/blog
+      tags: deps
+      build_args_from_env:
+        - POETRY_OPTIONS
+      target: venv
+      pull_image: true
+      purge: false
+      storage_driver: overlay2
+    when:
+      branch:
+        - master
+  - name: build temp prod image
+    image: plugins/docker
+    settings:
+      registry: rg.fr-par.scw.cloud/crocmagnon
+      username: { from_secret: registry_username }
+      password: { from_secret: registry_password }
+      cache_from:
+        - rg.fr-par.scw.cloud/crocmagnon/blog:latest-temp
+        - rg.fr-par.scw.cloud/crocmagnon/blog:deps
+      repo: rg.fr-par.scw.cloud/crocmagnon/blog
+      tags: latest-temp
+      build_args_from_env:
+        - POETRY_OPTIONS
+      pull_image: true
+      purge: false
+      storage_driver: overlay2
+    when:
+      branch:
+        - master
+
+---
+kind: pipeline
+type: docker
+name: unit tests
+depends_on:
+  - build test images
+steps:
+  - name: unit tests
+    image: rg.fr-par.scw.cloud/crocmagnon/blog:tests-latest
+    commands:
+      - cd /app
+      - python -m pytest
+
+---
+kind: pipeline
+type: docker
+name: missing migration
+depends_on:
+  - build test images
+steps:
+  - name: missing migration
+    image: rg.fr-par.scw.cloud/crocmagnon/blog:tests-latest
+    commands:
+      - cd /app
+      - python manage.py makemigrations --check
+
+---
+kind: pipeline
+type: docker
+name: publish prod image
+depends_on:
+  - missing migration
+  - unit tests
+  - pre-commit
+  - build prod images
+environment:
+  POETRY_OPTIONS: "--no-dev"
+steps:
+  - name: build final prod image
+    image: plugins/docker
+    settings:
+      registry: rg.fr-par.scw.cloud/crocmagnon
+      username: { from_secret: registry_username }
+      password: { from_secret: registry_password }
+      cache_from:
+        - rg.fr-par.scw.cloud/crocmagnon/blog:latest-temp
+        - rg.fr-par.scw.cloud/crocmagnon/blog:deps
+      repo: rg.fr-par.scw.cloud/crocmagnon/blog
+      tags: latest
+      build_args_from_env:
+        - POETRY_OPTIONS
+      pull_image: true
+      purge: false
+      storage_driver: overlay2
+    when:
+      branch:
+        - master
+
+#---
+#kind: pipeline
+#type: docker
+#name: deploy
+#depends_on:
+#  - publish prod image
+#steps:
+#  - # tag and deploy prod image, when master
