@@ -152,11 +152,33 @@ steps:
       branch:
         - master
 
-#---
-#kind: pipeline
-#type: docker
-#name: deploy
-#depends_on:
-#  - publish prod image
-#steps:
-#  - # tag and deploy prod image, when master
+---
+kind: pipeline
+type: docker
+name: deploy
+depends_on:
+  - publish prod image
+steps:
+  - name: deploy
+    image: ubuntu
+    commands:
+      - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y --no-install-recommends )'
+      - eval $(ssh-agent -s)
+      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+      - mkdir -p ~/.ssh
+      - chmod 700 ~/.ssh
+      - echo "$SSH_CONFIG" > ~/.ssh/config
+      - chmod 644 ~/.ssh/config
+      - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+      - chmod 644 ~/.ssh/known_hosts
+      - ssh blog "/home/gaugendre/blog/update"
+    environment:
+      SSH_PRIVATE_KEY:
+        from_secret: ssh_private_key
+      SSH_CONFIG:
+        from_secret: ssh_config
+      SSH_KNOWN_HOSTS:
+        from_secret: ssh_known_hosts
+    when:
+      branch:
+        - master
