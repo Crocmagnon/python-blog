@@ -145,7 +145,7 @@ steps:
       tags: latest
       build_args_from_env:
         - POETRY_OPTIONS
-      pull_image: true
+      pull_image: false
       purge: false
       storage_driver: overlay2
     when:
