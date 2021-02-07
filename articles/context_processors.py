@@ -57,4 +57,5 @@ def blog_metadata(request):
     context["blog_description"] = settings.BLOG["description"]
     context["blog_author"] = settings.BLOG["author"]
     context["blog_pipelines_url"] = settings.BLOG["repo"]["pipelines_url"]
+    context["blog_repo_homepage"] = settings.BLOG["repo"]["homepage"]
     return context

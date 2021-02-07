@@ -194,10 +194,10 @@ BLOG = {
     "description": "My take on tech-related subjects (but not only).",
     "base_url": os.getenv("BLOG_BASE_URL", "https://gabnotes.org/"),
     "repo": {
-        "commit_url": "https://git.sr.ht/~crocmagnon/blog/commit/{commit_sha}",
-        "homepage": "https://git.sr.ht/~crocmagnon/blog",
-        "log": "https://git.sr.ht/~crocmagnon/blog/log",
-        "pipelines_url": "https://gitlab.com/gaugendre/blog/pipelines",
+        "commit_url": "https://git.augendre.info/gaugendre/blog/commit/{commit_sha}",
+        "homepage": "https://git.augendre.info/gaugendre/blog",
+        "log": "https://git.augendre.info/gaugendre/blog/commits/branch/master",
+        "pipelines_url": "https://drone.augendre.info/gaugendre/blog",
     },
 }
 
