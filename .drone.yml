@@ -131,14 +131,17 @@ depends_on:
   - build prod images
 steps:
   - name: retag prod image
-    image: gcr.io/go-containerregistry/crane
+    image: nicolaka/netshoot
     environment:
       REGISTRY: rg.fr-par.scw.cloud/crocmagnon
       REGISTRY_USERNAME: { from_secret: registry_username }
       REGISTRY_PASSWORD: { from_secret: registry_password }
+      CRANE_VERSION: 0.4.0
     commands:
-      - crane auth login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD $REGISTRY
-      - crane tag rg.fr-par.scw.cloud/crocmagnon/blog:latest-temp latest
+      - wget "https://github.com/google/go-containerregistry/releases/download/v$CRANE_VERSION/go-containerregistry_Linux_x86_64.tar.gz"
+      - tar xzf go-containerregistry_Linux_x86_64.tar.gz
+      - ./crane auth login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD $REGISTRY
+      - ./crane tag $REGISTRY/blog:latest-temp latest
     when:
       branch:
         - master
