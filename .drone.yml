@@ -129,25 +129,16 @@ depends_on:
   - unit tests
   - pre-commit
   - build prod images
-environment:
-  POETRY_OPTIONS: "--no-dev"
 steps:
-  - name: build final prod image
-    image: plugins/docker
-    settings:
-      registry: rg.fr-par.scw.cloud/crocmagnon
-      username: { from_secret: registry_username }
-      password: { from_secret: registry_password }
-      cache_from:
-        - rg.fr-par.scw.cloud/crocmagnon/blog:latest-temp
-        - rg.fr-par.scw.cloud/crocmagnon/blog:deps
-      repo: rg.fr-par.scw.cloud/crocmagnon/blog
-      tags: latest
-      build_args_from_env:
-        - POETRY_OPTIONS
-      pull_image: false
-      purge: false
-      storage_driver: overlay2
+  - name: retag prod image
+    image: gcr.io/go-containerregistry/crane
+    environment:
+      REGISTRY: rg.fr-par.scw.cloud/crocmagnon
+      REGISTRY_USERNAME: { from_secret: registry_username }
+      REGISTRY_PASSWORD: { from_secret: registry_password }
+    commands:
+      - crane auth login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD $REGISTRY
+      - crane tag rg.fr-par.scw.cloud/crocmagnon/blog:latest-temp latest
     when:
       branch:
         - master
