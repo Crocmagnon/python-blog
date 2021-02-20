@@ -31,10 +31,10 @@ repos:
     hooks:
     - id: black
       types: [python]
-  - repo: https://gitlab.com/devopshq/gitlab-ci-linter
-    rev: v1.0.1
-    hooks:
-      - id: gitlab-ci-linter
-        args:
-          - --server
-          - https://gitlab.com
+#  - repo: https://gitlab.com/devopshq/gitlab-ci-linter
+#    rev: v1.0.1
+#    hooks:
+#      - id: gitlab-ci-linter
+#        args:
+#          - --server
+#          - https://gitlab.com
