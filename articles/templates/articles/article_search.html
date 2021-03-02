@@ -1,0 +1,21 @@
+{% extends 'articles/article_list.html' %}
+
+{% block main_title %}Search{% if search_expression %} results{% endif %}{% endblock %}
+
+{% block search_bar %}
+    <p>
+        This search form is pretty basic and will search for articles matching
+        ALL of your search terms in either the content, the title or the keywords.
+        It returns exact case-insensitive matches.
+    </p>
+    <form action="" method="get">
+        <input aria-label="Search" type="text" name="s" placeholder="Search..." value="{{ search_expression }}">
+        <button type="submit">Search</button>
+    </form>
+{% endblock %}
+
+{% block empty_results %}
+    {% if search_expression %}
+        No article found matching your criteria.
+    {% endif %}
+{% endblock %}

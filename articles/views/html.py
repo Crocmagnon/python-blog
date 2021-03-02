@@ -1,24 +1,47 @@
+import operator
+from functools import reduce
+from typing import Dict
+
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import F
+from django.db.models import F, Q
 from django.views import generic
 
 from articles.models import Article
 
 
 class BaseArticleListView(generic.ListView):
+    model = Article
+    context_object_name = "articles"
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["blog_title"] = settings.BLOG["title"]
         context["blog_description"] = settings.BLOG["description"]
+        page_obj = context["page_obj"]
+        if page_obj.has_next():
+            querystring = self.build_querystring({"page": page_obj.next_page_number()})
+            context["next_page_querystring"] = querystring
+        if page_obj.has_previous():
+            querystring = self.build_querystring(
+                {"page": page_obj.previous_page_number()}
+            )
+            context["previous_page_querystring"] = querystring
         return context
+
+    def get_additional_querystring_params(self) -> Dict[str, str]:
+        return dict()
+
+    def build_querystring(self, initial_queryparams: Dict[str, str]) -> str:
+        querystring = {
+            **initial_queryparams,
+            **self.get_additional_querystring_params(),
+        }
+        return "&".join(map(lambda item: f"{item[0]}={item[1]}", querystring.items()))
 
 
 class ArticlesListView(BaseArticleListView):
-    model = Article
-    context_object_name = "articles"
     queryset = Article.objects.filter(status=Article.PUBLISHED)
 
     def get_context_data(self, **kwargs):
@@ -30,9 +53,39 @@ class ArticlesListView(BaseArticleListView):
         return context
 
 
+class SearchArticlesListView(BaseArticleListView):
+    queryset = Article.objects.filter(status=Article.PUBLISHED)
+    template_name = "articles/article_search.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search_expression"] = self.request.GET.get("s") or ""
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_expression = self.request.GET.get("s")
+        if not search_expression:
+            return queryset.none()
+        search_terms = search_expression.split()
+        return queryset.filter(
+            reduce(operator.and_, (Q(title__icontains=term) for term in search_terms))
+            | reduce(
+                operator.and_, (Q(content__icontains=term) for term in search_terms)
+            )
+            | reduce(
+                operator.and_, (Q(keywords__icontains=term) for term in search_terms)
+            )
+        )
+
+    def get_additional_querystring_params(self) -> Dict[str, str]:
+        search_expression = self.request.GET.get("s")
+        if search_expression:
+            return {"s": search_expression}
+        return {}
+
+
 class DraftsListView(LoginRequiredMixin, BaseArticleListView):
-    model = Article
-    context_object_name = "articles"
     queryset = Article.objects.filter(status=Article.DRAFT)
 
     def get_context_data(self, **kwargs):

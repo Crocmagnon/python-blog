@@ -1,5 +1,6 @@
 <nav>
     <a href="{% url 'articles-list' %}">Home</a>
+    <a href="{% url 'search' %}">Search</a>
     <a href="{% url 'complete-feed' %}">RSS</a>
     {% if user.is_authenticated %}
         <a href="{% url 'admin:articles_article_add' %}">Write</a>
