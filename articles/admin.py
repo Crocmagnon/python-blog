@@ -1,11 +1,9 @@
-import copy
-
 from django.contrib import admin, messages
 from django.contrib.admin import register
 from django.contrib.auth.admin import UserAdmin
 from django.shortcuts import redirect
 
-from .models import Article, User
+from .models import Article, Tag, User
 
 admin.site.register(User, UserAdmin)
 
@@ -40,7 +38,7 @@ class ArticleAdmin(admin.ModelAdmin):
             {
                 "fields": [
                     ("title", "slug"),
-                    ("author", "keywords"),
+                    ("author", "tags"),
                     ("status", "published_at"),
                     ("created_at", "updated_at"),
                     ("views_count", "read_time"),
@@ -71,7 +69,8 @@ class ArticleAdmin(admin.ModelAdmin):
     ]
     prepopulated_fields = {"slug": ("title",)}
     change_form_template = "articles/article_change_form.html"
-    search_fields = ["title", "content"]
+    search_fields = ["title", "content", "tags__name"]
+    autocomplete_fields = ["tags"]
 
     def publish(self, request, queryset):
         if not request.user.has_perm("articles.change_article"):
@@ -133,3 +132,9 @@ class ArticleAdmin(admin.ModelAdmin):
         return bool(instance.custom_css)
 
     has_custom_css.boolean = True
+
+
+@register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ["name"]
+    search_fields = ["name"]

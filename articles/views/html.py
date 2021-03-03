@@ -74,9 +74,9 @@ class SearchArticlesListView(BaseArticleListView):
                 operator.and_, (Q(content__icontains=term) for term in search_terms)
             )
             | reduce(
-                operator.and_, (Q(keywords__icontains=term) for term in search_terms)
+                operator.and_, (Q(tags__name__icontains=term) for term in search_terms)
             )
-        )
+        ).distinct()
 
     def get_additional_querystring_params(self) -> Dict[str, str]:
         search_expression = self.request.GET.get("s")
