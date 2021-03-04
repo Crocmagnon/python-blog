@@ -20,7 +20,7 @@ footer > :first-child {
     margin-top: 1em;
 }
 
-nav a:not(:first-child):before {
+nav a:not(:first-child):before, a.tag:not(:first-of-type):before {
     content: '\00B7';
     margin: 0 5px;
     color: var(--nc-tx-1);

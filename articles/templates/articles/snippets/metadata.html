@@ -2,4 +2,7 @@
     Published on {% include "articles/snippets/datetime.html" %}
     &centerdot; {{ article.get_read_time }} min read
     {% include "articles/snippets/admin_link.html" %}
+    {% if article.tags.all %}
+    <br>{% for tag in article.tags.all %}<a href="{% url "tag" slug=tag.slug %}" class="tag">{{ tag.name }}</a>{% endfor %}
+    {% endif %}
 </p>

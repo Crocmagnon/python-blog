@@ -5,9 +5,10 @@ from typing import Dict
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Q
+from django.shortcuts import get_object_or_404
 from django.views import generic
 
-from articles.models import Article
+from articles.models import Article, Tag
 
 
 class BaseArticleListView(generic.ListView):
@@ -41,9 +42,11 @@ class BaseArticleListView(generic.ListView):
         return "&".join(map(lambda item: f"{item[0]}={item[1]}", querystring.items()))
 
 
-class ArticlesListView(BaseArticleListView):
+class PublicArticleListView(BaseArticleListView):
     queryset = Article.objects.filter(status=Article.PUBLISHED)
 
+
+class ArticlesListView(PublicArticleListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         home_article = Article.objects.filter(
@@ -53,8 +56,7 @@ class ArticlesListView(BaseArticleListView):
         return context
 
 
-class SearchArticlesListView(BaseArticleListView):
-    queryset = Article.objects.filter(status=Article.PUBLISHED)
+class SearchArticlesListView(PublicArticleListView):
     template_name = "articles/article_search.html"
 
     def get_context_data(self, **kwargs):
@@ -85,6 +87,12 @@ class SearchArticlesListView(BaseArticleListView):
         return {}
 
 
+class TagArticlesListView(PublicArticleListView):
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, slug=self.kwargs.get("slug"))
+        return super().get_queryset().filter(tags=tag)
+
+
 class DraftsListView(LoginRequiredMixin, BaseArticleListView):
     queryset = Article.objects.filter(status=Article.DRAFT)
 
@@ -103,9 +111,9 @@ class ArticleDetailView(generic.DetailView):
     def get_queryset(self):
         key = self.request.GET.get("draft_key")
         if key:
-            return Article.objects.filter(draft_key=key)
+            return Article.objects.filter(draft_key=key).prefetch_related("tags")
 
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().prefetch_related("tags")
         if not self.request.user.is_authenticated:
             queryset = queryset.filter(status=Article.PUBLISHED)
         return queryset
