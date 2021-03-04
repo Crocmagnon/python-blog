@@ -136,5 +136,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ["name"]
-    search_fields = ["name"]
+    list_display = ["name", "slug"]
+    search_fields = ["slug", "name"]
+    list_display_links = ["slug", "name"]
+    prepopulated_fields = {"slug": ("name",)}
