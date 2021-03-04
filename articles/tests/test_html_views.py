@@ -102,29 +102,31 @@ def test_user_can_access_drafts_list(
 
 
 @pytest.mark.django_db
-def test_has_plausible_if_set(client: Client, settings):
-    settings.PLAUSIBLE_DOMAIN = "gabnotes.org"
+def test_has_goatcounter_if_set(client: Client, settings):
+    settings.GOATCOUNTER_DOMAIN = "gc.gabnotes.org"
     res = client.get(reverse("articles-list"))
     content = res.content.decode("utf-8")
-    assert "https://plausible.augendre.info/js/plausible.js" in content
-    assert 'data-domain="gabnotes.org"' in content
+    assert "window.goatcounter" in content
+    assert f"{settings.GOATCOUNTER_DOMAIN}/count" in content
 
 
 @pytest.mark.django_db
-def test_doesnt_have_plausible_if_unset(client: Client, settings):
-    settings.PLAUSIBLE_DOMAIN = None
+def test_doesnt_have_goatcounter_if_unset(client: Client, settings):
+    settings.GOATCOUNTER_DOMAIN = None
     res = client.get(reverse("articles-list"))
     content = res.content.decode("utf-8")
-    assert "https://plausible.augendre.info/js/plausible.js" not in content
+    assert "window.goatcounter" not in content
+    assert f"{settings.GOATCOUNTER_DOMAIN}/count" not in content
 
 
 @pytest.mark.django_db
-def test_logged_in_user_doesnt_have_plausible(client: Client, author: User, settings):
+def test_logged_in_user_doesnt_have_goatcounter(client: Client, author: User, settings):
     client.force_login(author)
-    settings.PLAUSIBLE_DOMAIN = "gabnotes.org"
+    settings.GOATCOUNTER_DOMAIN = "gc.gabnotes.org"
     res = client.get(reverse("articles-list"))
     content = res.content.decode("utf-8")
-    assert "https://plausible.augendre.info/js/plausible.js" not in content
+    assert "window.goatcounter" not in content
+    assert f"{settings.GOATCOUNTER_DOMAIN}/count" not in content
 
 
 @pytest.mark.django_db

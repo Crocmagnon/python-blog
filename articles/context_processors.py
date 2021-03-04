@@ -36,7 +36,6 @@ def git_version(request):
 
 def analytics(request):
     return {
-        "plausible_domain": settings.PLAUSIBLE_DOMAIN,
         "goatcounter_domain": settings.GOATCOUNTER_DOMAIN,
     }
 
