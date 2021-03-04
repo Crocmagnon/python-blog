@@ -8,7 +8,9 @@
     <meta name="author" content="Gabriel Augendre">
     <meta name="color-scheme" content="light dark">
     <title>{% block title %}Home | {% endblock %}{{ blog_title }} by {{ blog_author }}</title>
-    <link rel="alternate" type="application/rss+xml" title="Gab's Notes » Feed" href="{% url 'complete-feed' %}">
+    {% block feed_link %}
+        <link rel="alternate" type="application/rss+xml" title="{{ blog_title }}" href="{% url 'complete-feed' %}">
+    {% endblock %}
     {% include "articles/snippets/analytics_head.html" %}
     {% include "articles/snippets/page_metadata.html" %}
 

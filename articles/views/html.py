@@ -88,9 +88,20 @@ class SearchArticlesListView(PublicArticleListView):
 
 
 class TagArticlesListView(PublicArticleListView):
+    tag = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.tag = get_object_or_404(Tag, slug=self.kwargs.get("slug"))
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["feed_title"] = self.tag.get_feed_title()
+        context["feed_url"] = self.tag.get_feed_url()
+        return context
+
     def get_queryset(self):
-        tag = get_object_or_404(Tag, slug=self.kwargs.get("slug"))
-        return super().get_queryset().filter(tags=tag)
+        return super().get_queryset().filter(tags=self.tag)
 
 
 class DraftsListView(LoginRequiredMixin, BaseArticleListView):

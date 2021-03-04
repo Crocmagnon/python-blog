@@ -6,7 +6,7 @@ from blog import settings
 
 class CompleteFeed(Feed):
     FEED_LIMIT = 15
-    title = "Gab's Notes"
+    title = settings.BLOG["title"]
     link = settings.BLOG["base_url"]
     description = settings.BLOG["description"]
 
@@ -31,3 +31,9 @@ class TagFeed(CompleteFeed):
 
     def get_queryset(self, tag):
         return super().get_queryset(tag).filter(tags=tag)
+
+    def title(self, tag):
+        return tag.get_feed_title()
+
+    def link(self, tag):
+        return tag.get_absolute_url()

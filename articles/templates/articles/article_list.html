@@ -1,5 +1,12 @@
 {% extends 'articles/base.html' %}
 
+{% block feed_link %}
+    {{ block.super }}
+    {% if feed_url and feed_title %}
+        <link rel="alternate" type="application/rss+xml" title="{{ feed_title }}" href="{{ feed_url }}">
+    {% endif %}
+{% endblock %}
+
 {% block append_css %}
     <style>{{ article.get_minified_custom_css }}</style>
     <style>.pagination{display:flex;justify-content:space-between}</style>

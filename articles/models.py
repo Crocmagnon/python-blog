@@ -4,6 +4,7 @@ from functools import cached_property
 
 import rcssmin
 import readtime
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -32,6 +33,15 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("tag", kwargs={"slug": self.slug})
+
+    def get_feed_title(self):
+        return f"{self.name} - {settings.BLOG['title']}"
+
+    def get_feed_url(self):
+        return reverse("tag-feed", kwargs={"slug": self.slug})
 
 
 class Article(models.Model):
