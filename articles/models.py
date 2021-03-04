@@ -60,7 +60,7 @@ class Article(models.Model):
         ordering = ["-published_at"]
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
 
     def get_absolute_url(self):
         return reverse("article-detail", kwargs={"slug": self.slug})
