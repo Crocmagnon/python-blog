@@ -69,7 +69,7 @@ class Article(models.Model):
     is_home = models.BooleanField(default=False, blank=True)
     custom_css = models.TextField(blank=True)
     draft_key = models.UUIDField(default=uuid.uuid4)
-    tags = models.ManyToManyField(to=Tag, related_name="articles")
+    tags = models.ManyToManyField(to=Tag, related_name="articles", blank=True)
 
     class Meta:
         ordering = ["-published_at"]
