@@ -5,7 +5,7 @@ import pytest
 from django.core.management import call_command
 from django.utils import timezone
 
-from articles.models import Article, User
+from articles.models import Article, Tag, User
 
 
 @pytest.fixture()
@@ -16,8 +16,14 @@ def author() -> User:
 
 @pytest.fixture()
 @pytest.mark.django_db
-def published_article(author: User) -> Article:
-    return Article.objects.create(
+def tag() -> Tag:
+    return Tag.objects.create(name="This is a new tag", slug="this-new-tag")
+
+
+@pytest.fixture()
+@pytest.mark.django_db
+def published_article(author: User, tag: Tag) -> Article:
+    article = Article.objects.create(
         title="Some interesting article title",
         status=Article.PUBLISHED,
         author=author,
@@ -31,6 +37,8 @@ def published_article(author: User) -> Article:
             "[1]: https://example.com/image.png"
         ),
     )
+    article.tags.set([tag])
+    return article
 
 
 @pytest.fixture()
