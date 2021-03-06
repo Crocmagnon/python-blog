@@ -51,8 +51,13 @@ class Article(models.Model):
         (DRAFT, "Draft"),
         (PUBLISHED, "Published"),
     ]
+    CONTENT_DEFAULT = (
+        '!!! warning "Draft"\n'
+        "    This article is still a draft. It may appear by error in your feed "
+        'if I click on the "publish" button too early 😊'
+    )
     title = models.CharField(max_length=255)
-    content = models.TextField()
+    content = models.TextField(default=CONTENT_DEFAULT)
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default=DRAFT)
     published_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
