@@ -17,6 +17,10 @@ def render_article(request, article_pk):
     has_code = request.POST.get("has_code")
     if has_code is not None:
         article.has_code = has_code == "true"
-    tags = Tag.objects.filter(pk__in=map(int, request.POST.get("tag_ids").split(",")))
-    html = render(request, template, context={"article": article, "tags": tags})
+    context = {"article": article}
+    tags = request.POST.get("tag_ids")
+    if tags:
+        tags = Tag.objects.filter(pk__in=map(int, tags.split(",")))
+        context["tags"] = tags
+    html = render(request, template, context=context)
     return HttpResponse(html)

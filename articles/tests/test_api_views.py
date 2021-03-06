@@ -57,6 +57,16 @@ def test_render_article_doesnt_save(published_article, client: Client):
     assert published_article.content == original_content
 
 
+@pytest.mark.django_db
+def test_render_article_no_tags(published_article, client: Client):
+    client.force_login(published_article.author)
+    api_res = client.post(
+        reverse("api-render-article", kwargs={"article_pk": published_article.pk}),
+        data={"content": published_article.content, "tag_ids": ""},
+    )
+    assert api_res.status_code == 200
+
+
 def post_article(client: Client, article: Article, content: str):
     return client.post(
         reverse("api-render-article", kwargs={"article_pk": article.pk}),
