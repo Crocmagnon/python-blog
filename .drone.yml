@@ -5,6 +5,7 @@ name: pre-commit
 steps:
   - name: pre-commit
     image: rg.fr-par.scw.cloud/crocmagnon/pre-commit:latest
+    pull: always
     commands:
       - pre-commit run --all-files --color always --show-diff-on-failure
 
@@ -103,6 +104,7 @@ depends_on:
 steps:
   - name: unit tests
     image: rg.fr-par.scw.cloud/crocmagnon/blog:tests-latest
+    pull: always
     commands:
       - cd /app
       - python -m pytest
@@ -116,6 +118,7 @@ depends_on:
 steps:
   - name: missing migration
     image: rg.fr-par.scw.cloud/crocmagnon/blog:tests-latest
+    pull: always
     commands:
       - cd /app
       - python manage.py makemigrations --check
