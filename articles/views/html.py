@@ -136,3 +136,7 @@ class ArticleDetailView(generic.DetailView):
             obj.save(update_fields=["views_count"])
 
         return obj
+
+    def get_context_data(self, **kwargs):
+        kwargs["tags"] = self.object.tags.all()
+        return super().get_context_data(**kwargs)

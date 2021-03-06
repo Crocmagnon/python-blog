@@ -69,6 +69,8 @@ function prepareBody() {
         const element = document.querySelector(input.selector);
         body.set(input.to, element[input.property]);
     }
+    const tagIds = Array.from(document.querySelector("#id_tags").selectedOptions).map(option => option.value).join();
+    body.set("tag_ids", tagIds);
     return body;
 }
 
