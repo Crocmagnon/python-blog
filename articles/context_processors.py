@@ -11,6 +11,8 @@ IGNORED_PATHS = [
 def drafts_count(request):
     if request.path in IGNORED_PATHS:
         return {}
+    if not request.user.is_authenticated:
+        return {}
     return {"drafts_count": Article.objects.filter(status=Article.DRAFT).count()}
 
 
