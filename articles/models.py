@@ -132,7 +132,7 @@ class Article(models.Model):
     def get_related_articles(self):
         related_articles = set()
         for tag in self.tags.all():
-            related_articles.update(tag.articles.all())
+            related_articles.update(tag.articles.filter(status=Article.PUBLISHED))
         sample_size = min([len(related_articles), 3])
         return random.sample(related_articles, sample_size)
 
