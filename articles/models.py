@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.db.models import Prefetch
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
@@ -131,8 +132,11 @@ class Article(models.Model):
     @cached_property
     def get_related_articles(self):
         related_articles = set()
-        for tag in self.tags.all():
-            related_articles.update(tag.articles.filter(status=Article.PUBLISHED))
+        published_articles = Article.objects.filter(status=Article.PUBLISHED)
+        for tag in self.tags.all().prefetch_related(
+            Prefetch("articles", published_articles, to_attr="published_articles")
+        ):
+            related_articles.update(tag.published_articles)
         sample_size = min([len(related_articles), 3])
         return random.sample(related_articles, sample_size)
 
