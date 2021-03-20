@@ -49,6 +49,7 @@ pytest-cov = "^2.10.1"
 pytest-recording = "^0.11.0"
 pytest-rerunfailures = "^9.1.1"
 pytest-env = "^0.6.2"
+django-debug-toolbar = "^3.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
