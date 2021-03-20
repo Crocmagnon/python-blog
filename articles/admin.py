@@ -71,6 +71,12 @@ class ArticleAdmin(admin.ModelAdmin):
     change_form_template = "articles/article_change_form.html"
     search_fields = ["title", "content", "tags__name"]
     autocomplete_fields = ["tags"]
+    show_full_result_count = False
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.prefetch_related("tags")
+        return queryset
 
     def publish(self, request, queryset):
         if not request.user.has_perm("articles.change_article"):
