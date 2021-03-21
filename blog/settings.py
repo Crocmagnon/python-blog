@@ -42,8 +42,7 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv("DEBUG", "true").lower() == "true"
-DEBUG = False
+DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 ALLOWED_HOSTS = ["localhost"]  # Required for healthcheck
 if DEBUG:
     ALLOWED_HOSTS.extend(["127.0.0.1"])
