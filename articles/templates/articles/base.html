@@ -1,4 +1,4 @@
-{% load static compress %}
+{% load static %}
 {% spaceless %}
 <!DOCTYPE html>
 <html lang="en">
@@ -14,17 +14,15 @@
     {% include "articles/snippets/analytics_head.html" %}
     {% include "articles/snippets/page_metadata.html" %}
 
-    {% compress css inline %}
-        <link rel="stylesheet" href="{% static "vendor/newcss.css" %}" type="text/css">
-        <link rel="stylesheet" href="{% static "public.css" %}" type="text/css">
-        <link rel="stylesheet" href="{% static "admonitions.css" %}" type="text/css">
-        {% if article and article.has_code %}
-            <link rel="stylesheet" href="{% static "vendor/codehilite.css" %}" type="text/css">
-        {% endif %}
-        {% if user.is_authenticated %}
-            <link rel="stylesheet" href="{% static "authenticated.css" %}">
-        {% endif %}
-    {% endcompress %}
+    <link rel="stylesheet" href="{% static "vendor/newcss.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "public.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "admonitions.css" %}" type="text/css">
+    {% if article and article.has_code %}
+        <link rel="stylesheet" href="{% static "vendor/codehilite.css" %}" type="text/css">
+    {% endif %}
+    {% if user.is_authenticated %}
+        <link rel="stylesheet" href="{% static "authenticated.css" %}">
+    {% endif %}
 
     {% block append_css %}
     {% endblock %}
@@ -61,11 +59,9 @@
 </footer>
 
 {% include "articles/snippets/analytics.html" %}
-{% compress js inline %}
-    {% if user.is_authenticated %}
-        <script src="{% static 'edit-keymap.js' %}" async defer></script>
-    {% endif %}
-{% endcompress %}
+{% if user.is_authenticated %}
+    <script src="{% static 'edit-keymap.js' %}" async defer></script>
+{% endif %}
 
 </body>
 </html>

@@ -42,8 +42,8 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "true").lower() == "true"
-
+# DEBUG = os.getenv("DEBUG", "true").lower() == "true"
+DEBUG = False
 ALLOWED_HOSTS = ["localhost"]  # Required for healthcheck
 if DEBUG:
     ALLOWED_HOSTS.extend(["127.0.0.1"])
@@ -60,6 +60,7 @@ CSRF_COOKIE_SECURE = not DEBUG
 # Application definition
 
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -70,12 +71,12 @@ INSTALLED_APPS = [
     "attachments",
     "anymail",
     "django_cleanup.apps.CleanupConfig",
-    "compressor",
     "debug_toolbar",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -181,13 +182,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",
-]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -214,19 +209,3 @@ SHORTPIXEL_RESIZE_HEIGHT = int(os.getenv("SHORTPIXEL_RESIZE_HEIGHT", 10000))
 GOATCOUNTER_DOMAIN = os.getenv("GOATCOUNTER_DOMAIN")
 
 LOGIN_URL = "admin:login"
-
-# COMPRESS_ENABLED = True  # Enable this if you want to force compression during dev
-COMPRESS_FILTERS = {
-    "css": [
-        "compressor.filters.css_default.CssAbsoluteFilter",
-        "compressor.filters.cssmin.rCSSMinFilter",
-    ],
-    "js": [
-        "compressor.filters.jsmin.CalmjsFilter",
-    ],
-}
-if DEBUG:
-    COMPRESS_DEBUG_TOGGLE = "nocompress"
-
-COMPRESS_OFFLINE = True
-COMPRESS_OFFLINE_CONTEXT = "articles.compressor.offline_context"
