@@ -2,7 +2,9 @@ let preview = null;
 
 window.onload = function () {
     const previewButton = document.querySelector("input#_live_preview");
-    previewButton.addEventListener("click", openPreviewPopup);
+    if (previewButton) {
+        previewButton.addEventListener("click", openPreviewPopup);
+    }
 };
 window.onbeforeunload = function () {
     if (preview !== null) {
