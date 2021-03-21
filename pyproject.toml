@@ -40,6 +40,7 @@ pylibmc = "^1.6.1"
 django-debug-toolbar = "^3.2"
 whitenoise = {extras = ["brotli"], version = "^5.2.0"}
 rcssmin = "^1.0.6"
+django-csp = "^3.7"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.7"

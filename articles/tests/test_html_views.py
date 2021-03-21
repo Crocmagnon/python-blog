@@ -106,7 +106,7 @@ def test_has_goatcounter_if_set(client: Client, settings):
     settings.GOATCOUNTER_DOMAIN = "gc.gabnotes.org"
     res = client.get(reverse("articles-list"))
     content = res.content.decode("utf-8")
-    assert "window.goatcounter" in content
+    assert "data-goatcounter" in content
     assert f"{settings.GOATCOUNTER_DOMAIN}/count" in content
 
 

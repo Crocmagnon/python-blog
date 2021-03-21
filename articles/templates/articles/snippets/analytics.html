@@ -1,13 +1,8 @@
 {% load static %}
 
 {% if not user.is_authenticated and goatcounter_domain is not None %}
-    <script>
-        window.goatcounter = {
-            endpoint: 'https://{{ goatcounter_domain }}/count',
-            allow_local: true,
-        }
-    </script>
-    <script async defer src="{% static "vendor/goatcounter.js" %}"></script>
+    <script async defer src="{% static "vendor/goatcounter.js" %}"
+            data-goatcounter="https://{{ goatcounter_domain }}/count"></script>
     <noscript>
         <img src="https://{{ goatcounter_domain }}/count?p={{ request.get_full_path }}"
              alt="GoatCounter tracking pixel">

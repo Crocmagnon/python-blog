@@ -83,6 +83,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "csp.middleware.CSPMiddleware",
 ]
 
 ROOT_URLCONF = "blog.urls"
@@ -208,3 +209,19 @@ SHORTPIXEL_RESIZE_HEIGHT = int(os.getenv("SHORTPIXEL_RESIZE_HEIGHT", 10000))
 GOATCOUNTER_DOMAIN = os.getenv("GOATCOUNTER_DOMAIN")
 
 LOGIN_URL = "admin:login"
+
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_SECONDS = 63072000
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# CSP
+CSP_DEFAULT_SRC = ("'none'",)
+https_goatcounter_domain = "https://" + GOATCOUNTER_DOMAIN
+CSP_IMG_SRC = ("'self'", https_goatcounter_domain)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_CONNECT_SRC = ("'self'", https_goatcounter_domain)
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
+CSP_MANIFEST_SRC = ("'self'",)
