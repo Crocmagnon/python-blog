@@ -219,7 +219,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # CSP
 CSP_DEFAULT_SRC = ("'none'",)
-https_goatcounter_domain = "https://" + GOATCOUNTER_DOMAIN
+https_goatcounter_domain = "https://" + str(GOATCOUNTER_DOMAIN)
 CSP_IMG_SRC = ("'self'", https_goatcounter_domain)
 CSP_SCRIPT_SRC = ("'self'",)
 CSP_CONNECT_SRC = ("'self'", https_goatcounter_domain)
