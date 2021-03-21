@@ -55,12 +55,6 @@ def unpublished_article(author: User) -> Article:
     )
 
 
-@pytest.fixture(autouse=True)
-def enable_compressor(settings):
-    settings.COMPRESS_ENABLED = True
-
-
 @pytest.fixture(autouse=True, scope="session")
 def collect_static():
     call_command("collectstatic", "--no-input", "--clear")
-    call_command("compress", "--force")
