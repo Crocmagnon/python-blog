@@ -1,11 +1,19 @@
 let preview = null;
 
-window.onload = function () {
+function onLoad () {
     const previewButton = document.querySelector("input#_live_preview");
     if (previewButton) {
         previewButton.addEventListener("click", openPreviewPopup);
     }
-};
+}
+((readyState) => {
+    if (readyState === "interactive") {
+        onLoad();
+    } else if (readyState === "loading") {
+        window.addEventListener("DOMContentLoaded", onLoad, false);
+    }
+})(document.readyState);
+
 window.onbeforeunload = function () {
     if (preview !== null) {
         preview.close();
