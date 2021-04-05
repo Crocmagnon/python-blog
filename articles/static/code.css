@@ -1,0 +1,23 @@
+.codehilitetable td {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.codehilitetable .linenos {
+    max-width: 20px;
+}
+
+.codehilitetable .linenos pre {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-right: 0;
+}
+
+.codehilitetable .code pre {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding-left: .1rem;
+}

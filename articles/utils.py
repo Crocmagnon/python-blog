@@ -20,7 +20,7 @@ def format_article_content(content):
         extensions=[
             "extra",
             "admonition",
-            CodeHiliteExtension(linenums=False, guess_lang=False),
+            CodeHiliteExtension(linenums=True, guess_lang=False),
             LazyLoadingImageExtension(),
         ]
     )
