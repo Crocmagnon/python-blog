@@ -15,7 +15,8 @@ from django.utils import timezone
 
 from articles.utils import (
     build_full_absolute_url,
-    format_article_content,
+    format_article_content_for_html,
+    format_article_content_for_rss,
     get_html_to_text_converter,
     truncate_words_after_char_count,
 )
@@ -94,7 +95,11 @@ class Article(models.Model):
 
     @cached_property
     def get_formatted_content(self):
-        return format_article_content(self.content)
+        return format_article_content_for_html(self.content)
+
+    @cached_property
+    def get_formatted_content_for_rss(self):
+        return format_article_content_for_rss(self.content)
 
     def publish(self):
         if not self.published_at:

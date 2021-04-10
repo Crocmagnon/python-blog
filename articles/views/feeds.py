@@ -19,7 +19,7 @@ class CompleteFeed(Feed):
         return self.get_queryset(obj)[: self.FEED_LIMIT]
 
     def item_description(self, item: Article):
-        return item.get_formatted_content
+        return item.get_formatted_content_for_rss
 
     def item_pubdate(self, item: Article):
         return item.published_at

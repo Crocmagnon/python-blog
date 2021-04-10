@@ -3,7 +3,7 @@ from django.test import Client
 from django.urls import reverse
 
 from articles.models import Article
-from articles.utils import format_article_content
+from articles.utils import format_article_content_for_html
 
 
 @pytest.mark.django_db
@@ -42,7 +42,7 @@ def test_render_article_change_content(published_article: Article, client: Clien
     api_res = post_article(client, published_article, preview_content)
     assert api_res.status_code == 200
     api_content = api_res.content.decode("utf-8")  # type: str
-    html_preview_content = format_article_content(preview_content)
+    html_preview_content = format_article_content_for_html(preview_content)
     assert html_preview_content in api_content
 
 
