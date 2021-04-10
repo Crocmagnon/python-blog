@@ -1,6 +1,10 @@
+:root {
+    --body-width: 750px;
+}
+
 body {
     /* Overriding so that it doesn't change even when updating the library. */
-    max-width: 750px;
+    max-width: var(--body-width);
 }
 
 h1, h2, h3 {
