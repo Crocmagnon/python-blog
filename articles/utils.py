@@ -15,20 +15,12 @@ def build_full_absolute_url(request, url):
         return (settings.BLOG["base_url"] + url)[::-1].replace("//", "/", 1)[::-1]
 
 
-def format_article_content_for_rss(content):
-    return _format_article_content(content, linenums=False)
-
-
-def format_article_content_for_html(content):
-    return _format_article_content(content, linenums=True)
-
-
-def _format_article_content(content, linenums: bool):
+def format_article_content(content):
     md = markdown.Markdown(
         extensions=[
             "extra",
             "admonition",
-            CodeHiliteExtension(linenums=linenums, guess_lang=False),
+            CodeHiliteExtension(linenums=True, guess_lang=False),
             LazyLoadingImageExtension(),
         ]
     )
