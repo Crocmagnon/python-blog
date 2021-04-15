@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="{% static "admonitions.css" %}" type="text/css">
     {% if article and article.has_code %}
         <link rel="stylesheet" href="{% static "vendor/codehilite.css" %}" type="text/css">
-        <link rel="stylesheet" href="{% static "code.css" %}" type="text/css">
     {% endif %}
     {% if user.is_authenticated %}
         <link rel="stylesheet" href="{% static "authenticated.css" %}">
