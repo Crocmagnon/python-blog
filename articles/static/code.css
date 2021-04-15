@@ -1,9 +1,3 @@
-:root {
-    --linenos-width: 55px;
-    --code-border-width: 1px;
-    --pre-padding-horizontal: 1.5rem;
-}
-
 .codehilitetable td {
     border: none;
     margin: 0;
@@ -11,9 +5,7 @@
 }
 
 .codehilitetable .linenos {
-    width: var(--linenos-width);
-    min-width: var(--linenos-width);
-    max-width: var(--linenos-width);
+    max-width: 20px;
 }
 
 .codehilitetable .linenos pre {
@@ -21,8 +13,6 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     padding-right: 0;
-    margin-bottom: 0;
-    overflow-x: scroll;
 }
 
 .codehilitetable .code pre {
@@ -30,7 +20,4 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     padding-left: .1rem;
-    margin-bottom: 0;
-    width: calc(var(--body-width) - var(--linenos-width) - 2 * var(--code-border-width) - var(--pre-padding-horizontal));
-    overflow-x: scroll;
 }
