@@ -15,6 +15,8 @@ class BaseArticleListView(generic.ListView):
     model = Article
     context_object_name = "articles"
     paginate_by = 10
+    main_title = "Blog posts"
+    html_title = ""
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -58,6 +60,7 @@ class ArticlesListView(PublicArticleListView):
 
 class SearchArticlesListView(PublicArticleListView):
     template_name = "articles/article_search.html"
+    html_title = "Search"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -69,6 +72,7 @@ class SearchArticlesListView(PublicArticleListView):
         search_expression = self.request.GET.get("s")
         if not search_expression:
             return queryset.none()
+        self.html_title = f"Search results for {search_expression}"
         search_terms = search_expression.split()
         return queryset.filter(
             reduce(operator.and_, (Q(title__icontains=term) for term in search_terms))
@@ -89,9 +93,12 @@ class SearchArticlesListView(PublicArticleListView):
 
 class TagArticlesListView(PublicArticleListView):
     tag = None
+    main_title = None
+    html_title = None
 
     def dispatch(self, request, *args, **kwargs):
         self.tag = get_object_or_404(Tag, slug=self.kwargs.get("slug"))
+        self.main_title = self.html_title = f"{self.tag.name} articles"
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

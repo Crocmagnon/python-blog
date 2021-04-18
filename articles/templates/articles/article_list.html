@@ -12,11 +12,11 @@
     <style>.pagination{display:flex;justify-content:space-between}</style>
 {% endblock %}
 
-{% block title %}{% endblock %}
+{% block title %}{% if view.html_title %}{{ view.html_title }} | {% endif %}{% endblock %}
 
 {% block content %}
     <section>
-        <h2 id="blog-posts">{% block main_title %}Blog posts{% endblock %}</h2>
+        <h2 id="blog-posts">{% block main_title %}{{ view.main_title }}{% endblock %}</h2>
         {% block search_bar %}{% endblock %}
         {% for article in articles %}
             <p>
