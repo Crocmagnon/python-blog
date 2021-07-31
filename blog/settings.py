@@ -201,6 +201,7 @@ BLOG = {
         "log": "https://git.augendre.info/gaugendre/blog/commits/branch/master",
         "pipelines_url": "https://drone.augendre.info/gaugendre/blog",
     },
+    "status_url": os.getenv("SERVICES_STATUS_URL"),
 }
 
 SHORTPIXEL_API_KEY = os.getenv("SHORTPIXEL_API_KEY")
