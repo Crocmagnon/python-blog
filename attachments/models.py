@@ -52,7 +52,7 @@ class Attachment(models.Model):
 
         try:
             Image.open(self.original_file.path)
-        except IOError:
+        except OSError:
             return
 
         # Submit job to shortpixel

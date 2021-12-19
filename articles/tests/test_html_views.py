@@ -1,5 +1,4 @@
 import pytest
-from django.template import Context, Template
 from django.test import Client
 from django.urls import reverse
 from model_bakery import baker

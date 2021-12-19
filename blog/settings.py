@@ -228,3 +228,5 @@ CSP_MANIFEST_SRC = ("'self'",)
 CSP_FONT_SRC = ("'self'",)
 CSP_BASE_URI = ("'none'",)
 CSP_FORM_ACTION = ("'self'",)
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"

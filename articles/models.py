@@ -138,7 +138,7 @@ class Article(models.Model):
         ):
             related_articles.update(tag.published_articles)
         sample_size = min([len(related_articles), 3])
-        return random.sample(related_articles, sample_size)
+        return random.sample(list(related_articles), sample_size)
 
     @cached_property
     def keywords(self):
@@ -151,6 +151,6 @@ class Article(models.Model):
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
         return reverse(
-            "admin:%s_%s_change" % (content_type.app_label, content_type.model),
+            f"admin:{content_type.app_label}_{content_type.model}_change",
             args=(self.id,),
         )

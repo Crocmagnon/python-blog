@@ -1,0 +1,7 @@
+[flake8]
+ignore =
+    # ignore long lines
+    E501,
+    # deprecated rule
+    W503,
+    A003,

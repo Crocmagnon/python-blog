@@ -1,6 +1,5 @@
 import operator
 from functools import reduce
-from typing import Dict
 
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -33,10 +32,10 @@ class BaseArticleListView(generic.ListView):
             context["previous_page_querystring"] = querystring
         return context
 
-    def get_additional_querystring_params(self) -> Dict[str, str]:
-        return dict()
+    def get_additional_querystring_params(self) -> dict[str, str]:
+        return {}
 
-    def build_querystring(self, initial_queryparams: Dict[str, str]) -> str:
+    def build_querystring(self, initial_queryparams: dict[str, str]) -> str:
         querystring = {
             **initial_queryparams,
             **self.get_additional_querystring_params(),
@@ -84,7 +83,7 @@ class SearchArticlesListView(PublicArticleListView):
             )
         ).distinct()
 
-    def get_additional_querystring_params(self) -> Dict[str, str]:
+    def get_additional_querystring_params(self) -> dict[str, str]:
         search_expression = self.request.GET.get("s")
         if search_expression:
             return {"s": search_expression}
