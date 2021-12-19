@@ -64,4 +64,5 @@ ENV DB_BASE_DIR "/db"
 
 HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000', timeout=2)"
 
+WORKDIR /app/src
 CMD ["/app/docker/run.sh"]
