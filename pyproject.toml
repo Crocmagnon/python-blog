@@ -1,22 +1,3 @@
-[tool.black]
-target-version = ['py38']
-
-[tool.isort]
-profile = "black"
-
-[tool.pytest.ini_options]
-addopts = "--color=yes"
-minversion = "6.0"
-DJANGO_SETTINGS_MODULE = "blog.settings"
-testpaths = [
-    "articles",
-    "blog",
-    "attachments",
-]
-env = [
-    "GOATCOUNTER_DOMAIN=gc.gabnotes.org"
-]
-
 [tool.poetry]
 name = "blog"
 version = "0.1.0"
@@ -53,6 +34,23 @@ pytest-rerunfailures = "^10.2"
 pytest-env = "^0.6.2"
 poetry-deps-scanner = "^1.0.1"
 invoke = "^1.6.0"
+
+[tool.black]
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+addopts = "--color=yes"
+minversion = "6.0"
+DJANGO_SETTINGS_MODULE = "blog.settings"
+testpaths = [
+    "src",
+]
+env = [
+    "GOATCOUNTER_DOMAIN=gc.gabnotes.org"
+]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

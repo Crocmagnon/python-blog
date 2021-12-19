@@ -3,17 +3,18 @@ from pathlib import Path
 from invoke import task
 
 BASE_DIR = Path(__file__).parent.resolve(strict=True)
+SRC_DIR = BASE_DIR / "src"
 
 
 @task
 def test(ctx):
-    with ctx.cd(BASE_DIR):
+    with ctx.cd(SRC_DIR):
         ctx.run("pytest", pty=True, echo=True)
 
 
 @task
 def test_cov(ctx):
-    with ctx.cd(BASE_DIR):
+    with ctx.cd(SRC_DIR):
         ctx.run(
             "pytest --cov=. --cov-report term-missing:skip-covered",
             pty=True,
@@ -22,9 +23,14 @@ def test_cov(ctx):
 
 
 @task
-def publish(ctx):
+def build(ctx):
     with ctx.cd(BASE_DIR):
         ctx.run("docker-compose build django", pty=True, echo=True)
+
+
+@task
+def publish(ctx):
+    with ctx.cd(BASE_DIR):
         ctx.run("docker-compose push django", pty=True, echo=True)
 
 

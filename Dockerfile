@@ -43,11 +43,9 @@ COPY --from=venv /app/venv /app/venv/
 ENV PATH /app/venv/bin:$PATH
 
 WORKDIR /app
-COPY manage.py LICENSE pyproject.toml ./
+COPY LICENSE pyproject.toml ./
 COPY docker ./docker/
-COPY blog ./blog/
-COPY attachments ./attachments/
-COPY articles ./articles/
+COPY src ./src/
 COPY --from=git /version /app/.version
 
 ENV SECRET_KEY "changeme"
