@@ -52,6 +52,7 @@ pytest-recording = "^0.12.0"
 pytest-rerunfailures = "^10.2"
 pytest-env = "^0.6.2"
 poetry-deps-scanner = "^1.0.1"
+invoke = "^1.6.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

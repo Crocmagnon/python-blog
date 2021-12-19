@@ -1,7 +1,7 @@
 version: '2.4'
 services:
   django:
-    image: rg.fr-par.scw.cloud/crocmagnon/blog:latest
+    image: crocmagnon/blog:latest
     build:
       context: .
       args:

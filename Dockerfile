@@ -2,11 +2,10 @@
 FROM python:3.10.1-bullseye AS venv
 
 # https://python-poetry.org/docs/#installation
-ENV POETRY_VERSION=1.1.4
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+ENV POETRY_VERSION=1.1.11
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
 
-ENV PATH /root/.poetry/bin:$PATH
-ENV PYTHONPATH $PYTHONPATH:/root/.poetry/lib
+ENV PATH /root/.local/bin:$PATH
 ARG POETRY_OPTIONS
 
 WORKDIR /app
@@ -24,7 +23,7 @@ RUN python -m venv --copies /app/venv \
 
 
 ## Get git versions
-FROM alpine/git:v2.26.2 AS git
+FROM alpine/git AS git
 ADD . /app
 WORKDIR /app
 RUN git rev-parse HEAD | tee /version
