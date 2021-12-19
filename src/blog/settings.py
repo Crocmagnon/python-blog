@@ -197,7 +197,6 @@ BLOG = {
         "commit_url": "https://git.augendre.info/gaugendre/blog/commit/{commit_sha}",
         "homepage": "https://git.augendre.info/gaugendre/blog",
         "log": "https://git.augendre.info/gaugendre/blog/commits/branch/master",
-        "pipelines_url": "https://drone.augendre.info/gaugendre/blog",
     },
     "status_url": os.getenv("SERVICES_STATUS_URL"),
 }
