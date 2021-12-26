@@ -20,6 +20,9 @@ RUN python -m venv --copies /app/venv \
     && . /app/venv/bin/activate \
     && poetry install $POETRY_OPTIONS
 
+ENV PATH /app/venv/bin:$PATH
+COPY src ./src/
+RUN python ./src/manage.py collectstatic --no-input
 
 ## Get git versions
 FROM alpine/git AS git
@@ -46,6 +49,7 @@ COPY LICENSE pyproject.toml ./
 COPY docker ./docker/
 COPY src ./src/
 COPY --from=git /version /app/.version
+COPY --from=venv /app/src/staticfiles /app/src/staticfiles/
 
 ENV SECRET_KEY "changeme"
 ENV DEBUG "false"
