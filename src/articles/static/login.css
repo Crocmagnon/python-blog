@@ -1,0 +1,14 @@
+.d-none {
+  display: none !important;
+}
+
+.float-right {
+  float: right;
+}
+
+td, th, tr, tbody, tr:nth-child(2n) {
+  background-color: inherit;
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+}

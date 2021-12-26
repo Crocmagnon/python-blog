@@ -71,6 +71,10 @@ INSTALLED_APPS = [
     "anymail",
     "django_cleanup.apps.CleanupConfig",
     "debug_toolbar",
+    "django_otp",
+    "django_otp.plugins.otp_static",
+    "django_otp.plugins.otp_totp",
+    "two_factor",
 ]
 
 MIDDLEWARE = [
@@ -82,6 +86,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "csp.middleware.CSPMiddleware",
@@ -207,7 +212,12 @@ SHORTPIXEL_RESIZE_HEIGHT = int(os.getenv("SHORTPIXEL_RESIZE_HEIGHT", 10000))
 
 GOATCOUNTER_DOMAIN = os.getenv("GOATCOUNTER_DOMAIN")
 
-LOGIN_URL = "admin:login"
+LOGIN_URL = "two_factor:login"
+LOGIN_REDIRECT_URL = "two_factor:profile"
+LOGOUT_REDIRECT_URL = "articles-list"
+TWO_FACTOR_REMEMBER_COOKIE_AGE = 86400 * 30
+TWO_FACTOR_REMEMBER_COOKIE_SECURE = True
+TWO_FACTOR_REMEMBER_COOKIE_SAMESITE = "Strict"
 
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
