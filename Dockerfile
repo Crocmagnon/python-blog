@@ -18,7 +18,6 @@ COPY pyproject.toml poetry.lock ./
 
 RUN python -m venv --copies /app/venv \
     && . /app/venv/bin/activate \
-    && poetry config cache-dir /app/poetry-cache \
     && poetry install $POETRY_OPTIONS
 
 
