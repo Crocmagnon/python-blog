@@ -6,6 +6,7 @@
         <a href="{% url 'admin:articles_article_add' %}">Write</a>
         <a href="{% url 'drafts-list' %}">View drafts <span class="pill">{{ drafts_count }}</span></a>
         <a href="{% url 'admin:index' %}">Admin</a>
+        <a href="{% url 'two_factor:profile' %}">2FA</a>
         <a href="{% url 'admin:logout' %}?next={{ request.get_full_path }}">Log out</a>
     {% else %}
         <a href="{% url 'admin:login' %}?next={{ request.get_full_path }}">Log in</a>
