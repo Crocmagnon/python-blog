@@ -81,6 +81,10 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse("article-detail", kwargs={"slug": self.slug})
 
+    def get_mailto_url(self):
+        email = settings.BLOG["email"]
+        return f"mailto:{email}?subject={self.title}"
+
     def get_abstract(self):
         html = self.get_formatted_content
         return html.split("<!--more-->")[0]

@@ -216,6 +216,7 @@ AUTH_USER_MODEL = "articles.User"
 BLOG = {
     "title": "Gab's Notes",
     "author": "Gabriel Augendre",
+    "email": "ga-notes@augendre.info",
     "description": "My take on tech-related subjects (but not only).",
     "base_url": env("BLOG_BASE_URL"),
     "repo": {

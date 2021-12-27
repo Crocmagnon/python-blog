@@ -15,6 +15,11 @@
             {{ article.get_formatted_content|safe }}
         </div>
     </article>
+    <section id="reply">
+        <a href="{{ article.get_mailto_url }}&body={{ request.build_absolute_uri }}">
+            <button>✉️ Reply via email</button>
+        </a>
+    </section>
     {% if article.get_related_articles %}
         <section>
             <hr>

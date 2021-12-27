@@ -27,3 +27,13 @@ nav a:not(:first-child):before, a.tag:not(:first-of-type):before {
     text-decoration: none;
     display: inline-block;
 }
+
+#reply {
+    text-align: center;
+    margin-top: 2em;
+}
+
+#reply a button {
+    font-size: 1.2rem;
+    padding: 8px 16px;
+}
