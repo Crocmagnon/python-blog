@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 function bindKey() {
     const adminLinkElement = document.querySelector("a#admin-link");
@@ -10,7 +10,7 @@ function bindKey() {
         if (event.code === "KeyE") {
             window.location = adminLocation;
         }
-    })
+    });
 }
 
 ((readyState) => {

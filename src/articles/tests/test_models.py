@@ -3,7 +3,7 @@ import pytest
 from articles.models import Article, User
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_publish_article(unpublished_article: Article):
     assert unpublished_article.status == Article.DRAFT
     assert unpublished_article.published_at is None
@@ -12,7 +12,7 @@ def test_publish_article(unpublished_article: Article):
     assert published_article.published_at is not None
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_unpublish_article(published_article: Article):
     assert published_article.status == Article.PUBLISHED
     assert published_article.published_at is not None
@@ -21,7 +21,7 @@ def test_unpublish_article(published_article: Article):
     assert unpublished_article.published_at is None
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_save_article_adds_missing_slug(author: User):
     # Explicitly calling bulk_create with one article because it doesn't call save().
     articles = Article.objects.bulk_create(
@@ -33,7 +33,7 @@ def test_save_article_adds_missing_slug(author: User):
     assert article.slug != ""
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_save_article_doesnt_change_existing_slug(published_article: Article):
     original_slug = published_article.slug
     published_article.title = "This is a brand new title"
@@ -41,19 +41,19 @@ def test_save_article_doesnt_change_existing_slug(published_article: Article):
     assert published_article.slug == original_slug
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_empty_custom_css_minified(published_article):
     published_article.custom_css = ""
     assert published_article.get_minified_custom_css == ""
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_simple_custom_css_minified(published_article):
     published_article.custom_css = ".cls {\n    background-color:  red;\n}"
     assert published_article.get_minified_custom_css == ".cls{background-color:red}"
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_larger_custom_css_minified(published_article):
     published_article.custom_css = """\
 .profile {

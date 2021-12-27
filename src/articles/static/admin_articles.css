@@ -1,4 +1,5 @@
-#id_content, #id_custom_css {
+#id_content,
+#id_custom_css {
     font-family: "JetBrains Mono", monospace;
     min-height: 30em;
     resize: vertical;
@@ -9,6 +10,7 @@
     height: 38em;
 }
 
-label[for=id_content], label[for=id_custom_css] {
+label[for="id_content"],
+label[for="id_custom_css"] {
     display: none;
 }

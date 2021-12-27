@@ -8,19 +8,19 @@ from articles.models import Article, Tag, User
 
 
 @pytest.fixture()
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def author() -> User:
     return User.objects.create_user("gaugendre", is_staff=True, is_superuser=True)
 
 
 @pytest.fixture()
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def tag() -> Tag:
     return Tag.objects.create(name="This is a new tag", slug="this-new-tag")
 
 
 @pytest.fixture()
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def published_article(author: User, tag: Tag) -> Article:
     article = Article.objects.create(
         title="Some interesting article title",
@@ -41,7 +41,7 @@ def published_article(author: User, tag: Tag) -> Article:
 
 
 @pytest.fixture()
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def unpublished_article(author: User) -> Article:
     return Article.objects.create(
         title="Some interesting article title, but sorry it is not public yet",
@@ -55,5 +55,5 @@ def unpublished_article(author: User) -> Article:
 
 
 @pytest.fixture(autouse=True, scope="session")
-def collect_static():
+def _collect_static():
     call_command("collectstatic", "--no-input", "--clear")

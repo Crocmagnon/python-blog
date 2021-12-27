@@ -9,7 +9,7 @@
     --warning-text: #856404;
 }
 
-@media(prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     :root {
         --info-background: #0c5460;
         --info-text: #d1ecf1;

@@ -3,6 +3,6 @@
     &centerdot; {{ article.get_read_time }} min read
     {% include "articles/snippets/admin_link.html" %}
     {% if tags %}
-    <br><span>{% for tag in tags %}<a href="{% url "tag" slug=tag.slug %}" class="tag">{{ tag.name }}</a>{% endfor %}</span>
+        <br><span>{% for tag in tags %}<a href="{% url "tag" slug=tag.slug %}" class="tag">{{ tag.name }}</a>{% endfor %}</span>
     {% endif %}
 </p>

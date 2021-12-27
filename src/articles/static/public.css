@@ -3,7 +3,9 @@ body {
     max-width: 750px;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     border-bottom: unset;
 }
 
@@ -20,8 +22,9 @@ footer > :first-child {
     margin-top: 1em;
 }
 
-nav a:not(:first-child):before, a.tag:not(:first-of-type):before {
-    content: '\00B7';
+nav a:not(:first-child):before,
+a.tag:not(:first-of-type):before {
+    content: "\00B7";
     margin: 0 5px;
     color: var(--nc-tx-1);
     text-decoration: none;

@@ -1,6 +1,6 @@
 let preview = null;
 
-function onLoad () {
+function onLoad() {
     const previewButton = document.querySelector("input#_live_preview");
     if (previewButton) {
         previewButton.addEventListener("click", openPreviewPopup);
@@ -34,11 +34,11 @@ function openPreviewPopup(event) {
 function loadPreview() {
     const id = Number(window.location.pathname.match(/\d+/)[0]);
     const body = prepareBody();
-    fetch(`/api/render/${id}/`, {method: "POST", body: body})
-        .then(response => {
+    fetch(`/api/render/${id}/`, { method: "POST", body: body })
+        .then((response) => {
             return response.text();
         })
-        .then(value => {
+        .then((value) => {
             preview.document.open("text/html", "replace");
             preview.document.write(value);
             preview.document.close();
@@ -79,8 +79,11 @@ function prepareBody() {
         const element = document.querySelector(input.selector);
         body.set(input.to, element[input.property]);
     }
-    const tagIds = Array.from(document.querySelector("#id_tags").selectedOptions).map(option => option.value).join();
+    const tagIds = Array.from(document.querySelector("#id_tags").selectedOptions)
+        .map((option) => option.value)
+        .join();
     body.set("tag_ids", tagIds);
+
     return body;
 }
 
@@ -105,8 +108,10 @@ function setupLivePreview() {
  */
 function debounce(func, wait) {
     let timeout;
+
     return function () {
-        const context = this, args = arguments;
+        const context = this,
+            args = arguments;
         const later = function () {
             timeout = null;
             func.apply(context, args);

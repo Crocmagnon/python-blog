@@ -2,9 +2,9 @@
 
 {% if not user.is_authenticated and goatcounter_domain is not None %}
     <script async defer src="{% static "vendor/goatcounter.js" %}"
-            data-goatcounter="https://{{ goatcounter_domain }}/count"></script>
+        data-goatcounter="https://{{ goatcounter_domain }}/count"></script>
     <noscript>
         <img src="https://{{ goatcounter_domain }}/count?p={{ request.get_full_path }}"
-             alt="GoatCounter tracking pixel">
+            alt="GoatCounter tracking pixel">
     </noscript>
 {% endif %}

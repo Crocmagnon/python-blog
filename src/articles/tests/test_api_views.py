@@ -6,7 +6,7 @@ from articles.models import Article
 from articles.utils import format_article_content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_unauthenticated_render_redirects(published_article: Article, client: Client):
     api_res = client.post(
         reverse("api-render-article", kwargs={"article_pk": published_article.pk}),
@@ -15,7 +15,7 @@ def test_unauthenticated_render_redirects(published_article: Article, client: Cl
     assert api_res.status_code == 302
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_render_article_same_content(published_article: Article, client: Client):
     client.force_login(published_article.author)
     api_res = post_article(client, published_article, published_article.content)
@@ -35,7 +35,7 @@ def test_render_article_same_content(published_article: Article, client: Client)
     assert api_content == standard_content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_render_article_change_content(published_article: Article, client: Client):
     client.force_login(published_article.author)
     preview_content = "This is a different content **with strong emphasis**"
@@ -46,7 +46,7 @@ def test_render_article_change_content(published_article: Article, client: Clien
     assert html_preview_content in api_content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_render_article_doesnt_save(published_article, client: Client):
     client.force_login(published_article.author)
     original_content = published_article.content
@@ -57,7 +57,7 @@ def test_render_article_doesnt_save(published_article, client: Client):
     assert published_article.content == original_content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_render_article_no_tags(published_article, client: Client):
     client.force_login(published_article.author)
     api_res = client.post(

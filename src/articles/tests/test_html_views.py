@@ -6,7 +6,7 @@ from model_bakery import baker
 from articles.models import Article, User
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_can_access_list(client: Client, published_article: Article):
     res = client.get(reverse("articles-list"))
     assert res.status_code == 200
@@ -15,7 +15,7 @@ def test_can_access_list(client: Client, published_article: Article):
     assert published_article.get_abstract() not in content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_only_title_shown_on_list(client: Client, author: User):
     title = "This is a very long title mouahahaha"
     abstract = "Some abstract"
@@ -34,7 +34,7 @@ def test_only_title_shown_on_list(client: Client, author: User):
     assert after not in content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_access_article_by_slug(client: Client, published_article: Article):
     _test_access_article_by_slug(client, published_article)
 
@@ -52,7 +52,7 @@ def _assert_article_is_rendered(item: Article, res):
     assert html in content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_anonymous_cant_access_draft_detail(
     client: Client, unpublished_article: Article
 ):
@@ -62,7 +62,7 @@ def test_anonymous_cant_access_draft_detail(
     assert res.status_code == 404
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_anonymous_can_access_draft_detail_with_key(
     client: Client, unpublished_article: Article
 ):
@@ -73,7 +73,7 @@ def test_anonymous_can_access_draft_detail_with_key(
     _assert_article_is_rendered(unpublished_article, res)
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_user_can_access_draft_detail(
     client: Client, author: User, unpublished_article: Article
 ):
@@ -81,7 +81,7 @@ def test_user_can_access_draft_detail(
     _test_access_article_by_slug(client, unpublished_article)
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_anonymous_cant_access_drafts_list(
     client: Client, unpublished_article: Article
 ):
@@ -89,7 +89,7 @@ def test_anonymous_cant_access_drafts_list(
     assert res.status_code == 302
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_user_can_access_drafts_list(
     client: Client, author: User, unpublished_article: Article
 ):
@@ -100,7 +100,7 @@ def test_user_can_access_drafts_list(
     assert unpublished_article.title in content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_has_goatcounter_if_set(client: Client, settings):
     settings.GOATCOUNTER_DOMAIN = "gc.gabnotes.org"
     res = client.get(reverse("articles-list"))
@@ -109,7 +109,7 @@ def test_has_goatcounter_if_set(client: Client, settings):
     assert f"{settings.GOATCOUNTER_DOMAIN}/count" in content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_doesnt_have_goatcounter_if_unset(client: Client, settings):
     settings.GOATCOUNTER_DOMAIN = None
     res = client.get(reverse("articles-list"))
@@ -118,7 +118,7 @@ def test_doesnt_have_goatcounter_if_unset(client: Client, settings):
     assert f"{settings.GOATCOUNTER_DOMAIN}/count" not in content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_logged_in_user_doesnt_have_goatcounter(client: Client, author: User, settings):
     client.force_login(author)
     settings.GOATCOUNTER_DOMAIN = "gc.gabnotes.org"
@@ -128,7 +128,7 @@ def test_logged_in_user_doesnt_have_goatcounter(client: Client, author: User, se
     assert f"{settings.GOATCOUNTER_DOMAIN}/count" not in content
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 def test_image_is_lazy(client: Client, published_article: Article):
     res = client.get(reverse("article-detail", kwargs={"slug": published_article.slug}))
     assert res.status_code == 200

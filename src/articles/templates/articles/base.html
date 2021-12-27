@@ -1,42 +1,42 @@
 {% load static %}
 {% spaceless %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="Gabriel Augendre">
-    <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#F6F8FA" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-    <title>{% block title %}Home | {% endblock %}{{ blog_title }} by {{ blog_author }}</title>
-    {% block feed_link %}
-        <link rel="alternate" type="application/rss+xml" title="{{ blog_title }}" href="{% url 'complete-feed' %}">
-    {% endblock %}
-    {% include "articles/snippets/analytics_head.html" %}
-    {% include "articles/snippets/page_metadata.html" %}
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="author" content="Gabriel Augendre">
+            <meta name="color-scheme" content="light dark">
+            <meta name="theme-color" content="#F6F8FA" media="(prefers-color-scheme: light)">
+            <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+            <title>{% block title %}Home | {% endblock %}{{ blog_title }} by {{ blog_author }}</title>
+            {% block feed_link %}
+                <link rel="alternate" type="application/rss+xml" title="{{ blog_title }}" href="{% url 'complete-feed' %}">
+            {% endblock %}
+            {% include "articles/snippets/analytics_head.html" %}
+            {% include "articles/snippets/page_metadata.html" %}
 
-    <link rel="stylesheet" href="{% static "vendor/newcss.css" %}" type="text/css">
-    <link rel="stylesheet" href="{% static "public.css" %}" type="text/css">
-    <link rel="stylesheet" href="{% static "admonitions.css" %}" type="text/css">
-    {% if article and article.has_code %}
-        <link rel="stylesheet" href="{% static "vendor/codehilite.css" %}" type="text/css">
-    {% endif %}
-    {% if user.is_authenticated %}
-        <link rel="stylesheet" href="{% static "authenticated.css" %}">
-    {% endif %}
+            <link rel="stylesheet" href="{% static "vendor/newcss.css" %}" type="text/css">
+            <link rel="stylesheet" href="{% static "public.css" %}" type="text/css">
+            <link rel="stylesheet" href="{% static "admonitions.css" %}" type="text/css">
+            {% if article and article.has_code %}
+                <link rel="stylesheet" href="{% static "vendor/codehilite.css" %}" type="text/css">
+            {% endif %}
+            {% if user.is_authenticated %}
+                <link rel="stylesheet" href="{% static "authenticated.css" %}">
+            {% endif %}
 
-    {% block append_css %}
-    {% endblock %}
+            {% block append_css %}
+            {% endblock %}
 
-    {% include "articles/snippets/favicon.html" %}
-</head>
-<body>
-<header>
-    <h1>{{ blog_title }}</h1>
-    <p>{{ blog_description }}</p>
-    {% include "articles/snippets/navigation.html" %}
-</header>
+            {% include "articles/snippets/favicon.html" %}
+        </head>
+        <body>
+            <header>
+                <h1>{{ blog_title }}</h1>
+                <p>{{ blog_description }}</p>
+                {% include "articles/snippets/navigation.html" %}
+            </header>
 {% endspaceless %}
 
 <main>
@@ -45,31 +45,31 @@
 </main>
 
 {% spaceless %}
-<footer>
-    <hr>
-    <p>
-        Thoughts written here are my own and dont reflect any of my past, present
-        or future employer's position.
-        The platform behind this blog is <a href="{{ blog_repo_homepage }}">free software</a>.
-        This blog and all articles by Gabriel Augendre are licensed under the
-        <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 International License</a>.
-        Code blocks by Gabriel Augendre are licensed under the
-        <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GENERAL PUBLIC LICENSE version 3</a>.<br>
-        Currently deployed version: <a href="{{ git_version_url }}">{{ git_version }}</a>.
-        {% if blog_status_url %}
-            Status of services can be found <a href="{{ blog_status_url }}">here</a>
-        {% endif %}
-    </p>
-</footer>
+    <footer>
+        <hr>
+        <p>
+            Thoughts written here are my own and dont reflect any of my past, present
+            or future employer's position.
+            The platform behind this blog is <a href="{{ blog_repo_homepage }}">free software</a>.
+            This blog and all articles by Gabriel Augendre are licensed under the
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 International License</a>.
+            Code blocks by Gabriel Augendre are licensed under the
+            <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GENERAL PUBLIC LICENSE version 3</a>.<br>
+            Currently deployed version: <a href="{{ git_version_url }}">{{ git_version }}</a>.
+            {% if blog_status_url %}
+                Status of services can be found <a href="{{ blog_status_url }}">here</a>
+            {% endif %}
+        </p>
+    </footer>
 
-{% include "articles/snippets/analytics.html" %}
-{% if user.is_authenticated %}
-    <script src="{% static 'edit-keymap.js' %}" async defer></script>
-{% endif %}
-{% if article and article.has_code %}
-    <script src="{% static 'copy-code.js' %}" async defer></script>
-{% endif %}
+    {% include "articles/snippets/analytics.html" %}
+    {% if user.is_authenticated %}
+        <script src="{% static 'edit-keymap.js' %}" async defer></script>
+    {% endif %}
+    {% if article and article.has_code %}
+        <script src="{% static 'copy-code.js' %}" async defer></script>
+    {% endif %}
 
-</body>
-</html>
+    </body>
+    </html>
 {% endspaceless %}
