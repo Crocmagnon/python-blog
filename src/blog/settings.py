@@ -12,21 +12,43 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, "s#!83!8e$3s89m)r$1ghsgxbndf8=#^qt(_*o%xbq0j2t8#db5"),
+    ADMINS=(list, []),
+    MAILGUN_API_KEY=(str, ""),
+    MAILGUN_SENDER_DOMAIN=(str, ""),
+    HOSTS=(list, []),
+    MEMCACHED_LOCATION=(str, ""),
+    DB_BASE_DIR=(Path, BASE_DIR),
+    BLOG_BASE_URL=(str, "https://gabnotes.org/"),
+    SERVICES_STATUS_URL=(str, None),
+    SHORTPIXEL_API_KEY=(str, None),
+    SHORTPIXEL_RESIZE_WIDTH=(int, 750),
+    SHORTPIXEL_RESIZE_HEIGHT=(int, 10000),
+    GOATCOUNTER_DOMAIN=(str, None),
+)
+
+env_file = os.getenv("ENV_FILE", None)
+
+if env_file:
+    environ.Env.read_env(env_file)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv(
-    "SECRET_KEY", "s#!83!8e$3s89m)r$1ghsgxbndf8=#^qt(_*o%xbq0j2t8#db5"
-)
+SECRET_KEY = env("SECRET_KEY")
 
-admins = os.getenv("ADMINS", "")
+admins = env("ADMINS")
 if admins:
-    ADMINS = list(map(lambda x: tuple(x.split(",")), admins.split(";")))
+    ADMINS = list(map(lambda x: tuple(x.split("|")), admins))
 
 DEFAULT_FROM_EMAIL = "Gab's Notes <blog@mg.gabnotes.org>"
 SERVER_EMAIL = "Gab's Notes <blog@mg.gabnotes.org>"
@@ -34,22 +56,20 @@ EMAIL_SUBJECT_PREFIX = "[Blog] "
 EMAIL_TIMEOUT = 30
 
 ANYMAIL = {
-    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY", ""),
-    "MAILGUN_SENDER_DOMAIN": os.getenv("MAILGUN_SENDER_DOMAIN", ""),
+    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_SENDER_DOMAIN"),
     "MAILGUN_API_URL": "https://api.eu.mailgun.net/v3",
 }
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "true").lower() == "true"
+DEBUG = env("DEBUG")
 ALLOWED_HOSTS = ["localhost"]  # Required for healthcheck
 if DEBUG:
-    ALLOWED_HOSTS.extend(["127.0.0.1"])
+    ALLOWED_HOSTS.append("127.0.0.1")
 
-HOSTS = os.getenv("HOSTS")
-if HOSTS:
-    ALLOWED_HOSTS.extend(HOSTS.split(";"))
+ALLOWED_HOSTS.extend(env("HOSTS"))
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = not DEBUG
@@ -118,7 +138,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "blog.wsgi.application"
 
-MEMCACHED_LOCATION = os.getenv("MEMCACHED_LOCATION")
+MEMCACHED_LOCATION = env("MEMCACHED_LOCATION")
 if MEMCACHED_LOCATION:
     CACHES = {
         "default": {
@@ -137,12 +157,12 @@ else:
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DB_BASE_DIR = os.getenv("DB_BASE_DIR", BASE_DIR)
+DB_BASE_DIR = env("DB_BASE_DIR")
 if not DB_BASE_DIR:
     # Protect against empty strings
     DB_BASE_DIR = BASE_DIR
 else:
-    DB_BASE_DIR = Path(DB_BASE_DIR).resolve(strict=True)
+    DB_BASE_DIR = DB_BASE_DIR.resolve(strict=True)
 
 DATABASES = {
     "default": {
@@ -197,20 +217,20 @@ BLOG = {
     "title": "Gab's Notes",
     "author": "Gabriel Augendre",
     "description": "My take on tech-related subjects (but not only).",
-    "base_url": os.getenv("BLOG_BASE_URL", "https://gabnotes.org/"),
+    "base_url": env("BLOG_BASE_URL"),
     "repo": {
         "commit_url": "https://git.augendre.info/gaugendre/blog/commit/{commit_sha}",
         "homepage": "https://git.augendre.info/gaugendre/blog",
         "log": "https://git.augendre.info/gaugendre/blog/commits/branch/master",
     },
-    "status_url": os.getenv("SERVICES_STATUS_URL"),
+    "status_url": env("SERVICES_STATUS_URL"),
 }
 
-SHORTPIXEL_API_KEY = os.getenv("SHORTPIXEL_API_KEY")
-SHORTPIXEL_RESIZE_WIDTH = int(os.getenv("SHORTPIXEL_RESIZE_WIDTH", 750))
-SHORTPIXEL_RESIZE_HEIGHT = int(os.getenv("SHORTPIXEL_RESIZE_HEIGHT", 10000))
+SHORTPIXEL_API_KEY = env("SHORTPIXEL_API_KEY")
+SHORTPIXEL_RESIZE_WIDTH = env("SHORTPIXEL_RESIZE_WIDTH")
+SHORTPIXEL_RESIZE_HEIGHT = env("SHORTPIXEL_RESIZE_HEIGHT")
 
-GOATCOUNTER_DOMAIN = os.getenv("GOATCOUNTER_DOMAIN")
+GOATCOUNTER_DOMAIN = env("GOATCOUNTER_DOMAIN")
 
 LOGIN_URL = "two_factor:login"
 LOGIN_REDIRECT_URL = "two_factor:profile"
