@@ -1,10 +1,13 @@
 [flake8]
 ignore =
-    # ignore long lines
+    # long lines
     E501,
-    # deprecated rule
+    # deprecated rule: https://www.flake8rules.com/rules/W503.html
     W503,
-    # class member shadows builtin
+    # conflict with black on PEP8 interpretation
+    E203,
+    # class attribute is shadowing a python builtin
     A003,
+
 max-complexity = 10
 format = %(path)s:%(row)d:%(col)d: %(code)s %(text)s https://lintlyci.github.io/Flake8Rules/rules/%(code)s.html
