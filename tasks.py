@@ -37,3 +37,13 @@ def publish(ctx):
 @task
 def deploy(ctx):
     ctx.run("ssh ubuntu /home/gaugendre/blog/update", pty=True, echo=True)
+
+
+@task
+def download_db(ctx):
+    with ctx.cd(BASE_DIR):
+        ctx.run(
+            "scp ubuntu:/home/gaugendre/blog/db/db.sqlite3 ./db/db.sqlite3",
+            echo=True,
+            pty=True,
+        )
