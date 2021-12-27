@@ -44,6 +44,8 @@ def download_db(ctx):
     with ctx.cd(BASE_DIR):
         ctx.run(
             "scp ubuntu:/home/gaugendre/blog/db/db.sqlite3 ./db/db.sqlite3",
-            echo=True,
             pty=True,
         )
+    with ctx.cd(SRC_DIR):
+        ctx.run("./manage.py two_factor_disable gaugendre", pty=True)
+        ctx.run("./manage.py changepassword gaugendre", pty=True)
