@@ -132,7 +132,9 @@ class Article(models.Model):
     @cached_property
     def get_related_articles(self):
         related_articles = set()
-        published_articles = Article.objects.filter(status=Article.PUBLISHED)
+        published_articles = Article.objects.filter(status=Article.PUBLISHED).exclude(
+            pk=self.pk
+        )
         for tag in self.tags.all().prefetch_related(
             Prefetch("articles", published_articles, to_attr="published_articles")
         ):
