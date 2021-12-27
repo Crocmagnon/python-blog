@@ -1,6 +1,5 @@
 import re
 
-import html2text
 import markdown
 from django.conf import settings
 from markdown.extensions.codehilite import CodeHiliteExtension
@@ -37,12 +36,3 @@ def truncate_words_after_char_count(text, char_count):
         text_result.append(word)
         total_length += len(word) + 1
     return " ".join(text_result) + "..."
-
-
-def get_html_to_text_converter():
-    converter = html2text.HTML2Text()
-    converter.ignore_images = True
-    converter.ignore_links = True
-    converter.ignore_tables = True
-    converter.ignore_emphasis = True
-    return converter
