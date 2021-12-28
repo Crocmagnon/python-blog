@@ -1,5 +1,7 @@
+import time
 from pathlib import Path
 
+import requests
 from invoke import task
 
 BASE_DIR = Path(__file__).parent.resolve(strict=True)
@@ -56,7 +58,18 @@ def deploy(ctx):
     ctx.run("ssh ubuntu /home/gaugendre/blog/update", pty=True, echo=True)
 
 
-@task(pre=[check, build, publish, deploy])
+@task
+def check_alive(ctx):
+    for _ in range(5):
+        try:
+            res = requests.get("https://gabnotes.org")
+            res.raise_for_status()
+        except requests.exceptions.HTTPError:
+            time.sleep(1)
+        return
+
+
+@task(pre=[check, build, publish, deploy], post=[check_alive])
 def beam(ctx):
     pass
 

@@ -24,6 +24,7 @@ django-csp = "^3.7"
 django-two-factor-auth = {extras = ["phonenumberslite"], git = "https://github.com/Bouke/django-two-factor-auth.git", rev = "ffe4422e"}
 beautifulsoup4 = "^4.10.0"
 django-environ = "^0.8.1"
+django-stubs-ext = "^0.3.1"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.7"

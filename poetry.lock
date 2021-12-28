@@ -274,7 +274,7 @@ typing-extensions = "*"
 name = "django-stubs-ext"
 version = "0.3.1"
 description = "Monkey-patching and extensions for django-stubs"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -880,7 +880,7 @@ python-versions = "*"
 name = "typing-extensions"
 version = "4.0.1"
 description = "Backported and Experimental Type Hints for Python 3.6+"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -975,7 +975,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "35d359b39bfd7c907a1119797a4badf33b3f3c964a5ec90e85c781cf99fecf7e"
+content-hash = "f98d2a4ae15821bd9d0247980743235129a22295abf136ae59f89568a329180e"
 
 [metadata.files]
 asgiref = [
