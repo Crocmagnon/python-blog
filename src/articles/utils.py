@@ -9,14 +9,14 @@ from markdown.extensions.toc import TocExtension
 from articles.markdown import LazyLoadingImageExtension
 
 
-def build_full_absolute_url(request, url):
+def build_full_absolute_url(request, url: str) -> str:
     if request:
         return request.build_absolute_uri(url)
     else:
         return (settings.BLOG["base_url"] + url)[::-1].replace("//", "/", 1)[::-1]
 
 
-def format_article_content(content):
+def format_article_content(content: str) -> str:
     md = markdown.Markdown(
         extensions=[
             "extra",
@@ -30,7 +30,7 @@ def format_article_content(content):
     return md.convert(content)
 
 
-def truncate_words_after_char_count(text, char_count):
+def truncate_words_after_char_count(text: str, char_count: int) -> str:
     total_length = 0
     text_result = []
     for word in text.split():
@@ -41,14 +41,10 @@ def truncate_words_after_char_count(text, char_count):
     return " ".join(text_result) + "..."
 
 
-def find_first_paragraph_with_text(html):
+def find_first_paragraph_with_text(html: str) -> str:
     bs = BeautifulSoup(html, "html.parser")
-    paragraph = bs.find("p", recursive=False)
-    text = paragraph.text.strip()
-    while not text:
-        try:
-            paragraph = paragraph.next_sibling
-            text = paragraph.text.strip()
-        except Exception:
-            break
-    return text
+    paragraphs = bs.find_all("p", recursive=False)
+    for paragraph in paragraphs:
+        if paragraph.text.strip():
+            return paragraph.text
+    return ""

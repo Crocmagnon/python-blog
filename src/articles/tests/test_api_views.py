@@ -25,11 +25,11 @@ def test_render_article_same_content(published_article: Article, client: Client)
     assert api_res.status_code == 200
     assert standard_res.status_code == 200
     # ignore an expected difference
-    api_content = api_res.content.decode("utf-8")  # type: str
-    standard_content = standard_res.content.decode("utf-8")
+    api_content: str = api_res.content.decode("utf-8")
+    standard_content: str = standard_res.content.decode("utf-8")
     api_content = api_content.replace(
-        "?next=/api/render/1/",
-        "?next=/some-article-slug/",
+        "/api/render/1/",
+        "/some-article-slug/",
     )
 
     assert api_content == standard_content
@@ -41,7 +41,7 @@ def test_render_article_change_content(published_article: Article, client: Clien
     preview_content = "This is a different content **with strong emphasis**"
     api_res = post_article(client, published_article, preview_content)
     assert api_res.status_code == 200
-    api_content = api_res.content.decode("utf-8")  # type: str
+    api_content: str = api_res.content.decode("utf-8")
     html_preview_content = format_article_content(preview_content)
     assert html_preview_content in api_content
 

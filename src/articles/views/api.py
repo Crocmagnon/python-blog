@@ -1,5 +1,7 @@
+from typing import Any
+
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
 
@@ -8,7 +10,7 @@ from articles.models import Article, Tag
 
 @login_required
 @require_POST
-def render_article(request, article_pk):
+def render_article(request: HttpRequest, article_pk: int) -> HttpResponse:
     template = "articles/article_detail.html"
     article = Article.objects.get(pk=article_pk)
     article.content = request.POST.get("content", article.content)
@@ -17,10 +19,9 @@ def render_article(request, article_pk):
     has_code = request.POST.get("has_code")
     if has_code is not None:
         article.has_code = has_code == "true"
-    context = {"article": article}
+    context: dict[str, Any] = {"article": article}
     tags = request.POST.get("tag_ids")
     if tags:
-        tags = Tag.objects.filter(pk__in=map(int, tags.split(",")))
-        context["tags"] = tags
+        context["tags"] = Tag.objects.filter(pk__in=map(int, tags.split(",")))
     html = render(request, template, context=context)
     return HttpResponse(html)

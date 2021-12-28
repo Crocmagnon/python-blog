@@ -26,7 +26,7 @@ def test_only_title_shown_on_list(client: Client, author: User):
         status=Article.PUBLISHED,
         author=author,
         content=f"{abstract}\n<!--more-->\n{after}",
-    )  # type: Article
+    )
     res = client.get(reverse("articles-list"))
     content = res.content.decode("utf-8")
     assert title in content

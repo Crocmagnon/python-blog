@@ -36,6 +36,14 @@ pytest-rerunfailures = "^10.2"
 pytest-env = "^0.6.2"
 poetry-deps-scanner = "^1.0.1"
 invoke = "^1.6.0"
+mypy = "^0.930"
+django-stubs = "^1.9.0"
+types-Markdown = "^3.3.10"
+types-requests = "^2.26.3"
+types-setuptools = "^57.4.5"
+types-toml = "^0.10.1"
+types-beautifulsoup4 = "^4.10.7"
+types-Pillow = "^8.3.11"
 
 [tool.black]
 target-version = ['py38']
@@ -53,6 +61,25 @@ testpaths = [
 env = [
     "GOATCOUNTER_DOMAIN=gc.gabnotes.org"
 ]
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs:$MYPY_CONFIG_FILE_DIR/src"
+exclude = "/migrations/"
+
+[[tool.mypy.overrides]]
+module = [
+    "environ",
+    "django_otp.plugins.otp_static.models",
+    "two_factor.models",
+    "django_otp.plugins.otp_totp.models",
+    "model_bakery"
+]
+ignore_missing_imports = true
+
+[tool.django-stubs]
+django_settings_module = "blog.settings"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

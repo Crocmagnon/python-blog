@@ -18,7 +18,7 @@ class CompleteFeed(Feed):
     def items(self, obj):
         return self.get_queryset(obj)[: self.FEED_LIMIT]
 
-    def item_description(self, item: Article):
+    def item_description(self, item: Article):  # type: ignore[override]
         return item.get_formatted_content
 
     def item_pubdate(self, item: Article):

@@ -22,6 +22,13 @@ def test_cov(ctx):
         )
 
 
+@task(post=[test_cov])
+def check(ctx):
+    with ctx.cd(BASE_DIR):
+        ctx.run("pre-commit run --all-files", pty=True)
+        ctx.run("mypy src", pty=True)
+
+
 @task
 def build(ctx):
     with ctx.cd(BASE_DIR):
@@ -39,7 +46,7 @@ def deploy(ctx):
     ctx.run("ssh ubuntu /home/gaugendre/blog/update", pty=True, echo=True)
 
 
-@task(pre=[build, publish, deploy])
+@task(pre=[check, build, publish, deploy])
 def beam(ctx):
     pass
 

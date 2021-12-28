@@ -78,6 +78,7 @@ class ArticleAdmin(admin.ModelAdmin):
         queryset = queryset.prefetch_related("tags")
         return queryset
 
+    @admin.action(description="Publish selected articles")
     def publish(self, request, queryset):
         if not request.user.has_perm("articles.change_article"):
             messages.warning(request, "You're not allowed to do this.")
@@ -86,8 +87,7 @@ class ArticleAdmin(admin.ModelAdmin):
             article.publish()
         messages.success(request, f"{len(queryset)} articles published.")
 
-    publish.short_description = "Publish selected articles"
-
+    @admin.action(description="Unpublish selected articles")
     def unpublish(self, request, queryset):
         if not request.user.has_perm("articles.change_article"):
             messages.warning(request, "You're not allowed to do this.")
@@ -96,8 +96,7 @@ class ArticleAdmin(admin.ModelAdmin):
             article.unpublish()
         messages.success(request, f"{len(queryset)} articles unpublished.")
 
-    unpublish.short_description = "Unpublish selected articles"
-
+    @admin.action(description="Refresh draft key of selected articles")
     def refresh_draft_key(self, request, queryset):
         if not request.user.has_perm("articles.change_article"):
             messages.warning(request, "You're not allowed to do this.")
@@ -106,7 +105,6 @@ class ArticleAdmin(admin.ModelAdmin):
             article.refresh_draft_key()
         messages.success(request, f"{len(queryset)} draft keys refreshed.")
 
-    refresh_draft_key.short_description = "Refresh draft key of selected articles"
     actions = [publish, unpublish, refresh_draft_key]
 
     class Media:
@@ -134,10 +132,9 @@ class ArticleAdmin(admin.ModelAdmin):
     def read_time(self, instance: Article):
         return f"{instance.get_read_time()} min"
 
+    @admin.display(boolean=True)
     def has_custom_css(self, instance: Article):
         return bool(instance.custom_css)
-
-    has_custom_css.boolean = True
 
 
 @register(Tag)

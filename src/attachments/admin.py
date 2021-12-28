@@ -56,6 +56,7 @@ class AttachmentAdmin(admin.ModelAdmin):
             )
         return ""
 
+    @admin.action(description="Set as open graph image")
     def set_as_open_graph_image(self, request, queryset):
         if len(queryset) != 1:
             messages.error(request, "You must select only one attachment")
@@ -64,8 +65,7 @@ class AttachmentAdmin(admin.ModelAdmin):
         queryset.update(open_graph_image=True)
         messages.success(request, "Done")
 
-    set_as_open_graph_image.short_description = "Set as open graph image"
-
+    @admin.action(description="Reprocess selected attachments")
     def reprocess_selected_attachments(self, request, queryset):
         if len(queryset) == 0:
             messages.error(request, "You must select at least one attachment")
@@ -73,5 +73,3 @@ class AttachmentAdmin(admin.ModelAdmin):
         for attachment in queryset:
             attachment.reprocess()
         messages.success(request, "Attachments were successfully reprocessed.")
-
-    reprocess_selected_attachments.short_description = "Reprocess selected attachments"

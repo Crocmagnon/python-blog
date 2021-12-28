@@ -13,12 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-import debug_toolbar
+import debug_toolbar  # type: ignore
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
-from two_factor.urls import urlpatterns as tf_urls
+from two_factor.urls import urlpatterns as tf_urls  # type: ignore
 
 from blog import settings
 

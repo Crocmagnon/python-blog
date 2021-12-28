@@ -50,9 +50,9 @@ class PublicArticleListView(BaseArticleListView):
 class ArticlesListView(PublicArticleListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        home_article = Article.objects.filter(
+        home_article: Article = Article.objects.filter(
             status=Article.PUBLISHED, is_home=True
-        ).first()  # type: Article
+        ).first()
         context["article"] = home_article
         return context
 
@@ -92,8 +92,8 @@ class SearchArticlesListView(PublicArticleListView):
 
 class TagArticlesListView(PublicArticleListView):
     tag = None
-    main_title = None
-    html_title = None
+    main_title = ""
+    html_title = ""
 
     def dispatch(self, request, *args, **kwargs):
         self.tag = get_object_or_404(Tag, slug=self.kwargs.get("slug"))
@@ -136,7 +136,7 @@ class ArticleDetailView(generic.DetailView):
         return queryset
 
     def get_object(self, queryset=None) -> Article:
-        obj = super().get_object(queryset)  # type: Article
+        obj: Article = super().get_object(queryset)
         if not self.request.user.is_authenticated:
             obj.views_count = F("views_count") + 1
             obj.save(update_fields=["views_count"])

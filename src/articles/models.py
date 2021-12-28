@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import random
 import uuid
 from functools import cached_property
+from typing import Sequence
 
 import rcssmin
 import readtime
@@ -32,16 +35,16 @@ class Tag(models.Model):
     class Meta:
         ordering = ["name"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("tag", kwargs={"slug": self.slug})
 
-    def get_feed_title(self):
+    def get_feed_title(self) -> str:
         return f"{self.name} - {settings.BLOG['title']}"
 
-    def get_feed_url(self):
+    def get_feed_url(self) -> str:
         return reverse("tag-feed", kwargs={"slug": self.slug})
 
 
@@ -75,65 +78,65 @@ class Article(models.Model):
     class Meta:
         ordering = ["-published_at"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("article-detail", kwargs={"slug": self.slug})
 
-    def get_mailto_url(self):
+    def get_mailto_url(self) -> str:
         email = settings.BLOG["email"]
         return f"mailto:{email}?subject={self.title}"
 
-    def get_abstract(self):
+    def get_abstract(self) -> str:
         html = self.get_formatted_content
         return html.split("<!--more-->")[0]
 
     @cached_property
-    def get_description(self):
+    def get_description(self) -> str:
         html = self.get_formatted_content
         text = find_first_paragraph_with_text(html)
         return truncate_words_after_char_count(text, 160)
 
     @cached_property
-    def get_formatted_content(self):
+    def get_formatted_content(self) -> str:
         return format_article_content(self.content)
 
-    def publish(self):
+    def publish(self) -> Article:
         if not self.published_at:
             self.published_at = timezone.now()
         self.status = self.PUBLISHED
         self.save()
         return self
 
-    def unpublish(self):
+    def unpublish(self) -> Article:
         self.published_at = None
         self.status = self.DRAFT
         self.save()
         return self
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
 
     @property
-    def draft_public_url(self):
+    def draft_public_url(self) -> str:
         url = self.get_absolute_url() + f"?draft_key={self.draft_key}"
         return build_full_absolute_url(request=None, url=url)
 
-    def refresh_draft_key(self):
+    def refresh_draft_key(self) -> None:
         self.draft_key = uuid.uuid4()
         self.save()
 
-    def get_read_time(self):
+    def get_read_time(self) -> int:
         content = self.get_formatted_content
         if content:
             return readtime.of_html(content).minutes
         return 0
 
     @cached_property
-    def get_related_articles(self):
+    def get_related_articles(self) -> Sequence[Article]:
         related_articles = set()
         published_articles = Article.objects.filter(status=Article.PUBLISHED).exclude(
             pk=self.pk
@@ -141,19 +144,19 @@ class Article(models.Model):
         for tag in self.tags.all().prefetch_related(
             Prefetch("articles", published_articles, to_attr="published_articles")
         ):
-            related_articles.update(tag.published_articles)
+            related_articles.update(tag.published_articles)  # type: ignore
         sample_size = min([len(related_articles), 3])
         return random.sample(list(related_articles), sample_size)
 
     @cached_property
-    def keywords(self):
+    def keywords(self) -> str:
         return ", ".join(map(lambda tag: tag.name, self.tags.all()))
 
     @cached_property
-    def get_minified_custom_css(self):
+    def get_minified_custom_css(self) -> str:
         return rcssmin.cssmin(self.custom_css)
 
-    def get_admin_url(self):
+    def get_admin_url(self) -> str:
         content_type = ContentType.objects.get_for_model(self.__class__)
         return reverse(
             f"admin:{content_type.app_label}_{content_type.model}_change",
