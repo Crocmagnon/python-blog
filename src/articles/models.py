@@ -4,7 +4,6 @@ from functools import cached_property
 
 import rcssmin
 import readtime
-from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
@@ -16,6 +15,7 @@ from django.utils import timezone
 
 from articles.utils import (
     build_full_absolute_url,
+    find_first_paragraph_with_text,
     format_article_content,
     truncate_words_after_char_count,
 )
@@ -92,8 +92,7 @@ class Article(models.Model):
     @cached_property
     def get_description(self):
         html = self.get_formatted_content
-        bs = BeautifulSoup(html, "html.parser")
-        text = bs.find("p", recursive=False).text
+        text = find_first_paragraph_with_text(html)
         return truncate_words_after_char_count(text, 160)
 
     @cached_property

@@ -1,6 +1,7 @@
 import re
 
 import markdown
+from bs4 import BeautifulSoup
 from django.conf import settings
 from markdown.extensions.codehilite import CodeHiliteExtension
 
@@ -36,3 +37,16 @@ def truncate_words_after_char_count(text, char_count):
         text_result.append(word)
         total_length += len(word) + 1
     return " ".join(text_result) + "..."
+
+
+def find_first_paragraph_with_text(html):
+    bs = BeautifulSoup(html, "html.parser")
+    paragraph = bs.find("p", recursive=False)
+    text = paragraph.text.strip()
+    while not text:
+        try:
+            paragraph = paragraph.next_sibling
+            text = paragraph.text.strip()
+        except Exception:
+            break
+    return text
