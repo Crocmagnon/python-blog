@@ -39,6 +39,11 @@ def deploy(ctx):
     ctx.run("ssh ubuntu /home/gaugendre/blog/update", pty=True, echo=True)
 
 
+@task(pre=[build, publish, deploy])
+def beam(ctx):
+    pass
+
+
 @task
 def download_db(ctx):
     with ctx.cd(BASE_DIR):

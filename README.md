@@ -9,5 +9,5 @@ Hosted at https://gabnotes.org
 ## Development
 ```shell
 inv test-cov
-inv build publish deploy
+inv beam
 ```
