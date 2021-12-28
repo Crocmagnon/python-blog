@@ -40,3 +40,8 @@ a.tag:not(:first-of-type):before {
     font-size: 1.2rem;
     padding: 8px 16px;
 }
+
+.toclink {
+    color: var(--nc-tx-1);
+    text-decoration: none;
+}

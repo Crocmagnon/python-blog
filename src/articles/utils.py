@@ -4,6 +4,7 @@ import markdown
 from bs4 import BeautifulSoup
 from django.conf import settings
 from markdown.extensions.codehilite import CodeHiliteExtension
+from markdown.extensions.toc import TocExtension
 
 from articles.markdown import LazyLoadingImageExtension
 
@@ -20,6 +21,7 @@ def format_article_content(content):
         extensions=[
             "extra",
             "admonition",
+            TocExtension(anchorlink=True),
             CodeHiliteExtension(linenums=False, guess_lang=False),
             LazyLoadingImageExtension(),
         ]
