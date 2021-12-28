@@ -1,7 +1,7 @@
 from typing import Any
 
 from django.conf import settings
-from django.http import HttpRequest
+from django.core.handlers.wsgi import WSGIRequest
 
 from articles.models import Article
 from attachments.models import Attachment
@@ -11,7 +11,7 @@ IGNORED_PATHS = [
 ]
 
 
-def drafts_count(request: HttpRequest) -> dict[str, Any]:
+def drafts_count(request: WSGIRequest) -> dict[str, Any]:
     if request.path in IGNORED_PATHS:
         return {}
     if not request.user.is_authenticated:
@@ -19,13 +19,13 @@ def drafts_count(request: HttpRequest) -> dict[str, Any]:
     return {"drafts_count": Article.objects.filter(status=Article.DRAFT).count()}
 
 
-def date_format(request: HttpRequest) -> dict[str, Any]:
+def date_format(request: WSGIRequest) -> dict[str, Any]:
     if request.path in IGNORED_PATHS:
         return {}
     return {"CUSTOM_ISO": r"Y-m-d\TH:i:sO", "ISO_DATE": "Y-m-d"}
 
 
-def git_version(request: HttpRequest) -> dict[str, Any]:
+def git_version(request: WSGIRequest) -> dict[str, Any]:
     if request.path in IGNORED_PATHS:
         return {}
     try:
@@ -39,13 +39,13 @@ def git_version(request: HttpRequest) -> dict[str, Any]:
     return {"git_version": version, "git_version_url": url}
 
 
-def analytics(request: HttpRequest) -> dict[str, Any]:
+def analytics(request: WSGIRequest) -> dict[str, Any]:
     return {
         "goatcounter_domain": settings.GOATCOUNTER_DOMAIN,
     }
 
 
-def open_graph_image_url(request: HttpRequest) -> dict[str, Any]:
+def open_graph_image_url(request: WSGIRequest) -> dict[str, Any]:
     if request.path in IGNORED_PATHS:
         return {}
     open_graph_image = Attachment.objects.get_open_graph_image()
@@ -55,7 +55,7 @@ def open_graph_image_url(request: HttpRequest) -> dict[str, Any]:
     return {"open_graph_image_url": url}
 
 
-def blog_metadata(request: HttpRequest) -> dict[str, Any]:
+def blog_metadata(request: WSGIRequest) -> dict[str, Any]:
     return {
         "blog_title": settings.BLOG["title"],
         "blog_description": settings.BLOG["description"],

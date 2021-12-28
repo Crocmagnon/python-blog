@@ -1,39 +1,49 @@
+from datetime import datetime
+from typing import Iterable
+
 from django.contrib.syndication.views import Feed
+from django.core.handlers.wsgi import WSGIRequest
+from django.db.models import QuerySet
 
 from articles.models import Article, Tag
 from blog import settings
 
 
-class CompleteFeed(Feed):
+class BaseFeed(Feed):
     FEED_LIMIT = 15
-    title = settings.BLOG["title"]
-    link = settings.BLOG["base_url"]
     description = settings.BLOG["description"]
 
-    def get_queryset(self, obj):
+    def item_description(self, item: Article) -> str:  # type: ignore[override]
+        return item.get_formatted_content
+
+    def item_pubdate(self, item: Article) -> datetime | None:
+        return item.published_at
+
+    def _get_queryset(self) -> QuerySet[Article]:
         return Article.objects.filter(status=Article.PUBLISHED).order_by(
             "-published_at"
         )
 
-    def items(self, obj):
-        return self.get_queryset(obj)[: self.FEED_LIMIT]
 
-    def item_description(self, item: Article):  # type: ignore[override]
-        return item.get_formatted_content
+class CompleteFeed(BaseFeed):
+    title = settings.BLOG["title"]
+    link = settings.BLOG["base_url"]
 
-    def item_pubdate(self, item: Article):
-        return item.published_at
+    def items(self) -> Iterable[Article]:
+        return self._get_queryset()[: self.FEED_LIMIT]
 
 
-class TagFeed(CompleteFeed):
-    def get_object(self, request, *args, **kwargs):
+class TagFeed(BaseFeed):
+    def get_object(  # type: ignore[override]
+        self, request: WSGIRequest, *args, **kwargs
+    ) -> Tag:
         return Tag.objects.get(slug=kwargs.get("slug"))
 
-    def get_queryset(self, tag):
-        return super().get_queryset(tag).filter(tags=tag)
-
-    def title(self, tag):
+    def title(self, tag: Tag) -> str:
         return tag.get_feed_title()
 
-    def link(self, tag):
+    def link(self, tag: Tag) -> str:
         return tag.get_absolute_url()
+
+    def items(self, tag: Tag) -> Iterable[Article]:
+        return self._get_queryset().filter(tags=tag)[: self.FEED_LIMIT]

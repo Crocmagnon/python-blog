@@ -1,11 +1,15 @@
 import operator
 from functools import reduce
+from typing import Any
 
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.handlers.wsgi import WSGIRequest
+from django.core.paginator import Page
 from django.db.models import F, Q
 from django.shortcuts import get_object_or_404
 from django.views import generic
+from django.views.generic import DetailView
 
 from articles.models import Article, Tag
 
@@ -16,12 +20,13 @@ class BaseArticleListView(generic.ListView):
     paginate_by = 10
     main_title = "Blog posts"
     html_title = ""
+    request: WSGIRequest
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["blog_title"] = settings.BLOG["title"]
         context["blog_description"] = settings.BLOG["description"]
-        page_obj = context["page_obj"]
+        page_obj: Page = context["page_obj"]
         if page_obj.has_next():
             querystring = self.build_querystring({"page": page_obj.next_page_number()})
             context["next_page_querystring"] = querystring
@@ -35,7 +40,7 @@ class BaseArticleListView(generic.ListView):
     def get_additional_querystring_params(self) -> dict[str, str]:
         return {}
 
-    def build_querystring(self, initial_queryparams: dict[str, str]) -> str:
+    def build_querystring(self, initial_queryparams: dict[str, Any]) -> str:
         querystring = {
             **initial_queryparams,
             **self.get_additional_querystring_params(),
@@ -50,7 +55,7 @@ class PublicArticleListView(BaseArticleListView):
 class ArticlesListView(PublicArticleListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        home_article: Article = Article.objects.filter(
+        home_article = Article.objects.filter(
             status=Article.PUBLISHED, is_home=True
         ).first()
         context["article"] = home_article
@@ -120,10 +125,11 @@ class DraftsListView(LoginRequiredMixin, BaseArticleListView):
         return context
 
 
-class ArticleDetailView(generic.DetailView):
+class ArticleDetailView(DetailView[Article]):
     model = Article
     context_object_name = "article"
     template_name = "articles/article_detail.html"
+    request: WSGIRequest
 
     def get_queryset(self):
         key = self.request.GET.get("draft_key")
