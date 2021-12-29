@@ -79,4 +79,3 @@ repos:
         language: system
         types: [python]
         exclude: tasks.py$
-        args: ["--cache-dir=/dev/null"]
