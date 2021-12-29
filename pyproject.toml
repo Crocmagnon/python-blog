@@ -71,7 +71,10 @@ exclude = "/migrations/"
 [[tool.mypy.overrides]]
 module = [
     "environ",
-    "model_bakery",
+    "django_otp.plugins.otp_static.models",
+    "two_factor.models",
+    "django_otp.plugins.otp_totp.models",
+    "model_bakery"
 ]
 ignore_missing_imports = true
 
