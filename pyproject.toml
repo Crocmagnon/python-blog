@@ -81,6 +81,30 @@ ignore_missing_imports = true
 [tool.django-stubs]
 django_settings_module = "blog.settings"
 
+[tool.flakehell]
+max_complexity = 10
+format = "grouped"
+
+[tool.flakehell.plugins]
+"flake8-*" = [
+    "+*",
+    # long lines
+    "-E501",
+    # conflict with black on PEP8 interpretation
+    "-E203",
+    # deprecated rule: https://www.flake8rules.com/rules/W503.html
+    "-W503",
+]
+flake8-builtins = ["-A003"] # class attribute is shadowing a python builtin
+flake8-quotes = ["-Q000"] # found double quotes, conflict with black
+flake8-commas = ["-C812"] # missing trailing comma, conflict with black
+flake8-docstrings = ["-D1??"] # missing docstring
+flake8-rst-docstrings = ["-*"]
+
+[tool.flakehell.exceptions."**/migrations/*"]
+
+[tool.flakehell.exceptions."**/tests/*"]
+flake8-bandit = ["-S101"] # Use of assert detected.
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

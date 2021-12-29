@@ -41,7 +41,7 @@ class AttachmentAdmin(admin.ModelAdmin):
     def processed_file_url(self, instance):
         if instance.processed_file:
             return format_html(
-                '{} <a class="copy-button" data-to-copy="{}" href="#">&#128203;</a>',
+                '{0} <a class="copy-button" data-to-copy="{1}" href="#">&#128203;</a>',
                 instance.processed_file.url,
                 instance.processed_file.url,
             )
@@ -50,7 +50,7 @@ class AttachmentAdmin(admin.ModelAdmin):
     def original_file_url(self, instance):
         if instance.original_file:
             return format_html(
-                '{} <a class="copy-button" data-to-copy="{}" href="#">&#128203;</a>',
+                '{0} <a class="copy-button" data-to-copy="{1}" href="#">&#128203;</a>',
                 instance.original_file.url,
                 instance.original_file.url,
             )

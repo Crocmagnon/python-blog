@@ -43,10 +43,10 @@ repos:
     rev: v1.4.11
     hooks:
       - id: djhtml
-  - repo: https://github.com/pycqa/flake8
-    rev: 4.0.1
+  - repo: https://github.com/mcarans/flakehell
+    rev: 1b84f4dd6c16232b5c0c6206511427676ab55f5b
     hooks:
-      - id: flake8
+      - id: flakehell
         additional_dependencies:
           - flake8-annotations-complexity
           - flake8-builtins
@@ -56,6 +56,7 @@ repos:
           - flake8-noqa
           - flake8-pytest-style
           - flake8-pyi
+          - wemake-python-styleguide
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.5.1
     hooks:
