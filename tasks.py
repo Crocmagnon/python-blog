@@ -33,10 +33,10 @@ def pre_commit(ctx):
 @task
 def mypy(ctx):
     with ctx.cd(BASE_DIR):
-        ctx.run("mypy src", pty=True)
+        ctx.run("pre-commit run --all-files mypy", pty=True)
 
 
-@task(pre=[pre_commit, mypy, test_cov])
+@task(pre=[pre_commit, test_cov])
 def check(ctx):
     pass
 
