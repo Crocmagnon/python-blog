@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
-import django_stubs_ext
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,8 +39,6 @@ env_file = os.getenv("ENV_FILE", None)
 if env_file:
     environ.Env.read_env(env_file)
 
-
-django_stubs_ext.monkeypatch()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 

@@ -4,7 +4,6 @@ from typing import Any
 
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page
 from django.db.models import F, Q
 from django.shortcuts import get_object_or_404
@@ -20,7 +19,6 @@ class BaseArticleListView(generic.ListView):
     paginate_by = 10
     main_title = "Blog posts"
     html_title = ""
-    request: WSGIRequest
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -125,11 +123,10 @@ class DraftsListView(LoginRequiredMixin, BaseArticleListView):
         return context
 
 
-class ArticleDetailView(DetailView[Article]):
+class ArticleDetailView(DetailView):
     model = Article
     context_object_name = "article"
     template_name = "articles/article_detail.html"
-    request: WSGIRequest
 
     def get_queryset(self):
         key = self.request.GET.get("draft_key")

@@ -24,7 +24,6 @@ django-csp = "^3.7"
 django-two-factor-auth = {extras = ["phonenumberslite"], git = "https://github.com/Bouke/django-two-factor-auth.git", rev = "ffe4422e"}
 beautifulsoup4 = "^4.10.0"
 django-environ = "^0.8.1"
-django-stubs-ext = "^0.3.1"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.7"
@@ -38,7 +37,6 @@ pytest-env = "^0.6.2"
 poetry-deps-scanner = "^1.0.1"
 invoke = "^1.6.0"
 mypy = "^0.930"
-django-stubs = "^1.9.0"
 types-Markdown = "^3.3.10"
 types-requests = "^2.26.3"
 types-setuptools = "^57.4.5"
@@ -64,12 +62,12 @@ env = [
 ]
 
 [tool.mypy]
-plugins = ["mypy_django_plugin.main"]
 mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs:$MYPY_CONFIG_FILE_DIR/src"
 exclude = "/migrations/"
 
 [[tool.mypy.overrides]]
 module = [
+    "django.*",
     "environ",
     "django_otp.plugins.otp_static.models",
     "two_factor.models",
@@ -77,9 +75,6 @@ module = [
     "model_bakery"
 ]
 ignore_missing_imports = true
-
-[tool.django-stubs]
-django_settings_module = "blog.settings"
 
 [tool.flakehell]
 max_complexity = 10

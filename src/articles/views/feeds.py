@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Iterable
 
 from django.contrib.syndication.views import Feed
-from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import QuerySet
 
 from articles.models import Article, Tag
@@ -13,7 +12,7 @@ class BaseFeed(Feed):
     FEED_LIMIT = 15
     description = settings.BLOG["description"]
 
-    def item_description(self, item: Article) -> str:  # type: ignore[override]
+    def item_description(self, item: Article) -> str:
         return item.get_formatted_content
 
     def item_pubdate(self, item: Article) -> datetime | None:
@@ -34,7 +33,7 @@ class CompleteFeed(BaseFeed):
 
 
 class TagFeed(BaseFeed):
-    def get_object(self, request: WSGIRequest, *args, **kwargs) -> Tag:  # type: ignore[override]
+    def get_object(self, request, *args, **kwargs) -> Tag:
         return Tag.objects.get(slug=kwargs.get("slug"))
 
     def title(self, tag: Tag) -> str:
