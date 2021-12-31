@@ -45,7 +45,7 @@ class Attachment(models.Model):
         return f"{self.description} ({self.original_file.name})"
 
     def reprocess(self) -> None:
-        self.processed_file = None
+        self.processed_file = None  # type: ignore
         self.save()
 
     def save(self, *args: Any, **kwargs: Any) -> None:

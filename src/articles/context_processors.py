@@ -50,7 +50,7 @@ def open_graph_image_url(request: HttpRequest) -> dict[str, Any]:
         return {}
     open_graph_image = Attachment.objects.get_open_graph_image()
     url = ""
-    if open_graph_image:
+    if open_graph_image and open_graph_image.processed_file is not None:
         url = open_graph_image.processed_file.get_full_absolute_url(request)
     return {"open_graph_image_url": url}
 

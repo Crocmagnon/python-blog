@@ -96,7 +96,7 @@ class SearchArticlesListView(PublicArticleListView):
 
 
 class TagArticlesListView(PublicArticleListView):
-    tag = None
+    tag: Tag
     main_title = ""
     html_title = ""
 
