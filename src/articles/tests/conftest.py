@@ -55,5 +55,5 @@ def unpublished_article(author: User) -> Article:
 
 
 @pytest.fixture(autouse=True, scope="session")
-def _collect_static():
+def _collect_static() -> None:
     call_command("collectstatic", "--no-input", "--clear")

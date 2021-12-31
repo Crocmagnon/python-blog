@@ -78,4 +78,3 @@ repos:
         entry: mypy
         language: system
         types_or: [python, pyi]
-        exclude: tasks.py$

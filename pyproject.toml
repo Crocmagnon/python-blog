@@ -43,6 +43,7 @@ types-setuptools = "^57.4.5"
 types-toml = "^0.10.1"
 types-beautifulsoup4 = "^4.10.7"
 types-Pillow = "^8.3.11"
+django-stubs = "^1.9.0"
 
 [tool.black]
 target-version = ['py38']
@@ -63,6 +64,16 @@ env = [
 
 [tool.mypy]
 mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs:$MYPY_CONFIG_FILE_DIR/src"
+plugins = ["mypy_django_plugin.main"]
+disallow_untyped_defs = true
+warn_redundant_casts = true
+strict_equality = true
+disallow_untyped_calls = true
+warn_unreachable = true
+enable_error_code = ["redundant-expr", "truthy-bool"]
+
+[tool.django-stubs]
+django_settings_module = "blog.settings"
 
 [[tool.mypy.overrides]]
 module = [
@@ -71,7 +82,8 @@ module = [
     "django_otp.plugins.otp_static.models",
     "two_factor.models",
     "django_otp.plugins.otp_totp.models",
-    "model_bakery"
+    "model_bakery",
+    "invoke",
 ]
 ignore_missing_imports = true
 

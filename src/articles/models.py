@@ -3,7 +3,7 @@ from __future__ import annotations
 import random
 import uuid
 from functools import cached_property
-from typing import Sequence
+from typing import Any, Sequence
 
 import rcssmin
 import readtime
@@ -115,7 +115,7 @@ class Article(models.Model):
         self.save()
         return self
 
-    def save(self, *args, **kwargs) -> None:
+    def save(self, *args: Any, **kwargs: Any) -> None:
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)

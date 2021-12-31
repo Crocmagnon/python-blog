@@ -9,7 +9,7 @@ from attachments.models import Attachment
 @pytest.mark.block_network()
 @pytest.mark.vcr()
 @pytest.mark.django_db()
-def test_attachment_is_processed_by_shortpixel():
+def test_attachment_is_processed_by_shortpixel() -> None:
     # This path manipulation is required to make the test run from this directory
     # or from upper in the hierarchy (e.g.: settings.BASE_DIR)
     img_path = Path(__file__).parent / "resources" / "image.png"

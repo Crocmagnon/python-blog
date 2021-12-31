@@ -8,7 +8,7 @@ from articles.views.feeds import CompleteFeed
 
 
 @pytest.mark.django_db()
-def test_can_access_feed(client: Client, published_article):
+def test_can_access_feed(client: Client, published_article: Article) -> None:
     res = client.get(reverse("complete-feed"))
     assert res.status_code == 200
     assert "application/rss+xml" in res["content-type"]
@@ -17,7 +17,7 @@ def test_can_access_feed(client: Client, published_article):
 
 
 @pytest.mark.django_db()
-def test_feed_limits_number_of_articles(client: Client, author: User):
+def test_feed_limits_number_of_articles(client: Client, author: User) -> None:
     baker.make(Article, 100, status=Article.PUBLISHED, author=author)
     res = client.get(reverse("complete-feed"))
     content = res.content.decode("utf-8")

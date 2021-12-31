@@ -1,6 +1,10 @@
+from typing import cast
+
 from django.contrib import admin, messages
 from django.contrib.admin import register
 from django.contrib.auth.admin import UserAdmin
+from django.db.models import QuerySet
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 
 from .models import Article, Tag, User
@@ -73,13 +77,13 @@ class ArticleAdmin(admin.ModelAdmin):
     autocomplete_fields = ["tags"]
     show_full_result_count = False
 
-    def get_queryset(self, request):
+    def get_queryset(self, request: HttpRequest) -> QuerySet:
         queryset = super().get_queryset(request)
         queryset = queryset.prefetch_related("tags")
         return queryset
 
     @admin.action(description="Publish selected articles")
-    def publish(self, request, queryset):
+    def publish(self, request: HttpRequest, queryset: QuerySet) -> None:
         if not request.user.has_perm("articles.change_article"):
             messages.warning(request, "You're not allowed to do this.")
             return
@@ -88,7 +92,7 @@ class ArticleAdmin(admin.ModelAdmin):
         messages.success(request, f"{len(queryset)} articles published.")
 
     @admin.action(description="Unpublish selected articles")
-    def unpublish(self, request, queryset):
+    def unpublish(self, request: HttpRequest, queryset: QuerySet) -> None:
         if not request.user.has_perm("articles.change_article"):
             messages.warning(request, "You're not allowed to do this.")
             return
@@ -97,7 +101,7 @@ class ArticleAdmin(admin.ModelAdmin):
         messages.success(request, f"{len(queryset)} articles unpublished.")
 
     @admin.action(description="Refresh draft key of selected articles")
-    def refresh_draft_key(self, request, queryset):
+    def refresh_draft_key(self, request: HttpRequest, queryset: QuerySet) -> None:
         if not request.user.has_perm("articles.change_article"):
             messages.warning(request, "You're not allowed to do this.")
             return
@@ -110,12 +114,14 @@ class ArticleAdmin(admin.ModelAdmin):
     class Media:
         css = {"all": ("admin_articles.css",)}
 
-    def response_post_save_add(self, request, obj: Article):
+    def response_post_save_add(
+        self, request: HttpRequest, obj: Article
+    ) -> HttpResponseRedirect:
         if "_preview" in request.POST:
-            return redirect("article-detail", slug=obj.slug)
+            return cast(HttpResponseRedirect, redirect("article-detail", slug=obj.slug))
         return super().response_post_save_add(request, obj)
 
-    def response_change(self, request, obj: Article):
+    def response_change(self, request: HttpRequest, obj: Article) -> HttpResponse:
         if "_preview" in request.POST:
             obj.save()
             return redirect("article-detail", slug=obj.slug)
@@ -129,11 +135,11 @@ class ArticleAdmin(admin.ModelAdmin):
             return redirect(".")
         return super().response_change(request, obj)
 
-    def read_time(self, instance: Article):
+    def read_time(self, instance: Article) -> str:
         return f"{instance.get_read_time()} min"
 
     @admin.display(boolean=True)
-    def has_custom_css(self, instance: Article):
+    def has_custom_css(self, instance: Article) -> bool:
         return bool(instance.custom_css)
 
 

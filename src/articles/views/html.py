@@ -5,7 +5,9 @@ from typing import Any
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Page
-from django.db.models import F, Q
+from django.db.models import F, Q, QuerySet
+from django.http import HttpRequest
+from django.http.response import HttpResponseBase
 from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.views.generic import DetailView
@@ -20,7 +22,7 @@ class BaseArticleListView(generic.ListView):
     main_title = "Blog posts"
     html_title = ""
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["blog_title"] = settings.BLOG["title"]
         context["blog_description"] = settings.BLOG["description"]
@@ -51,7 +53,7 @@ class PublicArticleListView(BaseArticleListView):
 
 
 class ArticlesListView(PublicArticleListView):
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         home_article = Article.objects.filter(
             status=Article.PUBLISHED, is_home=True
@@ -64,12 +66,12 @@ class SearchArticlesListView(PublicArticleListView):
     template_name = "articles/article_search.html"
     html_title = "Search"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["search_expression"] = self.request.GET.get("s") or ""
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = super().get_queryset()
         search_expression = self.request.GET.get("s")
         if not search_expression:
@@ -98,25 +100,27 @@ class TagArticlesListView(PublicArticleListView):
     main_title = ""
     html_title = ""
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(
+        self, request: HttpRequest, *args: Any, **kwargs: Any
+    ) -> HttpResponseBase:
         self.tag = get_object_or_404(Tag, slug=self.kwargs.get("slug"))
         self.main_title = self.html_title = f"{self.tag.name} articles"
         return super().dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["feed_title"] = self.tag.get_feed_title()
         context["feed_url"] = self.tag.get_feed_url()
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         return super().get_queryset().filter(tags=self.tag)
 
 
 class DraftsListView(LoginRequiredMixin, BaseArticleListView):
     queryset = Article.objects.filter(status=Article.DRAFT)
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["title"] = "Drafts"
         context["title_header"] = context["title"]
@@ -128,7 +132,7 @@ class ArticleDetailView(DetailView):
     context_object_name = "article"
     template_name = "articles/article_detail.html"
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         key = self.request.GET.get("draft_key")
         if key:
             return Article.objects.filter(draft_key=key).prefetch_related("tags")
@@ -138,7 +142,7 @@ class ArticleDetailView(DetailView):
             queryset = queryset.filter(status=Article.PUBLISHED)
         return queryset
 
-    def get_object(self, queryset=None) -> Article:
+    def get_object(self, queryset: QuerySet | None = None) -> Article:
         obj: Article = super().get_object(queryset)
         if not self.request.user.is_authenticated:
             obj.views_count = F("views_count") + 1
@@ -146,6 +150,6 @@ class ArticleDetailView(DetailView):
 
         return obj
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         kwargs["tags"] = self.object.tags.all()
         return super().get_context_data(**kwargs)

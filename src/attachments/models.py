@@ -1,19 +1,23 @@
+from __future__ import annotations
+
 import json
 import tempfile
 from pathlib import Path
+from typing import Any
 
 import requests
 from django.conf import settings
 from django.core.files import File
 from django.db import models
 from django.db.models.fields.files import FieldFile
+from django.http import HttpRequest
 from PIL import Image
 
 from articles.utils import build_full_absolute_url
 
 
 class AbsoluteUrlFieldFile(FieldFile):
-    def get_full_absolute_url(self, request):
+    def get_full_absolute_url(self, request: HttpRequest) -> str:
         return build_full_absolute_url(request, self.url)
 
 
@@ -22,7 +26,7 @@ class AbsoluteUrlFileField(models.FileField):
 
 
 class AttachmentManager(models.Manager):
-    def get_open_graph_image(self):
+    def get_open_graph_image(self) -> Attachment | None:
         return self.filter(open_graph_image=True).first()
 
 
@@ -37,14 +41,14 @@ class Attachment(models.Model):
     class Meta:
         ordering = ["description"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.description} ({self.original_file.name})"
 
-    def reprocess(self):
+    def reprocess(self) -> None:
         self.processed_file = None
         self.save()
 
-    def save(self, *args, **kwargs):
+    def save(self, *args: Any, **kwargs: Any) -> None:
         super().save(*args, **kwargs)
 
         if self.processed_file:

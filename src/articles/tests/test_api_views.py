@@ -1,4 +1,5 @@
 import pytest
+from django.http import HttpResponse
 from django.test import Client
 from django.urls import reverse
 
@@ -7,7 +8,9 @@ from articles.utils import format_article_content
 
 
 @pytest.mark.django_db()
-def test_unauthenticated_render_redirects(published_article: Article, client: Client):
+def test_unauthenticated_render_redirects(
+    published_article: Article, client: Client
+) -> None:
     api_res = client.post(
         reverse("api-render-article", kwargs={"article_pk": published_article.pk}),
         data={"content": published_article.content},
@@ -16,7 +19,9 @@ def test_unauthenticated_render_redirects(published_article: Article, client: Cl
 
 
 @pytest.mark.django_db()
-def test_render_article_same_content(published_article: Article, client: Client):
+def test_render_article_same_content(
+    published_article: Article, client: Client
+) -> None:
     client.force_login(published_article.author)
     api_res = post_article(client, published_article, published_article.content)
     standard_res = client.get(
@@ -36,7 +41,9 @@ def test_render_article_same_content(published_article: Article, client: Client)
 
 
 @pytest.mark.django_db()
-def test_render_article_change_content(published_article: Article, client: Client):
+def test_render_article_change_content(
+    published_article: Article, client: Client
+) -> None:
     client.force_login(published_article.author)
     preview_content = "This is a different content **with strong emphasis**"
     api_res = post_article(client, published_article, preview_content)
@@ -47,7 +54,7 @@ def test_render_article_change_content(published_article: Article, client: Clien
 
 
 @pytest.mark.django_db()
-def test_render_article_doesnt_save(published_article, client: Client):
+def test_render_article_doesnt_save(published_article: Article, client: Client) -> None:
     client.force_login(published_article.author)
     original_content = published_article.content
     preview_content = "This is a different content **with strong emphasis**"
@@ -58,7 +65,7 @@ def test_render_article_doesnt_save(published_article, client: Client):
 
 
 @pytest.mark.django_db()
-def test_render_article_no_tags(published_article, client: Client):
+def test_render_article_no_tags(published_article: Article, client: Client) -> None:
     client.force_login(published_article.author)
     api_res = client.post(
         reverse("api-render-article", kwargs={"article_pk": published_article.pk}),
@@ -67,7 +74,7 @@ def test_render_article_no_tags(published_article, client: Client):
     assert api_res.status_code == 200
 
 
-def post_article(client: Client, article: Article, content: str):
+def post_article(client: Client, article: Article, content: str) -> HttpResponse:
     return client.post(
         reverse("api-render-article", kwargs={"article_pk": article.pk}),
         data={

@@ -1,8 +1,9 @@
 from datetime import datetime
-from typing import Iterable
+from typing import Any, Iterable
 
 from django.contrib.syndication.views import Feed
 from django.db.models import QuerySet
+from django.http import HttpRequest
 
 from articles.models import Article, Tag
 from blog import settings
@@ -33,7 +34,7 @@ class CompleteFeed(BaseFeed):
 
 
 class TagFeed(BaseFeed):
-    def get_object(self, request, *args, **kwargs) -> Tag:
+    def get_object(self, request: HttpRequest, *args: Any, **kwargs: Any) -> Tag:
         return Tag.objects.get(slug=kwargs.get("slug"))
 
     def title(self, tag: Tag) -> str:

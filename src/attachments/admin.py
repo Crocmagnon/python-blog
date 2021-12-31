@@ -1,5 +1,7 @@
 from django.contrib import admin, messages
 from django.contrib.admin import register
+from django.db.models import QuerySet
+from django.http import HttpRequest
 from django.utils.html import format_html
 
 from attachments.models import Attachment
@@ -38,7 +40,7 @@ class AttachmentAdmin(admin.ModelAdmin):
     class Media:
         js = ["attachments/js/copy_url.js"]
 
-    def processed_file_url(self, instance):
+    def processed_file_url(self, instance: Attachment) -> str:
         if instance.processed_file:
             return format_html(
                 '{0} <a class="copy-button" data-to-copy="{1}" href="#">&#128203;</a>',
@@ -47,7 +49,7 @@ class AttachmentAdmin(admin.ModelAdmin):
             )
         return ""
 
-    def original_file_url(self, instance):
+    def original_file_url(self, instance: Attachment) -> str:
         if instance.original_file:
             return format_html(
                 '{0} <a class="copy-button" data-to-copy="{1}" href="#">&#128203;</a>',
@@ -57,7 +59,7 @@ class AttachmentAdmin(admin.ModelAdmin):
         return ""
 
     @admin.action(description="Set as open graph image")
-    def set_as_open_graph_image(self, request, queryset):
+    def set_as_open_graph_image(self, request: HttpRequest, queryset: QuerySet) -> None:
         if len(queryset) != 1:
             messages.error(request, "You must select only one attachment")
             return
@@ -66,7 +68,9 @@ class AttachmentAdmin(admin.ModelAdmin):
         messages.success(request, "Done")
 
     @admin.action(description="Reprocess selected attachments")
-    def reprocess_selected_attachments(self, request, queryset):
+    def reprocess_selected_attachments(
+        self, request: HttpRequest, queryset: QuerySet
+    ) -> None:
         if len(queryset) == 0:
             messages.error(request, "You must select at least one attachment")
             return

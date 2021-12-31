@@ -9,15 +9,15 @@ from markdown.inlinepatterns import (
 
 
 class LazyImageInlineProcessor(ImageInlineProcessor):
-    def handleMatch(self, m, data):
+    def handleMatch(self, m, data):  # type: ignore
         el, match_start, index = super().handleMatch(m, data)
         if el is not None:
             el.set("loading", "lazy")
-        return el, match_start, index
+        return el, match_start, index  # type: ignore
 
 
 class LazyImageReferenceInlineProcessor(ImageReferenceInlineProcessor):
-    def makeTag(self, href, title, text):
+    def makeTag(self, href, title, text):  # type: ignore
         el = super().makeTag(href, title, text)
         if el is not None:
             el.set("loading", "lazy")
@@ -25,7 +25,7 @@ class LazyImageReferenceInlineProcessor(ImageReferenceInlineProcessor):
 
 
 class LazyLoadingImageExtension(Extension):
-    def extendMarkdown(self, md: Markdown):
+    def extendMarkdown(self, md: Markdown) -> None:
         md.inlinePatterns.register(
             LazyImageInlineProcessor(IMAGE_LINK_RE, md), "image_link", 150
         )
