@@ -50,7 +50,8 @@
         <p>
             Thoughts written here are my own and don't reflect any of my past, present
             or future employer's position.
-            The platform behind this blog is <a target="_blank" href="{{ blog.repo.homepage }}">free software</a>.
+            The platform behind this blog is
+            <a target="_blank" href="{{ blog.repo.homepage }}">free software</a>.<br>
             Articles are released into the public domain through the
             <a rel="license noopener noreferrer"
                 target="_blank"
@@ -60,7 +61,9 @@
             <a rel="license"
                 target="_blank"
                 href="{{ blog.licenses.code.url }}">
-                {{ blog.licenses.code.name }}</a>.<br>
+                {{ blog.licenses.code.name }}</a>.
+            I do appreciate being mentioned as the original author if you decide
+            to reuse my works but the licenses don't enforce it.<br>
             Currently deployed version:
             <a target="_blank" href="{{ git_version_url }}">{{ git_version }}</a>.
             {% if blog.status_url %}
