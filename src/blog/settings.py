@@ -224,6 +224,16 @@ BLOG = {
         "log": "https://git.augendre.info/gaugendre/blog/commits/branch/master",
     },
     "status_url": env("SERVICES_STATUS_URL"),
+    "licenses": {
+        "content": {
+            "url": "https://creativecommons.org/publicdomain/zero/1.0/?ref=chooser-v1",
+            "name": "CC0 1.0",
+        },
+        "code": {
+            "url": "https://git.augendre.info/gaugendre/blog/src/branch/master/LICENSE",
+            "name": "The Unlicense",
+        },
+    },
 }
 
 SHORTPIXEL_API_KEY = env("SHORTPIXEL_API_KEY")

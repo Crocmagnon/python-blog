@@ -9,9 +9,9 @@
             <meta name="color-scheme" content="light dark">
             <meta name="theme-color" content="#F6F8FA" media="(prefers-color-scheme: light)">
             <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-            <title>{% block title %}Home | {% endblock %}{{ blog_title }} by {{ blog_author }}</title>
+            <title>{% block title %}Home | {% endblock %}{{ blog.title }} by {{ blog.author }}</title>
             {% block feed_link %}
-                <link rel="alternate" type="application/rss+xml" title="{{ blog_title }}" href="{% url 'complete-feed' %}">
+                <link rel="alternate" type="application/rss+xml" title="{{ blog.title }}" href="{% url 'complete-feed' %}">
             {% endblock %}
             {% include "articles/snippets/analytics_head.html" %}
             {% include "articles/snippets/page_metadata.html" %}
@@ -33,8 +33,8 @@
         </head>
         <body>
             <header>
-                <h1>{{ blog_title }}</h1>
-                <p>{{ blog_description }}</p>
+                <h1>{{ blog.title }}</h1>
+                <p>{{ blog.description }}</p>
                 {% include "articles/snippets/navigation.html" %}
             </header>
 {% endspaceless %}
@@ -50,14 +50,22 @@
         <p>
             Thoughts written here are my own and don't reflect any of my past, present
             or future employer's position.
-            The platform behind this blog is <a href="{{ blog_repo_homepage }}">free software</a>.
-            This blog and all articles by Gabriel Augendre are licensed under the
-            <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 International License</a>.
-            Code blocks by Gabriel Augendre are published as is and released
-            <a href="https://git.augendre.info/gaugendre/blog/src/branch/master/LICENSE">into the public domain</a>.<br>
-            Currently deployed version: <a href="{{ git_version_url }}">{{ git_version }}</a>.
-            {% if blog_status_url %}
-                Status of services can be found <a href="{{ blog_status_url }}">here</a>
+            The platform behind this blog is <a target="_blank" href="{{ blog.repo.homepage }}">free software</a>.
+            Articles are released into the public domain through the
+            <a rel="license noopener noreferrer"
+                target="_blank"
+                href="{{ blog.licenses.content.url }}">
+                {{ blog.licenses.content.name }}</a>.
+            Code blocks are released into the public domain through
+            <a rel="license"
+                target="_blank"
+                href="{{ blog.licenses.code.url }}">
+                {{ blog.licenses.code.name }}</a>.<br>
+            Currently deployed version:
+            <a target="_blank" href="{{ git_version_url }}">{{ git_version }}</a>.
+            {% if blog.status_url %}
+                Status of services can be found
+                <a target="_blank" href="{{ blog.status_url }}">here</a>.
             {% endif %}
         </p>
     </footer>

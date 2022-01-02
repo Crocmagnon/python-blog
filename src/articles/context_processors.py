@@ -1,3 +1,4 @@
+import copy
 from typing import Any
 
 from django.conf import settings
@@ -56,10 +57,7 @@ def open_graph_image_url(request: HttpRequest) -> dict[str, Any]:
 
 
 def blog_metadata(request: HttpRequest) -> dict[str, Any]:
+    blog_settings = copy.deepcopy(settings.BLOG)
     return {
-        "blog_title": settings.BLOG["title"],
-        "blog_description": settings.BLOG["description"],
-        "blog_author": settings.BLOG["author"],
-        "blog_repo_homepage": settings.BLOG["repo"]["homepage"],
-        "blog_status_url": settings.BLOG["status_url"],
+        "blog": blog_settings,
     }
