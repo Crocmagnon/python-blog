@@ -2,8 +2,8 @@
 FROM python:3.10.2-bullseye AS venv
 
 # https://python-poetry.org/docs/#installation
-ENV POETRY_VERSION=1.1.11
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
+ENV POETRY_VERSION=1.1.13
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
 ENV PATH /root/.local/bin:$PATH
 ARG POETRY_OPTIONS
