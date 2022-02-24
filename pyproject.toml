@@ -16,7 +16,6 @@ pillow = "^8.4"
 django-cleanup = "^5.0"
 requests = "^2.24"
 readtime = "^1.1.1"
-pylibmc = "^1.6.1"
 django-debug-toolbar = "^3.2"
 whitenoise = {extras = ["brotli"], version = "^5.2.0"}
 rcssmin = "^1.0.6"

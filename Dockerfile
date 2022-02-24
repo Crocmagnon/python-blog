@@ -10,10 +10,6 @@ ARG POETRY_OPTIONS
 
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        libmemcached-dev
-
 COPY pyproject.toml poetry.lock ./
 
 RUN python -m venv --copies /app/venv \
@@ -37,10 +33,6 @@ FROM python:3.10.2-slim-bullseye as prod
 RUN echo "Europe/Paris" > /etc/timezone \
     && mkdir /db
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        libmemcached-dev
-
 COPY --from=venv /app/venv /app/venv/
 ENV PATH /app/venv/bin:$PATH
 
@@ -63,7 +55,6 @@ ENV DB_BASE_DIR "/db"
 #ENV SHORTPIXEL_RESIZE_WIDTH='750'
 #ENV SHORTPIXEL_RESIZE_HEIGHT='10000'
 #ENV GOATCOUNTER_DOMAIN='blog.goatcounter.example.com'
-#ENV MEMCACHED_LOCATION='memcached:11211'
 
 HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000', timeout=2)"
 

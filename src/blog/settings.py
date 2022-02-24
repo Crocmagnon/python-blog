@@ -24,7 +24,6 @@ env = environ.Env(
     MAILGUN_API_KEY=(str, ""),
     MAILGUN_SENDER_DOMAIN=(str, ""),
     HOSTS=(list, []),
-    MEMCACHED_LOCATION=(str, ""),
     DB_BASE_DIR=(Path, BASE_DIR),
     BLOG_BASE_URL=(str, "https://gabnotes.org/"),
     SERVICES_STATUS_URL=(str, None),
@@ -137,21 +136,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "blog.wsgi.application"
 
-MEMCACHED_LOCATION = env("MEMCACHED_LOCATION")
-if MEMCACHED_LOCATION:
-    CACHES = {
-        "default": {
-            "BACKEND": "django.core.cache.backends.memcached.PyLibMCCache",
-            "LOCATION": MEMCACHED_LOCATION,
-        }
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "cache",
     }
-else:
-    CACHES = {
-        "default": {
-            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-            "LOCATION": "cache",
-        }
-    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
