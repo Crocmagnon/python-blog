@@ -1,7 +1,7 @@
 version: '2.4'
 services:
   django:
-    image: crocmagnon/blog:latest
+    image: crocmagnon/blog:dev
     build:
       context: .
       args:
@@ -15,16 +15,6 @@ services:
     restart: on-failure
     init: true
     tty: true
-    depends_on:
-      - nginx
-  nginx:
-    image: nginx:1.19.2
-    ports:
-      - 8000:80
-    volumes:
-      - staticfiles:/app/static
-      - media:/app/media
-      - ./docker/nginx-dev.conf:/etc/nginx/conf.d/default.conf
 
 volumes:
   staticfiles: {}

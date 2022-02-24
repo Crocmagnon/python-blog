@@ -16,6 +16,8 @@ from invoke import Context, task
 
 BASE_DIR = Path(__file__).parent.resolve(strict=True)
 SRC_DIR = BASE_DIR / "src"
+COMPOSE_BUILD_FILE = BASE_DIR / "docker-compose-build.yaml"
+COMPOSE_BUILD_ENV = {"COMPOSE_FILE": COMPOSE_BUILD_FILE}
 
 
 @task
@@ -55,13 +57,17 @@ def check(ctx: Context) -> None:
 @task
 def build(ctx: Context) -> None:
     with ctx.cd(BASE_DIR):
-        ctx.run("docker-compose build django", pty=True, echo=True)
+        ctx.run(
+            "docker-compose build django", pty=True, echo=True, env=COMPOSE_BUILD_ENV
+        )
 
 
 @task
 def publish(ctx: Context) -> None:
     with ctx.cd(BASE_DIR):
-        ctx.run("docker-compose push django", pty=True, echo=True)
+        ctx.run(
+            "docker-compose push django", pty=True, echo=True, env=COMPOSE_BUILD_ENV
+        )
 
 
 @task
