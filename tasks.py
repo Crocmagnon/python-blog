@@ -28,9 +28,10 @@ def test(ctx: Context) -> None:
 def test_cov(ctx: Context) -> None:
     with ctx.cd(SRC_DIR):
         ctx.run(
-            "pytest --cov=. --cov-report term-missing:skip-covered",
+            "pytest --cov=. --cov-branch --cov-report term-missing:skip-covered",
             pty=True,
             echo=True,
+            env={"COVERAGE_FILE": BASE_DIR / ".coverage"},
         )
 
 
