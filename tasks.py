@@ -77,13 +77,17 @@ def deploy(ctx: Context) -> None:
 
 @task
 def check_alive(ctx: Context) -> None:
+    exception = None
     for _ in range(5):
         try:
             res = requests.get("https://gabnotes.org")
             res.raise_for_status()
-        except requests.exceptions.HTTPError:
-            time.sleep(1)
-        return
+            print("Server is up & running")
+            return
+        except requests.exceptions.HTTPError as e:
+            time.sleep(2)
+            exception = e
+    raise RuntimeError("Failed to reach the server") from exception
 
 
 @task(pre=[check, build, publish, deploy], post=[check_alive])
