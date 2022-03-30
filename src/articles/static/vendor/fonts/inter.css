@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Inter';
+    src: local("Inter"),
+    url('/static/vendor/fonts/Inter-VariableFont_slnt-wght.woff2') format("woff2-variations"),
+    url('/static/vendor/fonts/Inter-VariableFont_slnt-wght.woff2') format("woff2 supports variations"),
+    url('/static/vendor/fonts/Inter-VariableFont_slnt-wght.ttf') format("truetype-variations"),
+    url('/static/vendor/fonts/Inter-VariableFont_slnt-wght.ttf') format("truetype supports variations");
+    font-weight: 100 800;
+    font-style: oblique 0 10deg;
+}
