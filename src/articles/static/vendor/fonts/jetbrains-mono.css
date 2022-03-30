@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: local("JetBrains Mono"),
+    url('/static/vendor/fonts/JetBrainsMono-VariableFont_wght.woff2') format("woff2-variations"),
+    url('/static/vendor/fonts/JetBrainsMono-VariableFont_wght.woff2') format("woff2 supports variations"),
+    url('/static/vendor/fonts/JetBrainsMono-VariableFont_wght.ttf') format("truetype-variations"),
+    url('/static/vendor/fonts/JetBrainsMono-VariableFont_wght.ttf') format("truetype supports variations");
+    font-weight: 100 800;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: local("JetBrains Mono Italic"),
+    url('/static/vendor/fonts/JetBrainsMono-Italic-VariableFont_wght.woff2') format("woff2-variations"),
+    url('/static/vendor/fonts/JetBrainsMono-Italic-VariableFont_wght.woff2') format("woff2 supports variations"),
+    url('/static/vendor/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format("truetype-variations"),
+    url('/static/vendor/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format("truetype supports variations");
+    font-weight: 100 800;
+    font-style: italic;
+}
