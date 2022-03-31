@@ -1,8 +1,8 @@
 .codehilite.large {
     --larger-by: 140px;
-    max-width: calc(100% + var(--larger-by));
+    max-width: calc(100vw - 64px);
     width: calc(100% + var(--larger-by));
-    margin-left: calc(var(--larger-by) / -2);
+    margin-left: calc(-1 * min(calc(var(--larger-by) / 2), calc(100vw - 64px - 100%)));
 }
 
 @media(prefers-color-scheme: light) {
