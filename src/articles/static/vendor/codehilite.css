@@ -1,3 +1,10 @@
+.codehilite.large {
+    --larger-by: 140px;
+    max-width: calc(100% + var(--larger-by));
+    width: calc(100% + var(--larger-by));
+    margin-left: calc(var(--larger-by) / -2);
+}
+
 @media(prefers-color-scheme: light) {
     .codehilite .hll { background-color: #ffffcc }
     .codehilite  { background: #ffffff; }
