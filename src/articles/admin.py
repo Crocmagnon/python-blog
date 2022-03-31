@@ -112,7 +112,12 @@ class ArticleAdmin(admin.ModelAdmin):
     actions = [publish, unpublish, refresh_draft_key]
 
     class Media:
-        css = {"all": ("admin_articles.css",)}
+        css = {
+            "all": (
+                "vendor/fonts/jetbrains-mono.css",
+                "admin_articles.css",
+            )
+        }
 
     def response_post_save_add(
         self, request: HttpRequest, obj: Article
