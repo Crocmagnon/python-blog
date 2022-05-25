@@ -40,7 +40,7 @@ def test_cov(ctx: Context) -> None:
 @task
 def pre_commit(ctx: Context) -> None:
     with ctx.cd(BASE_DIR):
-        ctx.run("pre-commit run --all-files", pty=True)
+        ctx.run("pre-commit run --all-files", pty=True, echo=True)
 
 
 @task
