@@ -76,7 +76,7 @@ class Article(models.Model):
     tags = models.ManyToManyField(to=Tag, related_name="articles", blank=True)
 
     class Meta:
-        ordering = ["-published_at"]
+        ordering = ["-published_at", "-updated_at"]
 
     def __str__(self) -> str:
         return self.title
