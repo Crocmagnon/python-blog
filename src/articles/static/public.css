@@ -45,3 +45,7 @@ a.tag:not(:first-of-type):before {
     color: var(--nc-tx-1);
     text-decoration: none;
 }
+
+#metadata {
+    margin-bottom: 1.5rem;
+}
