@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Golos';
+    src: local("Golos"),
+    url('/static/vendor/fonts/Golos-Text_VF.woff2') format("woff2-variations"),
+    url('/static/vendor/fonts/Golos-Text_VF.woff2') format("woff2 supports variations"),
+    url('/static/vendor/fonts/Golos-Text_VF.ttf') format("truetype-variations"),
+    url('/static/vendor/fonts/Golos-Text_VF.ttf') format("truetype supports variations");
+    font-weight: 400 900;
+}
