@@ -1,5 +1,5 @@
 ## Build venv
-FROM python:3.10.4-bullseye AS venv
+FROM python:3.10.5-bullseye AS venv
 
 # https://python-poetry.org/docs/#installation
 ENV POETRY_VERSION=1.1.13
@@ -28,7 +28,7 @@ RUN git rev-parse HEAD | tee /version
 
 
 ## Beginning of runtime image
-FROM python:3.10.4-slim-bullseye as prod
+FROM python:3.10.5-slim-bullseye as prod
 ENV TZ "Europe/Paris"
 RUN mkdir /db
 
