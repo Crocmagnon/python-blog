@@ -7,4 +7,5 @@
     url('/static/vendor/fonts/Inter-VariableFont_slnt-wght.ttf') format("truetype supports variations");
     font-weight: 100 800;
     font-style: oblique 0 10deg;
+    font-display: swap;
 }

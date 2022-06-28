@@ -6,6 +6,7 @@
     url('/static/vendor/fonts/JetBrainsMono-VariableFont_wght.ttf') format("truetype-variations"),
     url('/static/vendor/fonts/JetBrainsMono-VariableFont_wght.ttf') format("truetype supports variations");
     font-weight: 100 800;
+    font-display: swap;
 }
 
 @font-face {
@@ -17,4 +18,5 @@
     url('/static/vendor/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format("truetype supports variations");
     font-weight: 100 800;
     font-style: italic;
+    font-display: swap;
 }
