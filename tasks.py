@@ -72,7 +72,7 @@ def publish(ctx: Context) -> None:
 
 @task
 def deploy(ctx: Context) -> None:
-    ctx.run("ssh ubuntu /home/gaugendre/blog/update", pty=True, echo=True)
+    ctx.run("ssh ubuntu /mnt/data/blog/update", pty=True, echo=True)
 
 
 @task
@@ -98,9 +98,9 @@ def beam(ctx: Context) -> None:
 @task
 def download_db(ctx: Context) -> None:
     with ctx.cd(BASE_DIR):
-        ctx.run("scp ubuntu:/home/gaugendre/blog/db/db.sqlite3 ./db/db.sqlite3")
+        ctx.run("scp ubuntu:/mnt/data/blog/db/db.sqlite3 ./db/db.sqlite3")
         ctx.run("rm -rf src/media/")
-        ctx.run("scp -r ubuntu:/home/gaugendre/blog/media/ ./src/media")
+        ctx.run("scp -r ubuntu:/mnt/data/blog/media/ ./src/media")
     with ctx.cd(SRC_DIR):
         ctx.run("./manage.py two_factor_disable gaugendre", pty=True)
         ctx.run("./manage.py changepassword gaugendre", pty=True)
