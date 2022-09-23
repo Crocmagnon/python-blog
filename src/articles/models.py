@@ -12,7 +12,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import Prefetch
+from django.db.models import F, Prefetch
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
@@ -132,13 +132,9 @@ class Article(models.Model):
         self.save()
 
     def get_read_time(self) -> int:
-        try:
-            content = self.get_formatted_content
-            if content:
-                return readtime.of_html(content).minutes
-        except ParseError:
-            print(f"minutes failed for pk {self.pk}")
-            return 0
+        content = self.get_formatted_content
+        if content:
+            return readtime.of_markdown(content).minutes
         return 0
 
     @cached_property
@@ -168,3 +164,7 @@ class Article(models.Model):
             f"admin:{content_type.app_label}_{content_type.model}_change",
             args=(self.id,),
         )
+
+    def increment_view_count(self) -> None:
+        self.views_count = F("views_count") + 1
+        self.save(update_fields=["views_count"])

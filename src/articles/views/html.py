@@ -6,11 +6,10 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page
-from django.db.models import F, Q, QuerySet
+from django.db.models import Q, QuerySet
 from django.http.response import HttpResponse, HttpResponseBase
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views import generic
-from django.views.generic import DetailView
 
 from articles.models import Article, Tag
 
@@ -127,29 +126,19 @@ class DraftsListView(LoginRequiredMixin, BaseArticleListView):
         return context
 
 
-class ArticleDetailView(DetailView):
-    model = Article
-    context_object_name = "article"
-    template_name = "articles/article_detail.html"
+def view_article(request: WSGIRequest, slug: str) -> HttpResponse:
+    article = get_article(request, slug)
+    if not request.user.is_authenticated:
+        article.increment_view_count()
+    context = {"article": article, "tags": article.tags.all()}
+    return render(request, "articles/article_detail.html", context)
 
-    def get_queryset(self) -> QuerySet:
-        key = self.request.GET.get("draft_key")
-        if key:
-            return Article.objects.filter(draft_key=key).prefetch_related("tags")
 
-        queryset = super().get_queryset().prefetch_related("tags")
-        if not self.request.user.is_authenticated:
-            queryset = queryset.filter(status=Article.PUBLISHED)
-        return queryset
-
-    def get_object(self, queryset: QuerySet | None = None) -> Article:
-        obj: Article = super().get_object(queryset)
-        if not self.request.user.is_authenticated:
-            obj.views_count = F("views_count") + 1
-            obj.save(update_fields=["views_count"])
-
-        return obj
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        kwargs["tags"] = self.object.tags.all()
-        return super().get_context_data(**kwargs)
+def get_article(request: WSGIRequest, slug: str) -> Article:
+    key = request.GET.get("draft_key")
+    qs = Article.objects.prefetch_related("tags")
+    if key:
+        return get_object_or_404(qs, draft_key=key, slug=slug)
+    if not request.user.is_authenticated:
+        qs = qs.filter(status=Article.PUBLISHED)
+    return get_object_or_404(qs, slug=slug)
