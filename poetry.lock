@@ -213,6 +213,17 @@ docs = ["furo (>=2021.8.17b43,<2021.9.0)", "sphinx (>=3.5.0)", "sphinx-notfound-
 testing = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)"]
 
 [[package]]
+name = "django-extensions"
+version = "3.2.1"
+description = "Extensions for Django"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "django-formtools"
 version = "2.3"
 description = "A set of high-level abstractions for Django forms"
@@ -1003,7 +1014,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "b5d90949c29a249df713dc87029ee77996009541a767afec07b3c8457cc35081"
+content-hash = "67be358cc8c633ec79a2343d4b3a9491d0032ef9d116e8c215b9573c44200893"
 
 [metadata.files]
 asgiref = [
@@ -1109,6 +1120,7 @@ django-environ = [
     {file = "django-environ-0.9.0.tar.gz", hash = "sha256:bff5381533056328c9ac02f71790bd5bf1cea81b1beeb648f28b81c9e83e0a21"},
     {file = "django_environ-0.9.0-py2.py3-none-any.whl", hash = "sha256:f21a5ef8cc603da1870bbf9a09b7e5577ab5f6da451b843dbcc721a7bca6b3d9"},
 ]
+django-extensions = []
 django-formtools = [
     {file = "django-formtools-2.3.tar.gz", hash = "sha256:9663b6eca64777b68d6d4142efad8597fe9a685924673b25aa8a1dcff4db00c3"},
     {file = "django_formtools-2.3-py3-none-any.whl", hash = "sha256:4699937e19ee041d803943714fe0c1c7ad4cab802600eb64bbf4cdd0a1bfe7d9"},

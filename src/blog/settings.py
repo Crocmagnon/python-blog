@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     "articles",
     "attachments",
     "anymail",
+    "django_extensions",
     "django_cleanup.apps.CleanupConfig",
     "debug_toolbar",
     "django_otp",
