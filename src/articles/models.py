@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import random
 import uuid
+from collections.abc import Sequence
 from functools import cached_property
-from typing import Any, Sequence
+from typing import Any
 
 import rcssmin
 import readtime
@@ -15,6 +16,7 @@ from django.db.models import Prefetch
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
+from lxml.etree import ParseError  # noqa: S410
 
 from articles.utils import (
     build_full_absolute_url,
@@ -130,9 +132,13 @@ class Article(models.Model):
         self.save()
 
     def get_read_time(self) -> int:
-        content = self.get_formatted_content
-        if content:
-            return readtime.of_html(content).minutes
+        try:
+            content = self.get_formatted_content
+            if content:
+                return readtime.of_html(content).minutes
+        except ParseError:
+            print(f"minutes failed for pk {self.pk}")
+            return 0
         return 0
 
     @cached_property
@@ -150,7 +156,7 @@ class Article(models.Model):
 
     @cached_property
     def keywords(self) -> str:
-        return ", ".join(map(lambda tag: tag.name, self.tags.all()))
+        return ", ".join(tag.name for tag in self.tags.all())
 
     @cached_property
     def get_minified_custom_css(self) -> str:

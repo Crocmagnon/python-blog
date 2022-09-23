@@ -7,45 +7,43 @@ license = "GPLv3"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-django = "^4.0"
+django = "^4.1"
 markdown = "^3.2"
 gunicorn = "^20.0"
 Pygments = "^2.6"
 django-anymail = {version = "^8.4", extras = ["mailgun"]}
-pillow = "^8.4"
-django-cleanup = "^5.0"
+pillow = "^9.2"
+django-cleanup = "^6.0"
 requests = "^2.24"
-readtime = "^1.1.1"
+readtime = "^2.0.0"
 django-debug-toolbar = "^3.2"
-whitenoise = {extras = ["brotli"], version = "^5.2.0"}
+whitenoise = {extras = ["brotli"], version = "^6.0"}
 rcssmin = "^1.0.6"
 django-csp = "^3.7"
-django-two-factor-auth = {extras = ["phonenumberslite"], git = "https://github.com/Bouke/django-two-factor-auth.git", rev = "ffe4422e"}
+django-two-factor-auth = {extras = ["phonenumberslite"], version = "^1.14"}
 beautifulsoup4 = "^4.10.0"
-django-environ = "^0.8.1"
+django-environ = "^0.9.0"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.7"
-pytest = "^6.0"
+pytest = "^7.0"
 pytest-django = "^4.5"
 model-bakery = "^1.1"
 pytest-cov = "^3.0"
 pytest-recording = "^0.12.0"
 pytest-rerunfailures = "^10.2"
 pytest-env = "^0.6.2"
-poetry-deps-scanner = "^1.0.1"
+poetry-deps-scanner = "^2.0"
 invoke = "^1.6.0"
-mypy = "^0.930"
+mypy = "^0.971"
 types-Markdown = "^3.3.10"
 types-requests = "^2.26.3"
-types-setuptools = "^57.4.5"
+types-setuptools = "^65"
 types-toml = "^0.10.1"
 types-beautifulsoup4 = "^4.10.7"
-types-Pillow = "^8.3.11"
+types-Pillow = "^9.2"
 kolo = "^2.0.3"
-
-[tool.black]
-target-version = ['py310']
+lxml-stubs = "^0.4.0"
 
 [tool.isort]
 profile = "black"
@@ -62,7 +60,7 @@ env = [
 ]
 
 [tool.mypy]
-mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs:$MYPY_CONFIG_FILE_DIR/src"
+mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
 disallow_untyped_defs = true
 warn_redundant_casts = true
 strict_equality = true
@@ -79,14 +77,15 @@ module = [
     "django_otp.plugins.otp_totp.models",
     "model_bakery",
     "invoke",
+    "kolo",
 ]
 ignore_missing_imports = true
 
-[tool.flakehell]
+[tool.flakeheaven]
 max_complexity = 10
 format = "grouped"
 
-[tool.flakehell.plugins]
+[tool.flakeheaven.plugins]
 "flake8-*" = [
     "+*",
     # long lines
@@ -101,10 +100,11 @@ flake8-quotes = ["-Q000"] # found double quotes, conflict with black
 flake8-commas = ["-C812"] # missing trailing comma, conflict with black
 flake8-docstrings = ["-D1??"] # missing docstring
 flake8-rst-docstrings = ["-*"]
+flake8-isort = ["-*"]
 
-[tool.flakehell.exceptions."**/migrations/*"]
+[tool.flakeheaven.exceptions."**/migrations/*"]
 
-[tool.flakehell.exceptions."**/tests/*"]
+[tool.flakeheaven.exceptions."**/tests/*"]
 flake8-bandit = ["-S101"] # Use of assert detected.
 
 [build-system]

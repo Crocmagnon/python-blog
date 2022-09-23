@@ -10,7 +10,7 @@ function addCopyCode() {
                     pre.querySelector("code").firstChild,
                     0,
                     pre.querySelector("code").lastChild,
-                    1
+                    1,
                 );
             }
         });

@@ -45,7 +45,7 @@ class BaseArticleListView(generic.ListView):
             **initial_queryparams,
             **self.get_additional_querystring_params(),
         }
-        return "&".join(map(lambda item: f"{item[0]}={item[1]}", querystring.items()))
+        return "&".join(f"{item[0]}={item[1]}" for item in querystring.items())
 
 
 class PublicArticleListView(BaseArticleListView):

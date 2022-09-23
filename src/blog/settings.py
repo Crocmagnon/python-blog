@@ -46,7 +46,7 @@ SECRET_KEY = env("SECRET_KEY")
 
 admins = env("ADMINS")
 if admins:
-    ADMINS = list(map(lambda x: tuple(x.split("|")), admins))
+    ADMINS = [tuple(admin.split("|")) for admin in admins]
 
 DEFAULT_FROM_EMAIL = "Gab's Notes <blog@mg.gabnotes.org>"
 SERVER_EMAIL = "Gab's Notes <blog@mg.gabnotes.org>"
@@ -96,7 +96,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "kolo.middleware.KoloMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.gzip.GZipMiddleware",
@@ -110,6 +109,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "csp.middleware.CSPMiddleware",
 ]
+
+try:
+    import kolo
+
+    MIDDLEWARE = ["kolo.middleware.KoloMiddleware"] + MIDDLEWARE
+except ImportError:
+    pass  # do nothing
 
 ROOT_URLCONF = "blog.urls"
 

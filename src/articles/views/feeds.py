@@ -1,5 +1,6 @@
+from collections.abc import Iterable
 from datetime import datetime
-from typing import Any, Iterable
+from typing import Any
 
 from django.contrib.syndication.views import Feed
 from django.core.handlers.wsgi import WSGIRequest

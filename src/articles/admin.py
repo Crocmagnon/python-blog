@@ -46,7 +46,7 @@ class ArticleAdmin(admin.ModelAdmin):
                     ("author", "tags"),
                     ("status", "published_at"),
                     ("created_at", "updated_at"),
-                    ("views_count", "read_time"),
+                    ("views_count",),
                     ("has_code", "has_custom_css"),
                 ]
             },

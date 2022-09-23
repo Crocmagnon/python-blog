@@ -13,7 +13,7 @@ def forwards(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
         tags = []
         keyword: str
         for keyword in list(
-            filter(None, map(lambda k: k.strip(), article.keywords.split(",")))
+            filter(None, (keyword.strip() for keyword in article.keywords.split(",")))
         ):
             tag = Tag.objects.using(db_alias).filter(name__iexact=keyword).first()
             if tag is None:
@@ -29,7 +29,7 @@ def backwards(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     db_alias = schema_editor.connection.alias
     articles = Article.objects.using(db_alias).all()
     for article in articles:
-        article.keywords = ",".join(map(lambda tag: tag.name, article.tags.all()))
+        article.keywords = ",".join(tag.name for tag in article.tags.all())
     Article.objects.bulk_update(articles, ["keywords"])
 
 
