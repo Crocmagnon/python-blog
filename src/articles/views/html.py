@@ -4,10 +4,10 @@ from typing import Any
 
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page
 from django.db.models import F, Q, QuerySet
-from django.http import HttpRequest
-from django.http.response import HttpResponseBase
+from django.http.response import HttpResponse, HttpResponseBase
 from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.views.generic import DetailView
@@ -101,7 +101,7 @@ class TagArticlesListView(PublicArticleListView):
     html_title = ""
 
     def dispatch(
-        self, request: HttpRequest, *args: Any, **kwargs: Any
+        self, request: WSGIRequest, *args: Any, **kwargs: Any
     ) -> HttpResponseBase:
         self.tag = get_object_or_404(Tag, slug=self.kwargs.get("slug"))
         self.main_title = self.html_title = f"{self.tag.name} articles"

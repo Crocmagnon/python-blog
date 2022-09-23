@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django.contrib.admin import register
+from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import QuerySet
-from django.http import HttpRequest
 from django.utils.html import format_html
 
 from attachments.models import Attachment
@@ -59,7 +59,7 @@ class AttachmentAdmin(admin.ModelAdmin):
         return ""
 
     @admin.action(description="Set as open graph image")
-    def set_as_open_graph_image(self, request: HttpRequest, queryset: QuerySet) -> None:
+    def set_as_open_graph_image(self, request: WSGIRequest, queryset: QuerySet) -> None:
         if len(queryset) != 1:
             messages.error(request, "You must select only one attachment")
             return
@@ -69,7 +69,7 @@ class AttachmentAdmin(admin.ModelAdmin):
 
     @admin.action(description="Reprocess selected attachments")
     def reprocess_selected_attachments(
-        self, request: HttpRequest, queryset: QuerySet
+        self, request: WSGIRequest, queryset: QuerySet
     ) -> None:
         if len(queryset) == 0:
             messages.error(request, "You must select at least one attachment")

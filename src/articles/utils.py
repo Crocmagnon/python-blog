@@ -3,14 +3,14 @@ import re
 import markdown
 from bs4 import BeautifulSoup
 from django.conf import settings
-from django.http import HttpRequest
+from django.core.handlers.wsgi import WSGIRequest
 from markdown.extensions.codehilite import CodeHiliteExtension
 from markdown.extensions.toc import TocExtension
 
 from articles.markdown import LazyLoadingImageExtension
 
 
-def build_full_absolute_url(request: HttpRequest | None, url: str) -> str:
+def build_full_absolute_url(request: WSGIRequest | None, url: str) -> str:
     if request:
         return request.build_absolute_uri(url)
     else:

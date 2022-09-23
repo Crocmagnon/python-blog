@@ -8,16 +8,16 @@ from typing import Any
 import requests
 from django.conf import settings
 from django.core.files import File
+from django.core.handlers.wsgi import WSGIRequest
 from django.db import models
 from django.db.models.fields.files import FieldFile
-from django.http import HttpRequest
 from PIL import Image
 
 from articles.utils import build_full_absolute_url
 
 
 class AbsoluteUrlFieldFile(FieldFile):
-    def get_full_absolute_url(self, request: HttpRequest) -> str:
+    def get_full_absolute_url(self, request: WSGIRequest) -> str:
         return build_full_absolute_url(request, self.url)
 
 
