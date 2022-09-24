@@ -1,14 +1,16 @@
 from django.urls import path
 
-from articles.views import api, feeds, html
+from articles import views
 
 urlpatterns = [
-    path("", html.ArticlesListView.as_view(), name="articles-list"),
-    path("drafts/", html.DraftsListView.as_view(), name="drafts-list"),
-    path("search/", html.SearchArticlesListView.as_view(), name="search"),
-    path("tag/<slug:slug>/feed/", feeds.TagFeed(), name="tag-feed"),
-    path("tag/<slug:slug>/", html.TagArticlesListView.as_view(), name="tag"),
-    path("feed/", feeds.CompleteFeed(), name="complete-feed"),
-    path("api/render/<int:article_pk>/", api.render_article, name="api-render-article"),
-    path("<slug:slug>/", html.view_article, name="article-detail"),
+    path("", views.ArticlesListView.as_view(), name="articles-list"),
+    path("drafts/", views.DraftsListView.as_view(), name="drafts-list"),
+    path("search/", views.SearchArticlesListView.as_view(), name="search"),
+    path("tag/<slug:slug>/feed/", views.TagFeed(), name="tag-feed"),
+    path("tag/<slug:slug>/", views.TagArticlesListView.as_view(), name="tag"),
+    path("feed/", views.CompleteFeed(), name="complete-feed"),
+    path(
+        "api/render/<int:article_pk>/", views.render_article, name="api-render-article"
+    ),
+    path("<slug:slug>/", views.view_article, name="article-detail"),
 ]

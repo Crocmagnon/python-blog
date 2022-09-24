@@ -7,8 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page
 from django.db.models import Q, QuerySet
-from django.http.response import HttpResponse, HttpResponseBase
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseBase
+from django.shortcuts import get_object_or_404
 from django.views import generic
 
 from articles.models import Article, Tag
@@ -124,21 +124,3 @@ class DraftsListView(LoginRequiredMixin, BaseArticleListView):
         context["title"] = "Drafts"
         context["title_header"] = context["title"]
         return context
-
-
-def view_article(request: WSGIRequest, slug: str) -> HttpResponse:
-    article = get_article(request, slug)
-    if not request.user.is_authenticated:
-        article.increment_view_count()
-    context = {"article": article, "tags": article.tags.all()}
-    return render(request, "articles/article_detail.html", context)
-
-
-def get_article(request: WSGIRequest, slug: str) -> Article:
-    key = request.GET.get("draft_key")
-    qs = Article.objects.prefetch_related("tags")
-    if key:
-        return get_object_or_404(qs, draft_key=key, slug=slug)
-    if not request.user.is_authenticated:
-        qs = qs.filter(status=Article.PUBLISHED)
-    return get_object_or_404(qs, slug=slug)
