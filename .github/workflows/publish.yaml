@@ -24,6 +24,11 @@ jobs:
           cache-to: type=inline
           build-args: |
             POETRY_OPTIONS=--no-dev
+  deploy:
+    name: Deploy new image
+    runs-on: ubuntu-latest
+    needs: [push_to_registry]
+    steps:
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
