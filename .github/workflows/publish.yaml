@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Test
-        run: pytest --cov=. --cov-branch --cov-report term-missing:skip-covered
+        run: poetry run pytest --cov=. --cov-branch --cov-report term-missing:skip-covered
         working-directory: ./src/
   push_to_registry:
     name: Push Docker image to Docker Hub
