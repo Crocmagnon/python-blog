@@ -41,4 +41,5 @@ jobs:
           timeout_seconds: 30
           max_attempts: 5
           retry_wait_seconds: 2
+          warning_on_retry: false
           command: curl -sSL --fail -m 10 https://gabnotes.org
