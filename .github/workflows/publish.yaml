@@ -34,3 +34,6 @@ jobs:
           TEMP=$(mktemp)
           echo "${{ secrets.DEPLOY_KEY }}" > $TEMP
           ssh -o StrictHostKeyChecking=no -i $TEMP -p ${{ secrets.DEPLOY_PORT }} ${{ secrets.DEPLOY_USERNAME }}@${{ secrets.DEPLOY_HOST }} /mnt/data/blog/update
+      - name: Check
+        run: |
+          curl --fail https://gabnotes.org
