@@ -1,7 +1,7 @@
 {% extends 'admin/change_form.html' %}
 
 {% block object-tools-items %}
-    <li><a href="{{ original.draft_public_url }}" class="historylink" target="_blank">Public draft</a></li>
-    <li><a href="https://python-markdown.github.io/" class="historylink" target="_blank">Markdown cheat sheet</a></li>
+    <li><a href="{{ original.draft_public_url }}" class="historylink" rel="noopener" target="_blank">Public draft</a></li>
+    <li><a href="https://python-markdown.github.io/" class="historylink" rel="noopener" target="_blank">Markdown cheat sheet</a></li>
     {{ block.super }}
 {% endblock %}
