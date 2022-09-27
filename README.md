@@ -1,5 +1,8 @@
 # Blog
 
+![Publish](https://github.com/Crocmagnon/blog/actions/workflows/publish.yaml/badge.svg)
+![CodeQL](https://github.com/Crocmagnon/blog/actions/workflows/codeql-analysis.yaml/badge.svg)
+
 Simple blog management system.
 
 The authoritative source for this repo is at https://git.augendre.info/gaugendre/blog
