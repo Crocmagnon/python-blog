@@ -22,6 +22,7 @@ jobs:
           tags: crocmagnon/blog:latest
           cache-from: type=registry,ref=crocmagnon/blog:latest
           cache-to: type=inline
+          platforms: linux/amd64
           build-args: |
             POETRY_OPTIONS=--no-dev
   deploy:
