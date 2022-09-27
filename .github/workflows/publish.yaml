@@ -30,10 +30,7 @@ jobs:
     needs: [push_to_registry]
     steps:
       - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USERNAME }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          port: ${{ secrets.DEPLOY_PORT }}
-          script: /mnt/data/blog/update
+        run: |
+          TEMP=$(mktemp)
+          echo "${{ secrets.DEPLOY_KEY }}" > $TEMP
+          ssh -o StrictHostKeyChecking=no -i $TEMP ${{ secrets.DEPLOY_USERNAME }}@${{ secrets.DEPLOY_HOST }} /mnt/data/blog/update
