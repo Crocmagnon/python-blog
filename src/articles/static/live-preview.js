@@ -34,6 +34,8 @@ function openPreviewPopup(event) {
 function loadPreview() {
     const id = Number(window.location.pathname.match(/\d+/)[0]);
     const body = prepareBody();
+    const scrollX = preview.scrollX || 0;
+    const scrollY = preview.scrollY || 0;
     fetch(`/api/render/${id}/`, { method: "POST", body: body })
         .then((response) => {
             return response.text();
@@ -42,6 +44,7 @@ function loadPreview() {
             preview.document.open("text/html", "replace");
             preview.document.write(value);
             preview.document.close();
+            preview.scrollTo(scrollX, scrollY);
         })
         .catch(console.error);
 }
@@ -88,7 +91,7 @@ function prepareBody() {
 }
 
 function setupLivePreview() {
-    const debouncedLoadPreview = debounce(loadPreview, 500);
+    const debouncedLoadPreview = debounce(loadPreview, 200);
 
     function listener(event) {
         event.preventDefault();
