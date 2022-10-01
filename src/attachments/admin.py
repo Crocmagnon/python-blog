@@ -43,18 +43,16 @@ class AttachmentAdmin(admin.ModelAdmin):
     def processed_file_url(self, instance: Attachment) -> str:
         if instance.processed_file:
             return format_html(
-                '{0} <a class="copy-button" data-to-copy="{1}" href="#">&#128203;</a>',
-                instance.processed_file.url,
-                instance.processed_file.url,
+                '{0} <a class="copy-button" data-to-copy="{0}" href="#">&#128203;</a>',
+                instance.processed_file_url,
             )
         return ""
 
     def original_file_url(self, instance: Attachment) -> str:
         if instance.original_file:
             return format_html(
-                '{0} <a class="copy-button" data-to-copy="{1}" href="#">&#128203;</a>',
-                instance.original_file.url,
-                instance.original_file.url,
+                '{0} <a class="copy-button" data-to-copy="{0}" href="#">&#128203;</a>',
+                instance.original_file_url,
             )
         return ""
 

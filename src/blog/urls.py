@@ -32,6 +32,7 @@ urlpatterns = [
     ),
     path("admin/", admin.site.urls),
     path("", include("articles.urls")),
+    path("attachments/", include("attachments.urls")),
 ]
 
 if settings.DEBUG:

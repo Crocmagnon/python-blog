@@ -11,6 +11,7 @@ from django.core.files import File
 from django.core.handlers.wsgi import WSGIRequest
 from django.db import models
 from django.db.models.fields.files import FieldFile
+from django.urls import reverse
 from PIL import Image
 
 from articles.utils import build_full_absolute_url
@@ -35,6 +36,7 @@ class Attachment(models.Model):
     original_file = AbsoluteUrlFileField()
     processed_file = AbsoluteUrlFileField(blank=True, null=True)
     open_graph_image = models.BooleanField(blank=True, default=False)
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = AttachmentManager()
 
@@ -47,6 +49,16 @@ class Attachment(models.Model):
     def reprocess(self) -> None:
         self.processed_file = None  # type: ignore
         self.save()
+
+    @property
+    def original_file_url(self) -> str:
+        return reverse("attachments:original", kwargs={"pk": self.pk})
+
+    @property
+    def processed_file_url(self) -> str | None:
+        if self.processed_file:
+            return reverse("attachments:processed", kwargs={"pk": self.pk})
+        return None
 
     def save(self, *args: Any, **kwargs: Any) -> None:
         super().save(*args, **kwargs)
