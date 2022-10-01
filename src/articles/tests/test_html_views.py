@@ -52,6 +52,7 @@ def _assert_article_is_rendered(item: Article, res: HttpResponse) -> None:
     assert item.title in content
     html = item.get_formatted_content
     assert html in content
+    assert "Last-Modified" in res.headers
 
 
 @pytest.mark.django_db()
