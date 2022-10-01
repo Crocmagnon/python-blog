@@ -36,7 +36,6 @@ class Attachment(models.Model):
     original_file = AbsoluteUrlFileField()
     processed_file = AbsoluteUrlFileField(blank=True, null=True)
     open_graph_image = models.BooleanField(blank=True, default=False)
-    updated_at = models.DateTimeField(auto_now=True)
 
     objects = AttachmentManager()
 
