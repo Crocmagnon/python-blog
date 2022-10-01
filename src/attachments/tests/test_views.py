@@ -34,7 +34,6 @@ def test_view_original(attachment: Attachment, client: Client) -> None:
     res = client.get(url)
     assert res.status_code == 302
     assert res.url == attachment.original_file.url
-    assert "Last-Modified" in res.headers
 
 
 def test_view_processed(attachment: Attachment, client: Client) -> None:
@@ -42,4 +41,3 @@ def test_view_processed(attachment: Attachment, client: Client) -> None:
     res = client.get(url)
     assert res.status_code == 302
     assert res.url == attachment.processed_file.url
-    assert "Last-Modified" in res.headers
