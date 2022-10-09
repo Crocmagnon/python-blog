@@ -1,6 +1,6 @@
 /** New CSS
     https://github.com/xz/new.css
-	commit 45cc63d759c3960095a6d8cf97f8663c6561efcc
+	commit 80e7107b491b1062193331ae93ff3670c6a2398d
     MIT License
 */
 :root {
@@ -13,8 +13,9 @@
 	--nc-bg-1: #FFFFFF;
 	--nc-bg-2: #F6F8FA;
 	--nc-bg-3: #E5E7EB;
-	--nc-lk-1: #0070F3;
-	--nc-lk-2: #0366D6;
+	/* Links color were darken to fit WCAG. */
+	--nc-lk-1: #0069e5;
+	--nc-lk-2: #035dc1;
 	--nc-lk-tx: #FFFFFF;
 	--nc-ac-1: #79FFE1;
 	--nc-ac-tx: #0C4047;
@@ -41,9 +42,9 @@
 		--nc-bg-3: var(--nc-d-bg-3);
 		--nc-lk-1: var(--nc-d-lk-1);
 		--nc-lk-2: var(--nc-d-lk-2);
-		--nc-lk-tx: var(--nc-d-lk-tx);
+		--nc-lk-tx: var(--nc--dlk-tx);
 		--nc-ac-1: var(--nc-d-ac-1);
-		--nc-ac-tx: var(--nc-d-ac-tx);
+		--nc-ac-tx: var(--nc--dac-tx);
 	}
 }
 
@@ -195,15 +196,15 @@ header {
 
 	/* This sets the right and left margins to cancel out the body's margins. It's width is still the same, but the background stretches across the page's width. */
 
-	margin: -2rem calc(0px - (50vw - 50%)) 2rem;
+	margin: -2rem calc(50% - 50vw) 2rem;
 
 	/* Shorthand for:
 
 	margin-top: -2rem;
 	margin-bottom: 2rem;
 
-	margin-left: calc(0px - (50vw - 50%));
-	margin-right: calc(0px - (50vw - 50%)); */
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw); */
 
 	padding-left: calc(50vw - 50%);
 	padding-right: calc(50vw - 50%);
@@ -266,6 +267,10 @@ input[type="reset"]:enabled:hover,
 input[type="button"]:focus,
 input[type="button"]:enabled:hover {
 	background: var(--nc-lk-2);
+}
+
+a img {
+	margin-bottom: 0;
 }
 
 code,
