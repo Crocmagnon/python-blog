@@ -19,7 +19,9 @@ jobs:
           python-version: '3.10'
           cache: poetry
       - name: Install dependencies
-        run: poetry install
+        run: |
+          poetry install
+          poetry run pip install setuptools
       - name: Test
         run: poetry run pytest --cov=. --cov-branch --cov-report term-missing:skip-covered
         working-directory: ./src/
