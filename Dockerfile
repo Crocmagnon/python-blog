@@ -14,6 +14,7 @@ COPY pyproject.toml poetry.lock ./
 
 RUN python -m venv --copies /app/venv \
     && . /app/venv/bin/activate \
+    && python -m pip install setuptools \
     && poetry install $POETRY_OPTIONS
 
 ENV PATH /app/venv/bin:$PATH
