@@ -464,7 +464,7 @@ code-syntax-highlighting = ["pygments (>=2.7.3)"]
 
 [[package]]
 name = "model-bakery"
-version = "1.7.1"
+version = "1.8.0"
 description = "Smart object creation facility for Django."
 category = "dev"
 optional = false
@@ -1504,8 +1504,8 @@ markdown2 = [
     {file = "markdown2-2.4.5.tar.gz", hash = "sha256:94445378752dbb7c5a7d62ee6639d0760ea9ca6bf26143515812669c83b9a63f"},
 ]
 model-bakery = [
-    {file = "model_bakery-1.7.1-py2.py3-none-any.whl", hash = "sha256:9f8bbb624df72a997d4c34e4948bf9e6985bb2999bfca4ca8868ec04ce387b25"},
-    {file = "model_bakery-1.7.1.tar.gz", hash = "sha256:9782628ccd6a751b431f993ba122dea2c4d8e2f25e46ca51c1837fde5752bca2"},
+    {file = "model_bakery-1.8.0-py2.py3-none-any.whl", hash = "sha256:da0dc0b5005ddf2936f66936eb96cc2aed2356bf7402833080535c2279c42931"},
+    {file = "model_bakery-1.8.0.tar.gz", hash = "sha256:98702ba2986adaf30aab417bca5209b6961b9ce8d31fe4a573161f9198647401"},
 ]
 multidict = [
     {file = "multidict-6.0.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:0b9e95a740109c6047602f4db4da9949e6c5945cefbad34a1299775ddc9a62e2"},
