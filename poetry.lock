@@ -409,7 +409,7 @@ python-versions = "*"
 
 [[package]]
 name = "kolo"
-version = "2.0.6"
+version = "2.2.0"
 description = "See everything happening in your running Django app"
 category = "dev"
 optional = false
@@ -1415,8 +1415,8 @@ invoke = [
     {file = "invoke-1.7.3.tar.gz", hash = "sha256:41b428342d466a82135d5ab37119685a989713742be46e42a3a399d685579314"},
 ]
 kolo = [
-    {file = "kolo-2.0.6-py3-none-any.whl", hash = "sha256:9bd63b318bf37a2b1eb544ffd58b8d210926939bb7baa3fb388814ee4313bb6a"},
-    {file = "kolo-2.0.6.tar.gz", hash = "sha256:e6435fafc55b3c80f36c37032ca8b2083b80c89d66630f44376bc863bd54ea4e"},
+    {file = "kolo-2.2.0-py3-none-any.whl", hash = "sha256:86b6566efcf15e0dbfedcd17b0f35221a07e8842bd4e32100149407fdd8c07c8"},
+    {file = "kolo-2.2.0.tar.gz", hash = "sha256:d8e0db4485ea8ff52b13648b76686207148e12204c234db0aed62a6b176a85c6"},
 ]
 lxml = [
     {file = "lxml-4.9.1-cp27-cp27m-macosx_10_15_x86_64.whl", hash = "sha256:98cafc618614d72b02185ac583c6f7796202062c41d2eeecdf07820bad3295ed"},
