@@ -3,7 +3,7 @@
     src: local("Golos Text"),
     local("Golos Text VF"),
     local("Golos"),
-    url('/static/vendor/fonts/golos-text-vf.woff2') format("woff2-variations");
+    url('golos-text-vf.woff2') format("woff2-variations");
     font-weight: 400 900;
     font-display: swap;
 }

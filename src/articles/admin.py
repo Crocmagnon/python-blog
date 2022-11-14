@@ -115,7 +115,7 @@ class ArticleAdmin(admin.ModelAdmin):
     class Media:
         css = {
             "all": (
-                "vendor/fonts/jetbrains-mono.css",
+                "vendor/fonts/fira-code.css",
                 "admin_articles.css",
             )
         }
