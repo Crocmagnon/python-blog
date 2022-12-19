@@ -27,7 +27,6 @@ module = [
     "django_otp.plugins.otp_totp.models",
     "model_bakery",
     "invoke",
-    "kolo",
 ]
 ignore_missing_imports = true
 

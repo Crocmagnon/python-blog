@@ -73,28 +73,36 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 
-
 # Application definition
 
-INSTALLED_APPS = [
-    "whitenoise.runserver_nostatic",
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "articles",
-    "attachments",
+]
+
+EXTERNAL_APPS = [
     "anymail",
     "django_extensions",
-    "django_cleanup.apps.CleanupConfig",
-    "debug_toolbar",
     "django_otp",
     "django_otp.plugins.otp_static",
     "django_otp.plugins.otp_totp",
     "two_factor",
+    "django_cleanup.apps.CleanupConfig",  # should be last: https://pypi.org/project/django-cleanup/
 ]
+if DEBUG:
+    EXTERNAL_APPS.insert(-2, "debug_toolbar")
+
+CUSTOM_APPS = [
+    "whitenoise.runserver_nostatic",  # should be first
+    "articles",
+    "attachments",
+]
+
+INSTALLED_APPS = CUSTOM_APPS + DJANGO_APPS + EXTERNAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -110,13 +118,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "csp.middleware.CSPMiddleware",
 ]
-
-try:
-    import kolo
-
-    MIDDLEWARE = ["kolo.middleware.KoloMiddleware"] + MIDDLEWARE
-except ImportError:
-    pass  # do nothing
+if DEBUG:
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "blog.urls"
 
