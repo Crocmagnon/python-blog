@@ -24,7 +24,7 @@ env = environ.Env(
     MAILGUN_API_KEY=(str, ""),
     MAILGUN_SENDER_DOMAIN=(str, ""),
     HOSTS=(list, []),
-    DB_BASE_DIR=(Path, BASE_DIR),
+    DATABASE_URL=(str, "sqlite:////app/db/db.sqlite3"),
     BLOG_BASE_URL=(str, "https://gabnotes.org/"),
     SERVICES_STATUS_URL=(str, None),
     SHORTPIXEL_API_KEY=(str, None),
@@ -154,19 +154,7 @@ CACHES = {
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DB_BASE_DIR = env("DB_BASE_DIR")
-if not DB_BASE_DIR:
-    # Protect against empty strings
-    DB_BASE_DIR = BASE_DIR
-else:
-    DB_BASE_DIR = DB_BASE_DIR.resolve(strict=True)
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": DB_BASE_DIR / "db.sqlite3",
-    }
-}
+DATABASES = {"default": env.db()}
 
 INTERNAL_IPS = [
     "127.0.0.1",

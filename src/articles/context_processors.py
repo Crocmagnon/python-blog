@@ -30,7 +30,7 @@ def git_version(request: WSGIRequest) -> dict[str, Any]:
     if request.path in IGNORED_PATHS:
         return {}
     try:
-        with open("/app/.version") as f:
+        with open("/app/git/git-commit") as f:
             version = f.read().strip()
         url = settings.BLOG["repo"]["commit_url"].format(commit_sha=version)
         version = version[:8]
