@@ -5,14 +5,18 @@
 
 Simple blog management system.
 
-The authoritative source for this repo is at https://git.augendre.info/gaugendre/blog
-
 Hosted at https://gabnotes.org
 
 ## Development
 ```shell
+pyenv virtualenv 3.11.1 blog
+pyenv local charasheet
+pip install pip-tools
+pip-sync requirements.txt requirements-dev.txt
+pre-commit install --install-hooks
 inv test-cov
-inv beam
+./src/manage.py migrate
+./src/manage.py createsuperuser
 ```
 
 # Reuse
