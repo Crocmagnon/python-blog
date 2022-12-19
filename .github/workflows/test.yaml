@@ -12,16 +12,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Install poetry
-        run: pipx install poetry==1.1.15
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
-          cache: poetry
+          python-version: '3.11'
+          cache: pip
       - name: Install dependencies
         run: |
-          poetry install
+          pip install pip-tools
+          pip-sync requirements.txt requirements-dev.txt
       - name: Test
-        run: poetry run pytest --cov=. --cov-branch --cov-report term-missing:skip-covered
+        run: pytest --cov=. --cov-branch --cov-report term-missing:skip-covered
         working-directory: ./src/
