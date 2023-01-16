@@ -410,9 +410,9 @@ pytest-recording==0.12.1 \
     --hash=sha256:0d1f36d10dea5090cab8ecd230e5dc937c97b9fed193874b330d2926ddea028f \
     --hash=sha256:6b5546b822b270b8d7338f70950453be45e4aa5bfd884d97583dfa47288380f9
     # via -r requirements-dev.in
-pytest-rerunfailures==10.3 \
-    --hash=sha256:6be6f96510bf94b54198bf15bc5568fe2cdff88e83875912e22d29810acf65ff \
-    --hash=sha256:d8244d799f89a6edb5e57301ddaeb3b6f10d6691638d51e80b371311592e28c6
+pytest-rerunfailures==11.0 \
+    --hash=sha256:b8c535b6c353de8c4b39258216512c64f288e4d349e86877583a08b2f5ea5441 \
+    --hash=sha256:cee59e4e6f0d73ae63fba099865314ba9b915b719349541110fa012ffb6efb13
     # via -r requirements-dev.in
 pyxdg==0.28 \
     --hash=sha256:3267bb3074e934df202af2ee0868575484108581e6f3cb006af1da35395e88b4 \
