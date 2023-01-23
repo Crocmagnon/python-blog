@@ -497,9 +497,9 @@ types-pillow==9.4.0.5 \
     --hash=sha256:941cefaac2f5297d7d2a9989633c95b4063112690dc21c965d46bd5a7fff3c76 \
     --hash=sha256:a1d2b3e070b4d852af04f76f018d12bd51abb4abca3b725d91b35e01cda7a2de
     # via -r requirements-dev.in
-types-requests==2.28.11.7 \
-    --hash=sha256:0ae38633734990d019b80f5463dfa164ebd3581998ac8435f526da6fe4d598c3 \
-    --hash=sha256:b6a2fca8109f4fdba33052f11ed86102bddb2338519e1827387137fefc66a98b
+types-requests==2.28.11.8 \
+    --hash=sha256:61960554baca0008ae7e2db2bd3b322ca9a144d3e80ce270f5fb640817e40994 \
+    --hash=sha256:e67424525f84adfbeab7268a159d3c633862dafae15c5b19547ce1b55954f0a3
     # via -r requirements-dev.in
 types-toml==0.10.8.1 \
     --hash=sha256:171bdb3163d79a520560f24ba916a9fc9bff81659c5448a9fea89240923722be \
