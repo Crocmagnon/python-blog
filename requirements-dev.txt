@@ -481,9 +481,9 @@ sqlparse==0.4.3 \
     #   -c constraints.txt
     #   django
     #   django-debug-toolbar
-types-beautifulsoup4==4.11.6.2 \
-    --hash=sha256:4994a3b5ce66467977d9ce65031f5e212f23af66941669a59f50a1801260d9db \
-    --hash=sha256:dbeb2f82f2d79878107238ab50291361563ae5db99e198a68e91dbb4c0f37b3f
+types-beautifulsoup4==4.11.6.4 \
+    --hash=sha256:25067e323d8757ebcf6b5177513b8242b9fa2610781e306541279454e536d24b \
+    --hash=sha256:53236c05d035449cc2021ad5d252db8b1ff23dbe280af060f177e6cdb4fcd468
     # via -r requirements-dev.in
 types-html5lib==1.1.11.10 \
     --hash=sha256:18c34ce51eac062321b224365b3aee5b5cdc1613872ed8469c9c0c4ccd3e02e9 \
