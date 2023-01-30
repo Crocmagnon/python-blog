@@ -118,7 +118,8 @@ MIDDLEWARE = [
     "csp.middleware.CSPMiddleware",
 ]
 if DEBUG:
-    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+    index = MIDDLEWARE.index("django.middleware.gzip.GZipMiddleware") + 1
+    MIDDLEWARE.insert(index, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "blog.urls"
 
