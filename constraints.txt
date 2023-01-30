@@ -48,7 +48,7 @@ django-otp==1.1.4
     # via django-two-factor-auth
 django-phonenumber-field==6.4.0
     # via django-two-factor-auth
-django-two-factor-auth==1.15.0
+django-two-factor-auth==1.14.0
     # via -r requirements.in
 gunicorn==20.1.0
     # via -r requirements.in
