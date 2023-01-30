@@ -62,7 +62,7 @@ markdown2==2.4.6
     # via readtime
 phonenumberslite==8.13.2
     # via django-two-factor-auth
-pillow==9.3.0
+pillow==9.4.0
     # via -r requirements.in
 pycparser==2.21
     # via cffi
