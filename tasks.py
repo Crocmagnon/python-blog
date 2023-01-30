@@ -20,8 +20,17 @@ COMPOSE_BUILD_ENV = {"COMPOSE_FILE": COMPOSE_BUILD_FILE}
 
 
 @task
-def update_dependencies(ctx: Context) -> None:
-    common_args = "-q --allow-unsafe --resolver=backtracking --upgrade"
+def update_dependencies(ctx: Context, *, sync: bool = True) -> None:
+    return compile_dependencies(ctx, update=True, sync=sync)
+
+
+@task
+def compile_dependencies(
+    ctx: Context, *, update: bool = False, sync: bool = False
+) -> None:
+    common_args = "-q --allow-unsafe --resolver=backtracking"
+    if update:
+        common_args += " --upgrade"
     with ctx.cd(BASE_DIR):
         ctx.run(
             f"pip-compile {common_args} --generate-hashes requirements.in",
@@ -38,6 +47,13 @@ def update_dependencies(ctx: Context) -> None:
             pty=True,
             echo=True,
         )
+    if sync:
+        sync_dependencies(ctx)
+
+
+@task
+def sync_dependencies(ctx: Context) -> None:
+    with ctx.cd(BASE_DIR):
         ctx.run("pip-sync requirements.txt requirements-dev.txt", pty=True, echo=True)
 
 
