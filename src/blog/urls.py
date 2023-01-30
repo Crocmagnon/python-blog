@@ -1,4 +1,4 @@
-"""blog URL Configuration
+"""blog URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -17,7 +17,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
-from two_factor.urls import urlpatterns as tf_urls  # type: ignore
+from two_factor.urls import urlpatterns as tf_urls  # type: ignore[import]
 
 from blog import settings
 
@@ -35,7 +35,7 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    import debug_toolbar  # type: ignore
+    import debug_toolbar  # type: ignore[import]
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]

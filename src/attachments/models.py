@@ -46,7 +46,7 @@ class Attachment(models.Model):
         return f"{self.description} ({self.original_file.name})"
 
     def reprocess(self) -> None:
-        self.processed_file = None  # type: ignore
+        self.processed_file = None  # type: ignore[assignment]
         self.save()
 
     @property
@@ -63,12 +63,12 @@ class Attachment(models.Model):
         super().save(*args, **kwargs)
 
         if self.processed_file:
-            return
+            return None
 
         try:
             Image.open(self.original_file.path)
         except OSError:
-            return
+            return None
 
         # Submit job to shortpixel
         base_data = {
@@ -88,9 +88,12 @@ class Attachment(models.Model):
         }
         data = {**base_data, **post_data}
         url = "https://api.shortpixel.com/v2/post-reducer.php"
-        with open(self.original_file.path, "rb") as original_file:
+        with Path(self.original_file.path).open("rb") as original_file:
             response = requests.post(
-                url=url, data=data, files={self.original_file.name: original_file}
+                url=url,
+                data=data,
+                files={self.original_file.name: original_file},
+                timeout=10,
             )
         res = response.json()
         res_data = res[0]
@@ -104,20 +107,20 @@ class Attachment(models.Model):
         }
         check_data = {**base_data, **post_data}
         while res_data["Status"]["Code"] == "1":
-            response = requests.post(url=url, data=check_data)
+            response = requests.post(url=url, data=check_data, timeout=10)
             res_data = response.json()[0]
 
         # Download image
         current_path = Path(self.original_file.path)
         temp_dir = Path(tempfile.mkdtemp())
         temp_path = temp_dir / (current_path.stem + "-processed" + current_path.suffix)
-        img = requests.get(res_data["LossyURL"], stream=True)
-        with open(temp_path, "wb") as temp_file:
+        img = requests.get(res_data["LossyURL"], stream=True, timeout=10)
+        with Path(temp_path).open("wb") as temp_file:
             for chunk in img:
                 temp_file.write(chunk)
 
         # Link it to our model
-        with open(temp_path, "rb") as output_file:
+        with Path(temp_path).open("rb") as output_file:
             f = File(output_file)
             self.processed_file.save(temp_path.name, f, save=False)
 

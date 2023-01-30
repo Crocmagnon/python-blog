@@ -12,7 +12,6 @@ from articles.models import Article, Tag
 @login_required
 @require_POST
 def render_article(request: WSGIRequest, article_pk: int) -> HttpResponse:
-    print(f"{type(request)=}")
     template = "articles/article_detail.html"
     article = Article.objects.get(pk=article_pk)
     article.content = request.POST.get("content", article.content)

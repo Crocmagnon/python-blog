@@ -80,8 +80,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request: WSGIRequest) -> QuerySet:
         queryset = super().get_queryset(request)
-        queryset = queryset.prefetch_related("tags")
-        return queryset
+        return queryset.prefetch_related("tags")
 
     @admin.action(description="Publish selected articles")
     def publish(self, request: WSGIRequest, queryset: QuerySet) -> None:

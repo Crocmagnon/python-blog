@@ -16,7 +16,6 @@ from django.db.models import F, Prefetch
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
-from lxml.etree import ParseError  # noqa: S410
 
 from articles.utils import (
     build_full_absolute_url,
@@ -146,7 +145,7 @@ class Article(models.Model):
         for tag in self.tags.all().prefetch_related(
             Prefetch("articles", published_articles, to_attr="published_articles")
         ):
-            related_articles.update(tag.published_articles)  # type: ignore
+            related_articles.update(tag.published_articles)
         sample_size = min([len(related_articles), 3])
         return random.sample(list(related_articles), sample_size)
 

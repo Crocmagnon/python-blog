@@ -6,9 +6,9 @@ from attachments.models import Attachment
 
 
 class Command(BaseCommand):
-    help = "Reprocess all attachments"
+    help = "Reprocess all attachments"  # noqa: A003
 
-    def handle(self, *args: Any, **options: Any) -> None:
+    def handle(self, *_args: Any, **_options: Any) -> None:
         for attachment in Attachment.objects.all():
             self.stdout.write(f"Processing {attachment}...")
             attachment.reprocess()

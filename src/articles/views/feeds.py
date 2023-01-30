@@ -35,7 +35,7 @@ class CompleteFeed(BaseFeed):
 
 
 class TagFeed(BaseFeed):
-    def get_object(self, request: WSGIRequest, *args: Any, **kwargs: Any) -> Tag:
+    def get_object(self, _request: WSGIRequest, *_args: Any, **kwargs: Any) -> Tag:
         return Tag.objects.get(slug=kwargs.get("slug"))
 
     def title(self, tag: Tag) -> str:

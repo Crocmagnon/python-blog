@@ -13,8 +13,7 @@ from articles.markdown import LazyLoadingImageExtension
 def build_full_absolute_url(request: WSGIRequest | None, url: str) -> str:
     if request:
         return request.build_absolute_uri(url)
-    else:
-        return (settings.BLOG["base_url"] + url)[::-1].replace("//", "/", 1)[::-1]
+    return (settings.BLOG["base_url"] + url)[::-1].replace("//", "/", 1)[::-1]
 
 
 def format_article_content(content: str) -> str:

@@ -1,4 +1,5 @@
 import copy
+from pathlib import Path
 from typing import Any
 
 from django.conf import settings
@@ -30,7 +31,7 @@ def git_version(request: WSGIRequest) -> dict[str, Any]:
     if request.path in IGNORED_PATHS:
         return {}
     try:
-        with open("/app/git/git-commit") as f:
+        with Path("/app/git/git-commit").open() as f:
             version = f.read().strip()
         url = settings.BLOG["repo"]["commit_url"].format(commit_sha=version)
         version = version[:8]
@@ -40,7 +41,7 @@ def git_version(request: WSGIRequest) -> dict[str, Any]:
     return {"git_version": version, "git_version_url": url}
 
 
-def analytics(request: WSGIRequest) -> dict[str, Any]:
+def analytics(_: WSGIRequest) -> dict[str, Any]:
     return {
         "goatcounter_domain": settings.GOATCOUNTER_DOMAIN,
     }
@@ -56,7 +57,7 @@ def open_graph_image_url(request: WSGIRequest) -> dict[str, Any]:
     return {"open_graph_image_url": url}
 
 
-def blog_metadata(request: WSGIRequest) -> dict[str, Any]:
+def blog_metadata(_request: WSGIRequest) -> dict[str, Any]:
     blog_settings = copy.deepcopy(settings.BLOG)
     return {
         "blog": blog_settings,

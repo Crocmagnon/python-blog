@@ -87,7 +87,7 @@ def mypy(ctx: Context) -> None:
 
 
 @task(pre=[pre_commit, test_cov])
-def check(ctx: Context) -> None:
+def check(_ctx: Context) -> None:
     pass
 
 
@@ -113,24 +113,25 @@ def deploy(ctx: Context) -> None:
 
 
 @task
-def check_alive(ctx: Context) -> None:
+def check_alive(_ctx: Context) -> None:
     import requests
 
     exception = None
     for _ in range(5):
         try:
-            res = requests.get("https://gabnotes.org")
+            res = requests.get("https://gabnotes.org", timeout=5)
             res.raise_for_status()
-            print("Server is up & running")
-            return
         except requests.exceptions.HTTPError as e:
             time.sleep(2)
             exception = e
+        else:
+            print("Server is up & running")  # noqa: T201
+            return
     raise RuntimeError("Failed to reach the server") from exception
 
 
 @task(pre=[check, build, publish, deploy], post=[check_alive])
-def beam(ctx: Context) -> None:
+def beam(_ctx: Context) -> None:
     pass
 
 

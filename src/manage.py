@@ -5,7 +5,7 @@ import sys
 
 
 def main() -> None:
-    """Run administrative tasks."""  # noqa: DAR401
+    """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "blog.settings")
     try:
         from django.core.management import execute_from_command_line

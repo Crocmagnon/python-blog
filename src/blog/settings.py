@@ -206,7 +206,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 AUTH_USER_MODEL = "articles.User"
 
 BLOG = {
-    "title": "Gab’s Notes",
+    "title": "Gab’s Notes",  # noqa: RUF001
     "author": "Gabriel Augendre",
     "email": "ga-notes@augendre.info",
     "description": "My take on tech-related subjects (but not only).",
