@@ -483,10 +483,6 @@ pathspec==0.11.0 \
     --hash=sha256:3a66eb970cbac598f9e5ccb5b2cf58930cd8e3ed86d393d541eaf2d8b1705229 \
     --hash=sha256:64d338d4e0914e91c1792321e6907b5a593f1ab1851de7fc269557a21b30ebbc
     # via black
-pip==22.3.1 \
-    --hash=sha256:65fd48317359f3af8e593943e6ae1506b66325085ea64b706a998c6e83eeaf38 \
-    --hash=sha256:908c78e6bc29b676ede1c4d57981d490cb892eb45cd8c214ab6298125119e077
-    # via pip-tools
 pip-tools==6.12.1 \
     --hash=sha256:88efb7b29a923ffeac0713e6f23ef8529cc6175527d42b93f73756cc94387293 \
     --hash=sha256:f0c0c0ec57b58250afce458e2e6058b1f30a4263db895b7d72fd6311bf1dc6f7
@@ -617,13 +613,6 @@ ruff==0.0.237 \
     --hash=sha256:ea239cfedf67b74ea4952e1074bb99a4281c2145441d70bc7e2f058d5c49f1c9 \
     --hash=sha256:fedfb60f986c26cdb1809db02866e68508db99910c587d2c4066a5c07aa85593
     # via -r requirements-dev.in
-setuptools==67.0.0 \
-    --hash=sha256:883131c5b6efa70b9101c7ef30b2b7b780a4283d5fc1616383cdf22c83cbefe6 \
-    --hash=sha256:9d790961ba6219e9ff7d9557622d2fe136816a264dd01d5997cfc057d804853d
-    # via
-    #   -c constraints.txt
-    #   nodeenv
-    #   pip-tools
 six==1.16.0 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
@@ -649,9 +638,9 @@ types-markdown==3.4.2.2 \
     --hash=sha256:394e205effefbd12103220f370287ab28e99534f3e12a6408734aae79b7e6119 \
     --hash=sha256:d0cf7706aed5f489a6233406990b7f35c3211882dd69aa034634de1ad367b231
     # via -r requirements-dev.in
-types-pillow==9.4.0.5 \
-    --hash=sha256:941cefaac2f5297d7d2a9989633c95b4063112690dc21c965d46bd5a7fff3c76 \
-    --hash=sha256:a1d2b3e070b4d852af04f76f018d12bd51abb4abca3b725d91b35e01cda7a2de
+types-pillow==9.4.0.6 \
+    --hash=sha256:51ba83bcebd7d3e21a5a3b558a9ba86b21b0eb3f18d5c66c93189c6ee4c0578b \
+    --hash=sha256:fa638b8be75acf5dac21c7f01dfee645d2885f63a55b7aad95d65b05ac4d7b7d
     # via -r requirements-dev.in
 types-requests==2.28.11.8 \
     --hash=sha256:61960554baca0008ae7e2db2bd3b322ca9a144d3e80ce270f5fb640817e40994 \
