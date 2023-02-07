@@ -21,7 +21,6 @@ def backwards(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("articles", "0029_auto_20210303_1711"),
     ]

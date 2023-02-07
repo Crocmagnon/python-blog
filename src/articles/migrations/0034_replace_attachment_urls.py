@@ -50,7 +50,6 @@ def replace_with_file_url(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("articles", "0033_alter_article_options"),
         ("attachments", "0008_attachment_updated_at"),

@@ -6,7 +6,6 @@ import attachments.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("attachments", "0005_attachment_open_graph_image"),
     ]

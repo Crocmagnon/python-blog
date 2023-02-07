@@ -15,7 +15,6 @@ def reverse_func(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("articles", "0023_article_has_code"),
     ]
