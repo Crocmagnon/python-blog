@@ -34,7 +34,7 @@ django==4.1.6
     #   django-two-factor-auth
 django-anymail==9.0
     # via -r requirements.in
-django-cleanup==6.0.0
+django-cleanup==7.0.0
     # via -r requirements.in
 django-csp==3.7
     # via -r requirements.in
@@ -58,9 +58,9 @@ lxml==4.9.2
     # via pyquery
 markdown==3.4.1
     # via -r requirements.in
-markdown2==2.4.7
+markdown2==2.4.8
     # via readtime
-phonenumberslite==8.13.5
+phonenumberslite==8.13.6
     # via django-two-factor-auth
 pillow==9.4.0
     # via -r requirements.in
