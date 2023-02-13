@@ -221,9 +221,9 @@ django-anymail[mailgun]==9.0 \
     --hash=sha256:4239f7c61fb77b6eb8c8591a317a84a2a78f6bce1f8f42847921de74194b5d8a \
     --hash=sha256:c21d94ffdbada613a85c22a7bf32e37447d2811e1688cd001d3cad3c7f1ff289
     # via -r requirements.in
-django-cleanup==6.0.0 \
-    --hash=sha256:922e06ef8839c92bd3ab37a84db6058b8764f3fe44dbb4487bbca941d288280a \
-    --hash=sha256:997feab3b1f7a2e84f71c29e83b1d664459ec0d4b1924977b1fa25b5babb8703
+django-cleanup==7.0.0 \
+    --hash=sha256:28a969f889c661eba0d9438978693980f09482c97983bd08ee52955dae8d71e4 \
+    --hash=sha256:f50d54de48527d66ff05d74d2c3aafcdadc6c94ba280ece14a7e4c5b2c591447
     # via -r requirements.in
 django-csp==3.7 \
     --hash=sha256:01443a07723f9a479d498bd7bb63571aaa771e690f64bde515db6cdb76e8041a \
@@ -344,13 +344,13 @@ markdown==3.4.1 \
     --hash=sha256:08fb8465cffd03d10b9dd34a5c3fea908e20391a2a90b88d66362cb05beed186 \
     --hash=sha256:3b809086bb6efad416156e00a0da66fe47618a5d6918dd688f53f40c8e4cfeff
     # via -r requirements.in
-markdown2==2.4.7 \
-    --hash=sha256:62156ad2426249a1d1a9059cfe7eab712ff2f397660991b1796c342c19bfa922 \
-    --hash=sha256:dfb52ff4007389567b391ce8fa3cff3dd363d1f282d20205383c6a710f9870d1
+markdown2==2.4.8 \
+    --hash=sha256:7d49ca871d3e0e412c65d7d21fcbc13ae897f7876f3e5f14dd4db3b7fbf27f10 \
+    --hash=sha256:90475aca3d9c8e7df6d70c51de5bbbe9edf7fcf6a380bd1044d321500f5445da
     # via readtime
-phonenumberslite==8.13.5 \
-    --hash=sha256:57a6825d729ec2ee28eb7d3a171837adad386defb6ad10593a2ddd405afe569c \
-    --hash=sha256:f143456744422398a26537b8815fb9650f187420a346f4198b2bf1ed6019e8ac
+phonenumberslite==8.13.6 \
+    --hash=sha256:61a9fcf4ce688fabcce8f566fe160dc2984299112ceaa306a18922e4e4d94745 \
+    --hash=sha256:bceb85adeb84eb71bb3bd1afa5163633d513b9e836b486b86fd40df17dc3b074
     # via django-two-factor-auth
 pillow==9.4.0 \
     --hash=sha256:013016af6b3a12a2f40b704677f8b51f72cb007dac785a9933d5c86a72a7fe33 \
