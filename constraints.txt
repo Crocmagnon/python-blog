@@ -90,9 +90,9 @@ typing-extensions==4.5.0
     # via qrcode
 urllib3==1.26.14
     # via requests
-whitenoise==6.3.0
+whitenoise==6.4.0
     # via -r requirements.in
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==67.3.2
+setuptools==67.4.0
     # via gunicorn
