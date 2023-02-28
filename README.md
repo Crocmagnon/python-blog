@@ -9,10 +9,8 @@ Hosted at https://gabnotes.org
 
 ## Development
 ```shell
-pyenv virtualenv 3.11.1 blog
-pyenv local charasheet
-pip install pip-tools
-pip-sync requirements.txt requirements-dev.txt
+pip install -U pip pip-tools invoke
+inv sync-dependencies
 pre-commit install --install-hooks
 inv test-cov
 ./src/manage.py migrate
