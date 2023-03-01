@@ -15,12 +15,12 @@
 {% block title %}{% if view.html_title %}{{ view.html_title }} | {% endif %}{% endblock %}
 
 {% block content %}
-    <section>
+    <section id="articles-list">
         <h2 id="blog-posts">{% block main_title %}{{ view.main_title }}{% endblock %}</h2>
         {% block search_bar %}{% endblock %}
         {% for article in articles %}
             <p>
-                {% include "articles/snippets/datetime.html" %}<br>
+                {% include "articles/snippets/datetime.html" %}
                 <a href="{% url 'article-detail' slug=article.slug %}">{{ article.title }}</a>
             </p>
         {% empty %}

@@ -49,3 +49,14 @@ a.tag:not(:first-of-type):before {
 #metadata {
     margin-bottom: 1.5rem;
 }
+
+#articles-list time {
+    display: inline-block;
+    min-width: 11ex;
+}
+
+@media (max-width: 720px) {
+    #articles-list time {
+        display: block;
+    }
+}
