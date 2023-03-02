@@ -2,11 +2,13 @@
 {% load static %}
 {% block submit-row %}
     {{ block.super }}
-    {% if original.status != original.PUBLISHED %}
-        <input type="submit" value="Save and publish" name="_publish">
-    {% elif original.status != original.DRAFT %}
-        <input type="submit" value="Save and unpublish" name="_unpublish">
-    {% endif %}
+    <p class="deletelink-box">
+        {% if original.status != original.PUBLISHED %}
+            <input type="submit" value="Save and publish" name="_publish">
+        {% elif original.status != original.DRAFT %}
+            <input type="submit" value="Save and unpublish" name="_unpublish">
+        {% endif %}
+    </p>
     <input type="submit" value="Save and view" name="_preview">
     {% if original %}
         <input type="submit" value="Live preview" id="_live_preview">

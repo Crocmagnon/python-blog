@@ -142,6 +142,27 @@ class ArticleAdmin(admin.ModelAdmin):
             return redirect(".")
         return super().response_change(request, obj)
 
+    def change_view(
+        self,
+        request: WSGIRequest,
+        object_id: int,
+        form_url: str = "",
+        extra_context: dict | None = None,
+    ) -> HttpResponse:
+        extra_context = extra_context or {}
+        extra_context["show_save_and_add_another"] = False
+        return super().change_view(request, object_id, form_url, extra_context)
+
+    def add_view(
+        self,
+        request: WSGIRequest,
+        form_url: str = "",
+        extra_context: dict | None = None,
+    ) -> HttpResponse:
+        extra_context = extra_context or {}
+        extra_context["show_save_and_add_another"] = False
+        return super().add_view(request, form_url, extra_context)
+
     def read_time(self, instance: Article) -> str:
         return f"{instance.get_read_time()} min"
 
