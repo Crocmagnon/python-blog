@@ -16,6 +16,7 @@ from django.db.models import F, Prefetch
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
+from lxml import etree
 
 from articles.utils import (
     build_full_absolute_url,
@@ -132,9 +133,13 @@ class Article(models.Model):
 
     def get_read_time(self) -> int:
         content = self.get_formatted_content
-        if content:
-            return readtime.of_markdown(content).minutes
-        return 0
+        if not content:
+            return 0
+        try:
+            return readtime.of_html(content).minutes
+        except etree.Error:
+            # Needed for compatibility with M1 Macs
+            return 0
 
     @cached_property
     def get_related_articles(self) -> Sequence[Article]:
