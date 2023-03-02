@@ -25,7 +25,7 @@ def test_unpublish_article(published_article: Article) -> None:
 def test_save_article_adds_missing_slug(author: User) -> None:
     # Explicitly calling bulk_create with one article because it doesn't call save().
     articles = Article.objects.bulk_create(
-        [Article(author=author, title="noice title", slug="", status=Article.DRAFT)]
+        [Article(author=author, title="noice title", slug="", status=Article.DRAFT)],
     )
     article = articles[0]
     assert article.slug == ""

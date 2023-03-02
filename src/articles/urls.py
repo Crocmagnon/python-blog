@@ -10,7 +10,9 @@ urlpatterns = [
     path("tag/<slug:slug>/", views.TagArticlesListView.as_view(), name="tag"),
     path("feed/", views.CompleteFeed(), name="complete-feed"),
     path(
-        "api/render/<int:article_pk>/", views.render_article, name="api-render-article"
+        "api/render/<int:article_pk>/",
+        views.render_article,
+        name="api-render-article",
     ),
     path("<slug:slug>/", views.view_article, name="article-detail"),
 ]

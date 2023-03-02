@@ -6,7 +6,8 @@ from django.urls import reverse
 
 
 def replace_with_wrapper_url(
-    apps: Apps, schema_editor: BaseDatabaseSchemaEditor
+    apps: Apps,
+    schema_editor: BaseDatabaseSchemaEditor,
 ) -> None:
     Attachment = apps.get_model("attachments", "Attachment")
     Article = apps.get_model("articles", "Article")

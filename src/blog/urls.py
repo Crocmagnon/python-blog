@@ -26,7 +26,8 @@ urlpatterns = [
     path(
         "robots.txt",
         TemplateView.as_view(
-            template_name="blog/robots.txt", content_type="text/plain"
+            template_name="blog/robots.txt",
+            content_type="text/plain",
         ),
     ),
     path("admin/", admin.site.urls),

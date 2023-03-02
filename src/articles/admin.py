@@ -48,7 +48,7 @@ class ArticleAdmin(admin.ModelAdmin):
                     ("created_at", "updated_at"),
                     ("views_count",),
                     ("has_code", "has_custom_css"),
-                ]
+                ],
             },
         ),
         (
@@ -116,11 +116,13 @@ class ArticleAdmin(admin.ModelAdmin):
             "all": (
                 "vendor/fonts/fira-code.css",
                 "admin_articles.css",
-            )
+            ),
         }
 
     def response_post_save_add(
-        self, request: WSGIRequest, obj: Article
+        self,
+        request: WSGIRequest,
+        obj: Article,
     ) -> HttpResponseRedirect:
         if "_preview" in request.POST:
             return cast(HttpResponseRedirect, redirect("article-detail", slug=obj.slug))

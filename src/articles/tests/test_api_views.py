@@ -9,7 +9,8 @@ from articles.utils import format_article_content
 
 @pytest.mark.django_db()
 def test_unauthenticated_render_redirects(
-    published_article: Article, client: Client
+    published_article: Article,
+    client: Client,
 ) -> None:
     api_res = client.post(
         reverse("api-render-article", kwargs={"article_pk": published_article.pk}),
@@ -20,12 +21,13 @@ def test_unauthenticated_render_redirects(
 
 @pytest.mark.django_db()
 def test_render_article_same_content(
-    published_article: Article, client: Client
+    published_article: Article,
+    client: Client,
 ) -> None:
     client.force_login(published_article.author)
     api_res = post_article(client, published_article, published_article.content)
     standard_res = client.get(
-        reverse("article-detail", kwargs={"slug": published_article.slug})
+        reverse("article-detail", kwargs={"slug": published_article.slug}),
     )
     assert api_res.status_code == 200
     assert standard_res.status_code == 200
@@ -42,7 +44,8 @@ def test_render_article_same_content(
 
 @pytest.mark.django_db()
 def test_render_article_change_content(
-    published_article: Article, client: Client
+    published_article: Article,
+    client: Client,
 ) -> None:
     client.force_login(published_article.author)
     preview_content = "This is a different content **with strong emphasis**"
@@ -80,7 +83,7 @@ def post_article(client: Client, article: Article, content: str) -> HttpResponse
         data={
             "content": content,
             "tag_ids": ",".join(
-                map(str, article.tags.all().values_list("pk", flat=True))
+                map(str, article.tags.all().values_list("pk", flat=True)),
             ),
         },
     )

@@ -31,7 +31,7 @@ class BaseArticleListView(generic.ListView):
             context["next_page_querystring"] = querystring
         if page_obj.has_previous():
             querystring = self.build_querystring(
-                {"page": page_obj.previous_page_number()}
+                {"page": page_obj.previous_page_number()},
             )
             context["previous_page_querystring"] = querystring
         return context
@@ -55,7 +55,8 @@ class ArticlesListView(PublicArticleListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         home_article = Article.objects.filter(
-            status=Article.PUBLISHED, is_home=True
+            status=Article.PUBLISHED,
+            is_home=True,
         ).first()
         context["article"] = home_article
         return context
@@ -80,11 +81,13 @@ class SearchArticlesListView(PublicArticleListView):
         return queryset.filter(
             reduce(operator.and_, (Q(title__icontains=term) for term in search_terms))
             | reduce(
-                operator.and_, (Q(content__icontains=term) for term in search_terms)
+                operator.and_,
+                (Q(content__icontains=term) for term in search_terms),
             )
             | reduce(
-                operator.and_, (Q(tags__name__icontains=term) for term in search_terms)
-            )
+                operator.and_,
+                (Q(tags__name__icontains=term) for term in search_terms),
+            ),
         ).distinct()
 
     def get_additional_querystring_params(self) -> dict[str, str]:
@@ -100,7 +103,10 @@ class TagArticlesListView(PublicArticleListView):
     html_title = ""
 
     def dispatch(
-        self, request: WSGIRequest, *args: Any, **kwargs: Any
+        self,
+        request: WSGIRequest,
+        *args: Any,
+        **kwargs: Any,
     ) -> HttpResponseBase:
         self.tag = get_object_or_404(Tag, slug=self.kwargs.get("slug"))
         self.main_title = self.html_title = f"{self.tag.name} articles"

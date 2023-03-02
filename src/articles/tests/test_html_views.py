@@ -57,28 +57,32 @@ def _assert_article_is_rendered(item: Article, res: HttpResponse) -> None:
 
 @pytest.mark.django_db()
 def test_anonymous_cant_access_draft_detail(
-    client: Client, unpublished_article: Article
+    client: Client,
+    unpublished_article: Article,
 ) -> None:
     res = client.get(
-        reverse("article-detail", kwargs={"slug": unpublished_article.slug})
+        reverse("article-detail", kwargs={"slug": unpublished_article.slug}),
     )
     assert res.status_code == 404
 
 
 @pytest.mark.django_db()
 def test_anonymous_can_access_draft_detail_with_key(
-    client: Client, unpublished_article: Article
+    client: Client,
+    unpublished_article: Article,
 ) -> None:
     res = client.get(
         reverse("article-detail", kwargs={"slug": unpublished_article.slug})
-        + f"?draft_key={unpublished_article.draft_key}"
+        + f"?draft_key={unpublished_article.draft_key}",
     )
     _assert_article_is_rendered(unpublished_article, res)
 
 
 @pytest.mark.django_db()
 def test_user_can_access_draft_detail(
-    client: Client, author: User, unpublished_article: Article
+    client: Client,
+    author: User,
+    unpublished_article: Article,
 ) -> None:
     client.force_login(author)
     _test_access_article_by_slug(client, unpublished_article)
@@ -86,7 +90,8 @@ def test_user_can_access_draft_detail(
 
 @pytest.mark.django_db()
 def test_anonymous_cant_access_drafts_list(
-    client: Client, unpublished_article: Article
+    client: Client,
+    unpublished_article: Article,
 ) -> None:
     res = client.get(reverse("drafts-list"))
     assert res.status_code == 302
@@ -94,7 +99,9 @@ def test_anonymous_cant_access_drafts_list(
 
 @pytest.mark.django_db()
 def test_user_can_access_drafts_list(
-    client: Client, author: User, unpublished_article: Article
+    client: Client,
+    author: User,
+    unpublished_article: Article,
 ) -> None:
     client.force_login(author)
     res = client.get(reverse("drafts-list"))
@@ -114,7 +121,8 @@ def test_has_goatcounter_if_set(client: Client, settings: SettingsWrapper) -> No
 
 @pytest.mark.django_db()
 def test_doesnt_have_goatcounter_if_unset(
-    client: Client, settings: SettingsWrapper
+    client: Client,
+    settings: SettingsWrapper,
 ) -> None:
     settings.GOATCOUNTER_DOMAIN = None
     res = client.get(reverse("articles-list"))
@@ -125,7 +133,9 @@ def test_doesnt_have_goatcounter_if_unset(
 
 @pytest.mark.django_db()
 def test_logged_in_user_doesnt_have_goatcounter(
-    client: Client, author: User, settings: SettingsWrapper
+    client: Client,
+    author: User,
+    settings: SettingsWrapper,
 ) -> None:
     client.force_login(author)
     settings.GOATCOUNTER_DOMAIN = "gc.gabnotes.org"

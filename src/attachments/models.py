@@ -83,7 +83,7 @@ class Attachment(models.Model):
             "resize_height": settings.SHORTPIXEL_RESIZE_HEIGHT,
             "keep_exif": 1,
             "file_paths": json.dumps(
-                [f"{self.original_file.name}:{self.original_file.path}"]
+                [f"{self.original_file.name}:{self.original_file.path}"],
             ),
         }
         data = {**base_data, **post_data}

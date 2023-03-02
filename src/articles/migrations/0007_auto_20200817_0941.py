@@ -10,9 +10,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="page", options={"ordering": ["position", "-published_at"]}
+            name="page",
+            options={"ordering": ["position", "-published_at"]},
         ),
         migrations.AddField(
-            model_name="page", name="position", field=models.IntegerField(default=0)
+            model_name="page",
+            name="position",
+            field=models.IntegerField(default=0),
         ),
     ]

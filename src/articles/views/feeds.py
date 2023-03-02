@@ -22,7 +22,7 @@ class BaseFeed(Feed):
 
     def _get_queryset(self) -> QuerySet[Article]:
         return Article.objects.filter(status=Article.PUBLISHED).order_by(
-            "-published_at"
+            "-published_at",
         )
 
 

@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
             model_name="article",
             name="content",
             field=models.TextField(
-                default='!!! warning "Draft"\n    This article is still a draft. It may appear by error in your feed if I click on the "publish" button too early 😊'
+                default='!!! warning "Draft"\n    This article is still a draft. It may appear by error in your feed if I click on the "publish" button too early 😊',
             ),
         ),
     ]

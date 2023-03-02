@@ -25,7 +25,8 @@ class Migration(migrations.Migration):
                 (
                     "username",
                     models.CharField(
-                        help_text="Will be displayed with your comment.", max_length=255
+                        help_text="Will be displayed with your comment.",
+                        max_length=255,
                     ),
                 ),
                 (

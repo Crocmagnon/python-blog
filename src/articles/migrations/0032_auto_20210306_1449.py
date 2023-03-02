@@ -13,7 +13,9 @@ class Migration(migrations.Migration):
             model_name="article",
             name="tags",
             field=models.ManyToManyField(
-                blank=True, related_name="articles", to="articles.Tag"
+                blank=True,
+                related_name="articles",
+                to="articles.Tag",
             ),
         ),
     ]

@@ -16,7 +16,10 @@ def update_dependencies(ctx: Context, *, sync: bool = True) -> None:
 
 @task
 def compile_dependencies(
-    ctx: Context, *, update: bool = False, sync: bool = False
+    ctx: Context,
+    *,
+    update: bool = False,
+    sync: bool = False,
 ) -> None:
     common_args = "-q --allow-unsafe --resolver=backtracking"
     if update:
@@ -85,7 +88,10 @@ def check(_ctx: Context) -> None:
 def build(ctx: Context) -> None:
     with ctx.cd(BASE_DIR):
         ctx.run(
-            "docker-compose build django", pty=True, echo=True, env=COMPOSE_BUILD_ENV
+            "docker-compose build django",
+            pty=True,
+            echo=True,
+            env=COMPOSE_BUILD_ENV,
         )
 
 
@@ -93,7 +99,10 @@ def build(ctx: Context) -> None:
 def publish(ctx: Context) -> None:
     with ctx.cd(BASE_DIR):
         ctx.run(
-            "docker-compose push django", pty=True, echo=True, env=COMPOSE_BUILD_ENV
+            "docker-compose push django",
+            pty=True,
+            echo=True,
+            env=COMPOSE_BUILD_ENV,
         )
 
 
@@ -117,7 +126,8 @@ def check_alive(_ctx: Context) -> None:
         else:
             print("Server is up & running")  # noqa: T201
             return
-    raise RuntimeError("Failed to reach the server") from exception
+    msg = "Failed to reach the server"
+    raise RuntimeError(msg) from exception
 
 
 @task(pre=[check, build, publish, deploy], post=[check_alive])

@@ -13,7 +13,7 @@ def forwards(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
         tags = []
         keyword: str
         for keyword in list(
-            filter(None, (keyword.strip() for keyword in article.keywords.split(",")))
+            filter(None, (keyword.strip() for keyword in article.keywords.split(","))),
         ):
             tag = Tag.objects.using(db_alias).filter(name__iexact=keyword).first()
             if tag is None:

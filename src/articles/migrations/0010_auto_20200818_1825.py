@@ -10,7 +10,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="comment", options={"ordering": ["-created_at"]}
+            name="comment",
+            options={"ordering": ["-created_at"]},
         ),
         migrations.AddField(
             model_name="comment",

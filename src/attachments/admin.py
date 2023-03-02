@@ -67,7 +67,9 @@ class AttachmentAdmin(admin.ModelAdmin):
 
     @admin.action(description="Reprocess selected attachments")
     def reprocess_selected_attachments(
-        self, request: WSGIRequest, queryset: QuerySet
+        self,
+        request: WSGIRequest,
+        queryset: QuerySet,
     ) -> None:
         if len(queryset) == 0:
             messages.error(request, "You must select at least one attachment")

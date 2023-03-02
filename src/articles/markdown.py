@@ -27,7 +27,9 @@ class LazyImageReferenceInlineProcessor(ImageReferenceInlineProcessor):
 class LazyLoadingImageExtension(Extension):
     def extendMarkdown(self, md: Markdown) -> None:  # noqa: N802
         md.inlinePatterns.register(
-            LazyImageInlineProcessor(IMAGE_LINK_RE, md), "image_link", 150
+            LazyImageInlineProcessor(IMAGE_LINK_RE, md),
+            "image_link",
+            150,
         )
         md.inlinePatterns.register(
             LazyImageReferenceInlineProcessor(IMAGE_REFERENCE_RE, md),

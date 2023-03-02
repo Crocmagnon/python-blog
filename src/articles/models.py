@@ -140,10 +140,10 @@ class Article(models.Model):
     def get_related_articles(self) -> Sequence[Article]:
         related_articles = set()
         published_articles = Article.objects.filter(status=Article.PUBLISHED).exclude(
-            pk=self.pk
+            pk=self.pk,
         )
         for tag in self.tags.all().prefetch_related(
-            Prefetch("articles", published_articles, to_attr="published_articles")
+            Prefetch("articles", published_articles, to_attr="published_articles"),
         ):
             related_articles.update(tag.published_articles)
         sample_size = min([len(related_articles), 3])

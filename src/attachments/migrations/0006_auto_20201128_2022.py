@@ -20,7 +20,9 @@ class Migration(migrations.Migration):
             model_name="attachment",
             name="processed_file",
             field=attachments.models.AbsoluteUrlFileField(
-                blank=True, null=True, upload_to=""
+                blank=True,
+                null=True,
+                upload_to="",
             ),
         ),
     ]

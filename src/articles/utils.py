@@ -24,7 +24,7 @@ def format_article_content(content: str) -> str:
             TocExtension(anchorlink=True),
             CodeHiliteExtension(linenums=False, guess_lang=False),
             LazyLoadingImageExtension(),
-        ]
+        ],
     )
     content = re.sub(r"(\s)#(\w+)", r"\1\#\2", content)
     return md.convert(content)
