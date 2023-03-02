@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     name: Python tests
@@ -22,8 +25,7 @@ jobs:
         run: |
           pip install pip-tools
           pip-sync requirements.txt requirements-dev.txt
-      - name: Ruff
-        run: ruff --format=github .
       - name: Test
         run: pytest --cov=. --cov-branch --cov-report term-missing:skip-covered
         working-directory: ./src/
+      - uses: pre-commit/action@v3.0.0

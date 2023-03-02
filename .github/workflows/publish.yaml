@@ -6,6 +6,9 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     uses: ./.github/workflows/test.yaml
@@ -30,8 +33,6 @@ jobs:
           cache-from: type=registry,ref=crocmagnon/blog:latest
           cache-to: type=inline
           platforms: linux/amd64
-          build-args: |
-            POETRY_OPTIONS=--no-dev
   deploy:
     name: Deploy new image
     runs-on: ubuntu-latest
