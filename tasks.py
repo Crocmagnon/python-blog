@@ -1,13 +1,3 @@
-"""
-Invoke management tasks for the project.
-
-The current implementation with type annotations is not compatible
-with invoke 1.7.1 and requires manual patching.
-
-See https://github.com/pyinvoke/invoke/pull/458/files
-"""
-
-
 import time
 from pathlib import Path
 
