@@ -25,7 +25,7 @@ jobs:
         run: |
           pip install pip-tools
           pip-sync requirements.txt requirements-dev.txt
+      - uses: pre-commit/action@v3.0.0
       - name: Test
         run: pytest --cov=. --cov-branch --cov-report term-missing:skip-covered
         working-directory: ./src/
-      - uses: pre-commit/action@v3.0.0
