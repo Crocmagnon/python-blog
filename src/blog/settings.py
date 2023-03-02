@@ -213,9 +213,9 @@ BLOG = {
     "description": "My take on tech-related subjects (but not only).",
     "base_url": env("BLOG_BASE_URL"),
     "repo": {
-        "commit_url": "https://git.augendre.info/gaugendre/blog/commit/{commit_sha}",
-        "homepage": "https://git.augendre.info/gaugendre/blog",
-        "log": "https://git.augendre.info/gaugendre/blog/commits/branch/master",
+        "commit_url": "https://github.com/Crocmagnon/blog/commit/{commit_sha}",
+        "homepage": "https://github.com/Crocmagnon/blog",
+        "log": "https://github.com/Crocmagnon/blog/commits/master",
     },
     "status_url": env("SERVICES_STATUS_URL"),
     "licenses": {
