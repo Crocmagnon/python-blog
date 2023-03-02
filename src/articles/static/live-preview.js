@@ -41,7 +41,7 @@ function loadPreview() {
             return response.text();
         })
         .then((value) => {
-            preview.document.open("text/html", "replace");
+            preview.document.open();
             preview.document.write(value);
             preview.document.close();
             preview.scrollTo(scrollX, scrollY);
@@ -91,7 +91,7 @@ function prepareBody() {
 }
 
 function setupLivePreview() {
-    const debouncedLoadPreview = debounce(loadPreview, 200);
+    const debouncedLoadPreview = debounce(loadPreview, 500);
 
     function listener(event) {
         event.preventDefault();
