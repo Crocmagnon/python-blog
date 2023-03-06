@@ -18,7 +18,7 @@ certifi==2022.12.7
     # via requests
 cffi==1.15.1
     # via argon2-cffi-bindings
-charset-normalizer==3.0.1
+charset-normalizer==3.1.0
     # via requests
 cssselect==1.2.0
     # via pyquery
@@ -38,13 +38,13 @@ django-cleanup==7.0.0
     # via -r requirements.in
 django-csp==3.7
     # via -r requirements.in
-django-environ==0.9.0
+django-environ==0.10.0
     # via -r requirements.in
 django-extensions==3.2.1
     # via -r requirements.in
 django-formtools==2.4
     # via django-two-factor-auth
-django-otp==1.1.4
+django-otp==1.1.5
     # via django-two-factor-auth
 django-phonenumber-field==6.4.0
     # via django-two-factor-auth
@@ -60,7 +60,7 @@ markdown==3.4.1
     # via -r requirements.in
 markdown2==2.4.8
     # via readtime
-phonenumberslite==8.13.6
+phonenumberslite==8.13.7
     # via django-two-factor-auth
 pillow==9.4.0
     # via -r requirements.in
@@ -94,5 +94,5 @@ whitenoise==6.4.0
     # via -r requirements.in
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==67.4.0
+setuptools==67.5.1
     # via gunicorn
