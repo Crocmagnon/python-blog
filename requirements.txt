@@ -130,6 +130,7 @@ charset-normalizer==3.1.0 \
     --hash=sha256:22908891a380d50738e1f978667536f6c6b526a2064156203d418f4856d6e86a \
     --hash=sha256:3160a0fd9754aab7d47f95a6b63ab355388d890163eb03b2d2b87ab0a30cfa59 \
     --hash=sha256:322102cdf1ab682ecc7d9b1c5eed4ec59657a65e1c146a0da342b78f4112db23 \
+    --hash=sha256:34e0a2f9c370eb95597aae63bf85eb5e96826d81e3dcf88b8886012906f509b5 \
     --hash=sha256:3573d376454d956553c356df45bb824262c397c6e26ce43e8203c4c540ee0acb \
     --hash=sha256:3747443b6a904001473370d7810aa19c3a180ccd52a7157aacc264a5ac79265e \
     --hash=sha256:38e812a197bf8e71a59fe55b757a84c1f946d0ac114acafaafaf21667a7e169e \
@@ -203,9 +204,9 @@ django[argon2]==4.1.7 \
     #   django-otp
     #   django-phonenumber-field
     #   django-two-factor-auth
-django-anymail[mailgun]==9.0 \
-    --hash=sha256:4239f7c61fb77b6eb8c8591a317a84a2a78f6bce1f8f42847921de74194b5d8a \
-    --hash=sha256:c21d94ffdbada613a85c22a7bf32e37447d2811e1688cd001d3cad3c7f1ff289
+django-anymail[mailgun]==9.1 \
+    --hash=sha256:339d0ada34fde4e7e8b655dd496f780a5db0e2782b1b10794f534e22c4829dc7 \
+    --hash=sha256:5f18eb6b368e11ed1ec1e3e02f5b80e6d6406b4a37493ac1c1d18b83ca4f3c57
     # via -r requirements.in
 django-cleanup==7.0.0 \
     --hash=sha256:28a969f889c661eba0d9438978693980f09482c97983bd08ee52955dae8d71e4 \
@@ -227,9 +228,9 @@ django-formtools==2.4 \
     --hash=sha256:deb932be55b1d9419e37dc4d65dfbfeb8d307b71c8c11fd52f159aba5fc0deed \
     --hash=sha256:f5f32f62ec8192cd1bc55bd929ca7dff5a5f2addf9027db95a5906ecfaa64836
     # via django-two-factor-auth
-django-otp==1.1.5 \
-    --hash=sha256:9b34bc4656180c98fe54a1e7eec49d6696d55ee0753f1060a64bed9233387c1e \
-    --hash=sha256:af939ba2645f7498511acaf5eb08d1b249aba9a24cdc0cafa39583e62e98addb
+django-otp==1.1.6 \
+    --hash=sha256:8a431a934afdd4359ab838551d02d68d3cd90c974aa9e7337cbcbb6d45db621b \
+    --hash=sha256:eac8e06041efe90e0687faea997fc0b3340f5bc74476f20aca0f6a96978f4253
     # via django-two-factor-auth
 django-phonenumber-field==6.4.0 \
     --hash=sha256:72a3e7a3e7493bf2a12c07a3bc77ce89813acc16592bf04d0eee3b5a452097ed \
@@ -484,9 +485,9 @@ typing-extensions==4.5.0 \
     --hash=sha256:5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb \
     --hash=sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4
     # via qrcode
-urllib3==1.26.14 \
-    --hash=sha256:076907bf8fd355cde77728471316625a4d2f7e713c125f51953bb5b3eecf4f72 \
-    --hash=sha256:75edcdc2f7d85b137124a6c3c9fc3933cdeaa12ecb9a6a959f22797a0feca7e1
+urllib3==1.26.15 \
+    --hash=sha256:8a388717b9476f934a21484e8c8e61875ab60644d29b9b39e11e4b9dc1c6b305 \
+    --hash=sha256:aa751d169e23c7479ce47a0cb0da579e3ede798f994f5816a74e4f4500dcea42
     # via requests
 whitenoise==6.4.0 \
     --hash=sha256:599dc6ca57e48929dfeffb2e8e187879bfe2aed0d49ca419577005b7f2cc930b \
@@ -494,7 +495,7 @@ whitenoise==6.4.0 \
     # via -r requirements.in
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==67.5.1 \
-    --hash=sha256:15136a251127da2d2e77ac7a1bc231eb504654f7e3346d93613a13f2e2787535 \
-    --hash=sha256:1c39d42bda4cb89f7fdcad52b6762e3c309ec8f8715b27c684176b7d71283242
+setuptools==67.6.0 \
+    --hash=sha256:2ee892cd5f29f3373097f5a814697e397cf3ce313616df0af11231e2ad118077 \
+    --hash=sha256:b78aaa36f6b90a074c1fa651168723acbf45d14cb1196b6f02c0fd07f17623b2
     # via gunicorn

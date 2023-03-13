@@ -32,7 +32,7 @@ django==4.1.7
     #   django-otp
     #   django-phonenumber-field
     #   django-two-factor-auth
-django-anymail==9.0
+django-anymail==9.1
     # via -r requirements.in
 django-cleanup==7.0.0
     # via -r requirements.in
@@ -44,7 +44,7 @@ django-extensions==3.2.1
     # via -r requirements.in
 django-formtools==2.4
     # via django-two-factor-auth
-django-otp==1.1.5
+django-otp==1.1.6
     # via django-two-factor-auth
 django-phonenumber-field==6.4.0
     # via django-two-factor-auth
@@ -88,11 +88,11 @@ sqlparse==0.4.3
     # via django
 typing-extensions==4.5.0
     # via qrcode
-urllib3==1.26.14
+urllib3==1.26.15
     # via requests
 whitenoise==6.4.0
     # via -r requirements.in
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==67.5.1
+setuptools==67.6.0
     # via gunicorn
