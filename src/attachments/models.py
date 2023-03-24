@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,8 @@ from django.urls import reverse
 from PIL import Image
 
 from articles.utils import build_full_absolute_url
+
+logger = logging.getLogger(__name__)
 
 
 class AbsoluteUrlFieldFile(FieldFile):
@@ -95,7 +98,12 @@ class Attachment(models.Model):
                 files={self.original_file.name: original_file},
                 timeout=10,
             )
+
         res = response.json()
+        if len(res) == 0:
+            logger.error("Shortpixel response is empty: %s", res)
+            return super().save(*args, **kwargs)
+
         res_data = res[0]
 
         # Loop until it's done
