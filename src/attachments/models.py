@@ -86,7 +86,7 @@ class Attachment(models.Model):
             "resize_height": settings.SHORTPIXEL_RESIZE_HEIGHT,
             "keep_exif": 1,
             "file_paths": json.dumps(
-                {self.original_file.name: self.original_file.path},
+                {"img": self.original_file.path},
             ),
         }
         data = {**base_data, **post_data}
@@ -95,14 +95,14 @@ class Attachment(models.Model):
             response = requests.post(
                 url=url,
                 data=data,
-                files={self.original_file.name: original_file},
+                files={"img": original_file},
                 timeout=10,
             )
 
         res = response.json()
         if len(res) == 0 or not isinstance(res, list):
             logger.error("Shortpixel response is not a non-empty list: %s", res)
-            logger.info("POST data: %s", data)
+            logger.error("POST data: %s", data)
             return super().save(*args, **kwargs)
 
         res_data = res[0]
