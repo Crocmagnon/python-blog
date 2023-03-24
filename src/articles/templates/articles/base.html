@@ -19,12 +19,8 @@
             <link rel="stylesheet" href="{% static "vendor/newcss.css" %}" type="text/css">
             <link rel="stylesheet" href="{% static "public.css" %}" type="text/css">
             <link rel="stylesheet" href="{% static "admonitions.css" %}" type="text/css">
-            <link rel="preload" href="{% static "vendor/fonts/golos-text-vf.woff2" %}" as="font" type="font/woff2">
-            <link rel="stylesheet" href="{% static "vendor/fonts/golos.css" %}" type="text/css">
             {% if article and article.has_code %}
                 <link rel="stylesheet" href="{% static "vendor/codehilite.css" %}" type="text/css">
-                <link rel="preload" href="{% static "vendor/fonts/fira-code-vf.woff2" %}" as="font" type="font/woff2">
-                <link rel="stylesheet" href="{% static "vendor/fonts/fira-code.css" %}">
             {% endif %}
             {% if user.is_authenticated %}
                 <link rel="stylesheet" href="{% static "authenticated.css" %}">

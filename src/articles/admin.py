@@ -113,10 +113,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            "all": (
-                "vendor/fonts/fira-code.css",
-                "admin_articles.css",
-            ),
+            "all": ("admin_articles.css",),
         }
 
     def response_post_save_add(
