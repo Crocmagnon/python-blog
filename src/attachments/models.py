@@ -100,8 +100,8 @@ class Attachment(models.Model):
             )
 
         res = response.json()
-        if len(res) == 0:
-            logger.error("Shortpixel response is empty: %s", res)
+        if len(res) == 0 or not isinstance(res, list):
+            logger.error("Shortpixel response is not a non-empty list: %s", res)
             return super().save(*args, **kwargs)
 
         res_data = res[0]
