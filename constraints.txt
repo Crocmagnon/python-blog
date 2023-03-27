@@ -56,11 +56,11 @@ idna==3.4
     # via requests
 lxml==4.9.2
     # via pyquery
-markdown==3.4.1
+markdown==3.4.3
     # via -r requirements.in
 markdown2==2.4.8
     # via readtime
-phonenumberslite==8.13.7
+phonenumberslite==8.13.8
     # via django-two-factor-auth
 pillow==9.4.0
     # via -r requirements.in
