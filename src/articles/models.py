@@ -83,6 +83,11 @@ class Article(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
     def get_absolute_url(self) -> str:
         return reverse("article-detail", kwargs={"slug": self.slug})
 
@@ -116,11 +121,6 @@ class Article(models.Model):
         self.status = self.DRAFT
         self.save()
         return self
-
-    def save(self, *args: Any, **kwargs: Any) -> None:
-        if not self.slug:
-            self.slug = slugify(self.title)
-        return super().save(*args, **kwargs)
 
     @property
     def draft_public_url(self) -> str:
