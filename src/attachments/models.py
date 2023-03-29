@@ -48,20 +48,6 @@ class Attachment(models.Model):
     def __str__(self) -> str:
         return f"{self.description} ({self.original_file.name})"
 
-    def reprocess(self) -> None:
-        self.processed_file = None  # type: ignore[assignment]
-        self.save()
-
-    @property
-    def original_file_url(self) -> str:
-        return reverse("attachments:original", kwargs={"pk": self.pk})
-
-    @property
-    def processed_file_url(self) -> str | None:
-        if self.processed_file:
-            return reverse("attachments:processed", kwargs={"pk": self.pk})
-        return None
-
     def save(self, *args: Any, **kwargs: Any) -> None:
         super().save(*args, **kwargs)
 
@@ -136,3 +122,17 @@ class Attachment(models.Model):
         temp_path.unlink()
         temp_dir.rmdir()
         return super().save(*args, **kwargs)
+
+    @property
+    def original_file_url(self) -> str:
+        return reverse("attachments:original", kwargs={"pk": self.pk})
+
+    @property
+    def processed_file_url(self) -> str | None:
+        if self.processed_file:
+            return reverse("attachments:processed", kwargs={"pk": self.pk})
+        return None
+
+    def reprocess(self) -> None:
+        self.processed_file = None  # type: ignore[assignment]
+        self.save()
