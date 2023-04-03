@@ -22,7 +22,7 @@ charset-normalizer==3.1.0
     # via requests
 cssselect==1.2.0
     # via pyquery
-django==4.1.7
+django==4.2
     # via
     #   -r requirements.in
     #   django-anymail
@@ -62,7 +62,7 @@ markdown2==2.4.8
     # via readtime
 phonenumberslite==8.13.8
     # via django-two-factor-auth
-pillow==9.4.0
+pillow==9.5.0
     # via -r requirements.in
 pycparser==2.21
     # via cffi
@@ -94,5 +94,5 @@ whitenoise==6.4.0
     # via -r requirements.in
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==67.6.0
+setuptools==67.6.1
     # via gunicorn
