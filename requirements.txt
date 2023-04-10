@@ -10,7 +10,7 @@ argon2-cffi-bindings==21.2.0
     # via argon2-cffi
 asgiref==3.6.0
     # via django
-beautifulsoup4==4.12.0
+beautifulsoup4==4.12.2
     # via
     #   -r requirements.in
     #   readtime
@@ -66,7 +66,7 @@ pillow==9.5.0
     # via -r requirements.in
 pycparser==2.21
     # via cffi
-pygments==2.14.0
+pygments==2.15.0
     # via -r requirements.in
 pypng==0.20220715.0
     # via qrcode
