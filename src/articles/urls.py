@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import RedirectView
 
 from articles import views
 
@@ -8,7 +9,8 @@ urlpatterns = [
     path("search/", views.SearchArticlesListView.as_view(), name="search"),
     path("tag/<slug:slug>/feed/", views.TagFeed(), name="tag-feed"),
     path("tag/<slug:slug>/", views.TagArticlesListView.as_view(), name="tag"),
-    path("feed/", views.CompleteFeed(), name="complete-feed"),
+    path("feed/", RedirectView.as_view(url="/index.xml")),
+    path("index.xml", views.CompleteFeed(), name="complete-feed"),
     path(
         "api/render/<int:article_pk>/",
         views.render_article,
