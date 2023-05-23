@@ -78,7 +78,7 @@ rcssmin==1.1.1
     # via -r requirements.in
 readtime==2.0.0
     # via -r requirements.in
-requests==2.29.0
+requests==2.31.0
     # via
     #   -r requirements.in
     #   django-anymail

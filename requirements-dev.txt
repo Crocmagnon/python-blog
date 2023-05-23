@@ -126,10 +126,8 @@ pyyaml==6.0
     # via
     #   pre-commit
     #   vcrpy
-requests==2.29.0
-    # via
-    #   -c constraints.txt
-    #   bpython
+requests==2.31.0
+    # via bpython
 ruff==0.0.263
     # via -r requirements-dev.in
 six==1.16.0
